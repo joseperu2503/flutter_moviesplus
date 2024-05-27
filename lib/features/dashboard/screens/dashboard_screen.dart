@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
@@ -25,9 +26,43 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
+    final screen = MediaQuery.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: screen.padding.top,
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Movies Plus+',
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.white,
+                      height: 19.5 / 16,
+                      leadingDistribution: TextLeadingDistribution.even,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 24),
+              child: const SwiperMovies(),
+            ),
+          ),
           SliverList.separated(
             itemBuilder: (context, index) {
               return HorizonalListMovies(
@@ -103,14 +138,14 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ),
           child: Row(
             children: [
               Text(
                 widget.movieCategory.name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.w600,
                   color: AppColors.white,
@@ -121,13 +156,13 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         SizedBox(
           height: 200,
           child: ListView.separated(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 16,
             ),
             scrollDirection: Axis.horizontal,
@@ -158,6 +193,113 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class SwiperMovies extends ConsumerStatefulWidget {
+  const SwiperMovies({
+    super.key,
+  });
+
+  @override
+  SwiperMoviesState createState() => SwiperMoviesState();
+}
+
+class SwiperMoviesState extends ConsumerState<SwiperMovies> {
+  @override
+  void initState() {
+    getMovies();
+    super.initState();
+  }
+
+  List<Movie> movies = [];
+  int page = 1;
+  int totalPages = 1;
+  bool loading = false;
+
+  getMovies() async {
+    if (page > totalPages || loading) {
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+
+    try {
+      final MoviesResponse response = await MovieDbService.getMovies(
+        path: '/movie/now_playing',
+        page: page,
+      );
+      setState(() {
+        movies = [...movies, ...response.results];
+        page = page + 1;
+      });
+    } on ServiceException catch (e) {
+      throw Exception(e);
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 400,
+      child: Swiper(
+        viewportFraction: 0.6,
+        scale: 0.8,
+        autoplay: true,
+        pagination: const SwiperPagination(
+          margin: EdgeInsets.only(top: 0),
+          builder: DotSwiperPaginationBuilder(
+            activeColor: AppColors.primaryBlueAccent,
+            color: AppColors.textDarkGrey,
+          ),
+        ),
+        
+        itemCount: movies.length,
+        itemBuilder: (context, index) => _Slide(movie: movies[index]),
+      ),
+    );
+  }
+}
+
+class _Slide extends StatelessWidget {
+  final Movie movie;
+
+  const _Slide({required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+    final decoration = BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: const [
+        BoxShadow(
+          color: Colors.black45,
+          blurRadius: 10,
+          offset: Offset(0, 10),
+        )
+      ],
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: DecoratedBox(
+        decoration: decoration,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: GestureDetector(
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              placeholder: const AssetImage('assets/loaders/bottle-loader.gif'),
+              image: NetworkImage(movie.posterPath),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
