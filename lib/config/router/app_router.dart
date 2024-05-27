@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:moviesplus/features/auth/home/home_screen.dart';
+import 'package:moviesplus/features/dashboard/screens/dashboard_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -7,7 +7,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) {
-        return const HomeScreen();
+        return const DashboardScreen();
       },
     ),
   ],
