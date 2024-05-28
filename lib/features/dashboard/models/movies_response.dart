@@ -22,15 +22,15 @@ class MoviesResponse {
 
 class Movie {
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final List<int> genreIds;
   final int id;
   final String originalLanguage;
   final String originalTitle;
   final String overview;
   final double popularity;
-  final String posterPath;
-  final DateTime releaseDate;
+  final String? posterPath;
+  final DateTime? releaseDate;
   final String title;
   final bool video;
   final double voteAverage;
@@ -55,19 +55,15 @@ class Movie {
 
   factory Movie.fromJson(Map<String, dynamic> json) => Movie(
         adult: json["adult"],
-        backdropPath: json["backdrop_path"] != null
-            ? 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}'
-            : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png',
+        backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         originalLanguage: json["original_language"],
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"]?.toDouble(),
-        posterPath: json["poster_path"] != null
-            ? 'https://image.tmdb.org/t/p/w500${json["poster_path"]}'
-            : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png',
-        releaseDate: DateTime.parse(json["release_date"]),
+        posterPath: json["poster_path"],
+        releaseDate: DateTime.tryParse(json["release_date"]),
         title: json["title"],
         video: json["video"],
         voteAverage: json["vote_average"]?.toDouble(),

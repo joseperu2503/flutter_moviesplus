@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
+import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
+import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
+import 'package:moviesplus/features/movie/widgets/movie_info.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:moviesplus/features/shared/widgets/profile_image.dart';
 
 class MovieScreen extends StatefulWidget {
   const MovieScreen({
@@ -23,12 +26,17 @@ class _MovieScreenState extends State<MovieScreen> {
   bool loading = false;
   MovieDetail? movie;
   MovieCredits? credits;
+  double top = 0;
+  double width = 205;
+
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     getMovie();
     getMovieCredits();
+    scrollListener();
   }
 
   getMovie() async {
@@ -64,6 +72,35 @@ class _MovieScreenState extends State<MovieScreen> {
     }
   }
 
+  scrollListener() {
+    scrollController.addListener(() {
+      final screen = MediaQuery.of(context);
+
+      setState(() {
+        if (scrollController.offset < 0) {
+          top = screen.padding.top + 60;
+          width = 205;
+        } else if (scrollController.offset < screen.padding.top + 60) {
+          top = screen.padding.top + 60 - scrollController.offset;
+          width = 205 +
+              (screen.size.width - 205) *
+                  (scrollController.offset) /
+                  (screen.padding.top + 60);
+        } else {
+          top = 0;
+          width = screen.size.width;
+        }
+      });
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final screen = MediaQuery.of(context);
+    top = screen.padding.top + 60;
+  }
+
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
@@ -78,27 +115,8 @@ class _MovieScreenState extends State<MovieScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.network(
-            movie!.posterPath,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            opacity: const AlwaysStoppedAnimation(0.5),
-            height: 550,
-          ),
-          Container(
-            height: 550,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  const Color(0xFF1F1D2B).withOpacity(0.2),
-                  AppColors.backgroundColor,
-                ],
-              ),
-            ),
-          ),
           CustomScrollView(
+            controller: scrollController,
             slivers: [
               SliverAppBar(
                 titleSpacing: 0,
@@ -107,51 +125,100 @@ class _MovieScreenState extends State<MovieScreen> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                   ),
-                  child: Row(
+                  child: const Row(
                     children: [
-                      const CustomBackButton(),
-                      const SizedBox(
+                      CustomBackButton(),
+                      SizedBox(
                         width: 12,
                       ),
-                      Expanded(
-                        child: Text(
-                          movie!.title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.white,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 44,
-                      )
                     ],
                   ),
                 ),
                 scrolledUnderElevation: 0,
                 automaticallyImplyLeading: false,
                 pinned: true,
-                backgroundColor: Colors.transparent,
-                expandedHeight: 400,
-                foregroundColor: AppColors.backgroundColor,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    padding: EdgeInsets.only(
-                      top: screen.padding.top + 80,
+                backgroundColor: AppColors.backgroundColor,
+                expandedHeight: 450,
+                collapsedHeight: 200,
+                flexibleSpace: Stack(
+                  children: [
+                    Image.network(
+                      movie!.posterPath,
+                      alignment: Alignment.topCenter,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      opacity: const AlwaysStoppedAnimation(0.4),
+                      height: 550,
                     ),
-                    child: Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          movie!.posterPath,
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: const [0, 1],
+                          colors: [
+                            AppColors.backgroundColor.withOpacity(0.2),
+                            AppColors.backgroundColor,
+                          ],
                         ),
                       ),
                     ),
-                  ),
+                    Positioned(
+                      top: top,
+                      child: Container(
+                        width: screen.size.width,
+                        alignment: Alignment.topCenter,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                            movie!.posterPath,
+                            width: width,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      child: Container(
+                        height: 80,
+                        width: screen.size.width,
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          bottom: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: const [0, 1],
+                            colors: [
+                              AppColors.backgroundColor.withOpacity(0),
+                              AppColors.backgroundColor,
+                            ],
+                          ),
+                        ),
+                        // child: MovieInfo(),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                movie!.title,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.white,
+                                  leadingDistribution:
+                                      TextLeadingDistribution.even,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SliverToBoxAdapter(
@@ -159,115 +226,16 @@ class _MovieScreenState extends State<MovieScreen> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                   ),
-                  height: 10000,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: AppColors.secondaryOrange,
-                              minimumSize: const Size(115, 48),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/icons/play.svg',
-                                  width: 18,
-                                  height: 18,
-                                  colorFilter: const ColorFilter.mode(
-                                    AppColors.white,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                const Text(
-                                  'Play',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.white,
-                                    height: 19.5 / 16,
-                                    letterSpacing: 0.12,
-                                    leadingDistribution:
-                                        TextLeadingDistribution.even,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: AppColors.primarySoft,
-                              minimumSize: const Size(48, 48),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32),
-                              ),
-                              padding: EdgeInsets.zero,
-                            ),
-                            child: SvgPicture.asset(
-                              'assets/icons/download.svg',
-                              width: 24,
-                              height: 24,
-                              colorFilter: const ColorFilter.mode(
-                                AppColors.secondaryOrange,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: AppColors.primarySoft,
-                              minimumSize: const Size(48, 48),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32),
-                              ),
-                              padding: EdgeInsets.zero,
-                            ),
-                            child: SvgPicture.asset(
-                              'assets/icons/share.svg',
-                              width: 24,
-                              height: 24,
-                              colorFilter: const ColorFilter.mode(
-                                AppColors.primaryBlueAccent,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                      MovieInfo(movie: movie!),
                       const SizedBox(
                         height: 24,
                       ),
-                      const Text(
-                        'Story Line',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.white,
-                          height: 19.5 / 16,
-                          letterSpacing: 0.12,
-                          leadingDistribution: TextLeadingDistribution.even,
-                        ),
-                      ),
+                      const MovieButtons(),
                       const SizedBox(
-                        height: 8,
+                        height: 24,
                       ),
                       Text(
                         movie!.overview,
@@ -297,68 +265,38 @@ class _MovieScreenState extends State<MovieScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      if (credits != null)
-                        SizedBox(
-                          height: 60,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              final Cast cast = credits!.cast[index];
-                              return Row(
-                                children: [
-                                  ProfileImage(
-                                    path: cast.profilePath,
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        cast.name,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColors.white,
-                                          height: 17.07 / 14,
-                                          letterSpacing: 0.12,
-                                          leadingDistribution:
-                                              TextLeadingDistribution.even,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text(
-                                        cast.character ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.textGrey,
-                                          height: 12.19 / 10,
-                                          letterSpacing: 0.12,
-                                          leadingDistribution:
-                                              TextLeadingDistribution.even,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(
-                                width: 24,
-                              );
-                            },
-                            itemCount: credits!.cast.length,
-                          ),
-                        ),
+                      if (credits != null) MovieCast(credits: credits!),
+                      const SizedBox(
+                        height: 24,
+                      ),
                     ],
                   ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    HorizonalListMovies(
+                      movieCategory: MovieCategory(
+                        name: 'Recommendations',
+                        url: '/movie/${movie!.id}/recommendations',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    HorizonalListMovies(
+                      movieCategory: MovieCategory(
+                        name: 'Similar',
+                        url: '/movie/${movie!.id}/similar',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 40 + screen.padding.bottom,
                 ),
               )
             ],
