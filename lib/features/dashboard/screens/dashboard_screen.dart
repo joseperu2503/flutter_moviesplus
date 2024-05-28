@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
@@ -124,7 +125,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
         movies = [...movies, ...response.results];
         page = page + 1;
       });
-    } on ServiceException catch (e) {
+    } catch (e) {
       throw Exception(e);
     }
     setState(() {
@@ -173,6 +174,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: GestureDetector(
+                    onTap: () {
+                      context.push('/movie/${movie.id}');
+                    },
                     child: FadeInImage(
                       height: 220,
                       fit: BoxFit.cover,
@@ -259,7 +263,6 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
             color: AppColors.textDarkGrey,
           ),
         ),
-        
         itemCount: movies.length,
         itemBuilder: (context, index) => _Slide(movie: movies[index]),
       ),
