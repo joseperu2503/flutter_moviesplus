@@ -19,8 +19,6 @@ class MovieDbService {
         queryParameters: query,
       );
 
-      print(query);
-
       return MoviesResponse.fromJson(response.data);
     } catch (e) {
       throw Exception(e);

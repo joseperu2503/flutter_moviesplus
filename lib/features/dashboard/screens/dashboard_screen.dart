@@ -68,9 +68,8 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           SliverList.separated(
             itemBuilder: (context, index) {
-              print(index);
               return HorizonalListMovies(
-                movieCategory: movieCategories[index],
+                index: index,
               );
             },
             separatorBuilder: (context, index) {

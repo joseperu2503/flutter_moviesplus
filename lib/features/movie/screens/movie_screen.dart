@@ -276,21 +276,21 @@ class _MovieScreenState extends State<MovieScreen> {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    HorizonalListMovies(
-                      movieCategory: MovieCategory(
-                        name: 'Recommendations',
-                        url: '/movie/${movie!.id}/recommendations',
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    HorizonalListMovies(
-                      movieCategory: MovieCategory(
-                        name: 'Similar',
-                        url: '/movie/${movie!.id}/similar',
-                      ),
-                    ),
+                    // HorizonalListMovies(
+                    //   movieCategory: MovieCategory(
+                    //     name: 'Recommendations',
+                    //     url: '/movie/${movie!.id}/recommendations',
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 24,
+                    // ),
+                    // HorizonalListMovies(
+                    //   movieCategory: MovieCategory(
+                    //     name: 'Similar',
+                    //     url: '/movie/${movie!.id}/similar',
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

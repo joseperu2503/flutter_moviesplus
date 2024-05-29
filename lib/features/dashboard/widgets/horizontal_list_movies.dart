@@ -4,62 +4,61 @@ import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
-import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 
 class HorizonalListMovies extends ConsumerStatefulWidget {
   const HorizonalListMovies({
     super.key,
-    required this.movieCategory,
+    required this.index,
   });
 
-  final MovieCategory movieCategory;
+  final int index;
 
   @override
   HorizonalListMoviesState createState() => HorizonalListMoviesState();
 }
 
-class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
+class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
+    with AutomaticKeepAliveClientMixin {
+  final scrollController = ScrollController();
+
   @override
   void initState() {
-    getMovies();
     super.initState();
+    Future.microtask(() {
+      getMovies();
+    });
+    scrollController.addListener(() {
+      getMovies();
+    });
   }
-
-  List<Movie> movies = [];
-  int page = 1;
-  int totalPages = 1;
-  bool loading = false;
 
   getMovies() async {
-    if (page > totalPages || loading) {
-      return;
-    }
+    if ((scrollController.position.pixels + 600) <
+        scrollController.position.maxScrollExtent) return;
 
-    setState(() {
-      loading = true;
-    });
+    await Future.delayed(const Duration(milliseconds: 300));
 
-    try {
-      final MoviesResponse response = await MovieDbService.getMovies(
-        path: widget.movieCategory.url,
-        page: page,
-        queryParameters: widget.movieCategory.queryParameters,
-      );
-      setState(() {
-        movies = [...movies, ...response.results];
-        page = page + 1;
-      });
-    } catch (e) {
-      throw Exception(e);
-    }
-    setState(() {
-      loading = false;
-    });
+    if ((scrollController.position.pixels + 600) <
+        scrollController.position.maxScrollExtent) return;
+
+    await ref.read(moviesProvider.notifier).getMovies(widget.index);
   }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    final MovieCategory movieCategory =
+        ref.watch(moviesProvider).movieCategories[widget.index];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -70,7 +69,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
           child: Row(
             children: [
               Text(
-                widget.movieCategory.name,
+                movieCategory.name,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -88,12 +87,13 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
         SizedBox(
           height: 200,
           child: ListView.separated(
+            controller: scrollController,
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
             ),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              final Movie movie = movies[index];
+              final Movie movie = movieCategory.movies[index];
               return SizedBox(
                 width: 150,
                 child: ClipRRect(
@@ -114,7 +114,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
                 width: 10,
               );
             },
-            itemCount: movies.length,
+            itemCount: movieCategory.movies.length,
           ),
         ),
       ],
