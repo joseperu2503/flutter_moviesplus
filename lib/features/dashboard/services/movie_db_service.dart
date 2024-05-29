@@ -1,4 +1,6 @@
 import 'package:moviesplus/config/api/api.dart';
+import 'package:moviesplus/features/dashboard/models/genre.dart';
+import 'package:moviesplus/features/dashboard/models/genres_response.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
@@ -7,16 +9,17 @@ class MovieDbService {
   static Future<MoviesResponse> getMovies({
     int page = 1,
     required String path,
+    Map<String, dynamic> queryParameters = const {},
   }) async {
-    Map<String, dynamic> queryParameters = {
-      "page": page,
-    };
+    Map<String, dynamic> query = {"page": page, ...queryParameters};
 
     try {
       final response = await Api.get(
         path,
-        queryParameters: queryParameters,
+        queryParameters: query,
       );
+
+      print(query);
 
       return MoviesResponse.fromJson(response.data);
     } catch (e) {
@@ -47,6 +50,30 @@ class MovieDbService {
       );
 
       return MovieCredits.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future<List<Genre>> getMovieGenres() async {
+    try {
+      final response = await Api.get(
+        '/genre/movie/list',
+      );
+
+      return GenresResponse.fromJson(response.data).genres;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future<List<Genre>> getTvGenres() async {
+    try {
+      final response = await Api.get(
+        '/genre/tv/list',
+      );
+
+      return GenresResponse.fromJson(response.data).genres;
     } catch (e) {
       throw Exception(e);
     }

@@ -21,6 +21,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   void initState() {
     Future.microtask(() {
       ref.read(moviesProvider.notifier).initData();
+      ref.read(moviesProvider.notifier).getMovieGenres();
     });
     super.initState();
   }
@@ -67,6 +68,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           SliverList.separated(
             itemBuilder: (context, index) {
+              print(index);
               return HorizonalListMovies(
                 movieCategory: movieCategories[index],
               );

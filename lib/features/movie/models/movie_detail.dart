@@ -1,3 +1,5 @@
+import 'package:moviesplus/features/dashboard/models/genre.dart';
+
 class MovieDetail {
   final bool adult;
   final String backdropPath;
@@ -79,21 +81,6 @@ class MovieDetail {
         video: json["video"],
         voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
-      );
-}
-
-class Genre {
-  final int id;
-  final String name;
-
-  Genre({
-    required this.id,
-    required this.name,
-  });
-
-  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-        id: json["id"],
-        name: json["name"],
       );
 }
 

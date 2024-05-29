@@ -44,6 +44,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies> {
       final MoviesResponse response = await MovieDbService.getMovies(
         path: widget.movieCategory.url,
         page: page,
+        queryParameters: widget.movieCategory.queryParameters,
       );
       setState(() {
         movies = [...movies, ...response.results];
