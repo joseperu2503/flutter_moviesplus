@@ -3,16 +3,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
-import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 
 class HorizonalListMovies extends ConsumerStatefulWidget {
   const HorizonalListMovies({
     super.key,
-    required this.index,
+    required this.label,
+    required this.getMovies,
+    required this.movies,
   });
 
-  final int index;
+  final String label;
+  final Future<void> Function() getMovies;
+  final List<Movie> movies;
 
   @override
   HorizonalListMoviesState createState() => HorizonalListMoviesState();
@@ -42,7 +45,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
     if ((scrollController.position.pixels + 600) <
         scrollController.position.maxScrollExtent) return;
 
-    await ref.read(moviesProvider.notifier).getMovies(widget.index);
+    await widget.getMovies();
   }
 
   @override
@@ -57,8 +60,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final MovieCategory movieCategory =
-        ref.watch(moviesProvider).movieCategories[widget.index];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -69,7 +71,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
           child: Row(
             children: [
               Text(
-                movieCategory.name,
+                widget.label,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -93,31 +95,45 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
             ),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              final Movie movie = movieCategory.movies[index];
-              return SizedBox(
-                width: 150,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: GestureDetector(
-                    onTap: () {
-                      context.push('/movie/${movie.id}');
-                    },
-                    child: PosterImage(
-                      path: movie.posterPath,
-                    ),
-                  ),
-                ),
-              );
+              final Movie movie = widget.movies[index];
+              return MovieItem(movie: movie);
             },
             separatorBuilder: (context, index) {
               return const SizedBox(
                 width: 10,
               );
             },
-            itemCount: movieCategory.movies.length,
+            itemCount: widget.movies.length,
           ),
         ),
       ],
+    );
+  }
+}
+
+class MovieItem extends StatelessWidget {
+  const MovieItem({
+    super.key,
+    required this.movie,
+  });
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: GestureDetector(
+          onTap: () {
+            context.push('/movie/${movie.id}');
+          },
+          child: PosterImage(
+            path: movie.posterPath,
+          ),
+        ),
+      ),
     );
   }
 }

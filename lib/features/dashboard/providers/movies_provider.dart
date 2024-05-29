@@ -60,7 +60,8 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
   getMovies(int index) async {
     MovieCategory movieCategory = getMovieCategory(index: index);
 
-    if (movieCategory.page > movieCategory.page || movieCategory.loading) {
+    if (movieCategory.page > movieCategory.totalPages ||
+        movieCategory.loading) {
       return;
     }
 

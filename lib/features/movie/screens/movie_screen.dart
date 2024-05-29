@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
-import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
+import 'package:moviesplus/features/dashboard/widgets/temporal_horizontal_list_movies.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
@@ -276,21 +276,21 @@ class _MovieScreenState extends State<MovieScreen> {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    // HorizonalListMovies(
-                    //   movieCategory: MovieCategory(
-                    //     name: 'Recommendations',
-                    //     url: '/movie/${movie!.id}/recommendations',
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 24,
-                    // ),
-                    // HorizonalListMovies(
-                    //   movieCategory: MovieCategory(
-                    //     name: 'Similar',
-                    //     url: '/movie/${movie!.id}/similar',
-                    //   ),
-                    // ),
+                    TemporalHorizonalListMovies(
+                      movieCategory: MovieCategory(
+                        name: 'Recommendations',
+                        url: '/movie/${movie!.id}/recommendations',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    TemporalHorizonalListMovies(
+                      movieCategory: MovieCategory(
+                        name: 'Similar',
+                        url: '/movie/${movie!.id}/similar',
+                      ),
+                    ),
                   ],
                 ),
               ),
