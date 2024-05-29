@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
@@ -29,22 +30,24 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
-    final screen = MediaQuery.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Container(
-              padding: EdgeInsets.only(
+          SliverAppBar(
+            titleSpacing: 0,
+            backgroundColor: AppColors.backgroundColor,
+            scrolledUnderElevation: 0,
+            pinned: true,
+            title: Container(
+              padding: const EdgeInsets.only(
                 left: 16,
-                right: 16,
-                top: screen.padding.top,
+                right: 8,
               ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Movies Plus+',
+                  const Text(
+                    'Movies ',
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.w600,
@@ -53,8 +56,43 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                       leadingDistribution: TextLeadingDistribution.even,
                     ),
                   ),
-                  SizedBox(
-                    height: 24,
+                  const Text(
+                    'Plus',
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryBlueAccent,
+                      height: 19.5 / 16,
+                      leadingDistribution: TextLeadingDistribution.even,
+                    ),
+                  ),
+                  const Text(
+                    '+',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryBlueAccent,
+                      height: 19.5 / 16,
+                      leadingDistribution: TextLeadingDistribution.even,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: OvalBorder(),
+                      minimumSize: Size(42, 42),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/icons/search.svg',
+                      colorFilter: const ColorFilter.mode(
+                        AppColors.white,
+                        BlendMode.srcIn,
+                      ),
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
                 ],
               ),
