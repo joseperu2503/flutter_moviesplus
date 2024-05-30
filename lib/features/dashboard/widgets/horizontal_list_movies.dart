@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
-import 'package:moviesplus/features/shared/widgets/poster_image.dart';
+import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 
 class HorizonalListMovies extends ConsumerStatefulWidget {
   const HorizonalListMovies({
@@ -107,33 +106,6 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
           ),
         ),
       ],
-    );
-  }
-}
-
-class MovieItem extends StatelessWidget {
-  const MovieItem({
-    super.key,
-    required this.movie,
-  });
-
-  final Movie movie;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: GestureDetector(
-          onTap: () {
-            context.push('/movie/${movie.id}');
-          },
-          child: PosterImage(
-            path: movie.posterPath,
-          ),
-        ),
-      ),
     );
   }
 }

@@ -66,6 +66,9 @@ class _TemporalHorizonalListMoviesState
   @override
   Widget build(BuildContext context) {
     return HorizonalListMovies(
-        label: widget.movieCategory.name, getMovies: getMovies, movies: movies);
+      label: widget.movieCategory.name,
+      getMovies: getMovies,
+      movies: movies,
+    );
   }
 }
