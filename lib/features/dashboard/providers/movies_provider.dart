@@ -32,6 +32,9 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
         MovieCategory(
           name: 'Upcoming',
           url: '/movie/upcoming',
+          queryParameters: {
+            'region': 'us',
+          },
         ),
       ],
     );

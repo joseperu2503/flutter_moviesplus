@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
-import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
-import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
-import 'package:moviesplus/features/shared/models/service_exception.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
@@ -83,8 +80,8 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                     onPressed: () {},
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      shape: OvalBorder(),
-                      minimumSize: Size(42, 42),
+                      shape: const OvalBorder(),
+                      minimumSize: const Size(42, 42),
                     ),
                     child: SvgPicture.asset(
                       'assets/icons/search.svg',
@@ -142,58 +139,25 @@ class SwiperMovies extends ConsumerStatefulWidget {
 class SwiperMoviesState extends ConsumerState<SwiperMovies> {
   @override
   void initState() {
-    getMovies();
     super.initState();
-  }
-
-  List<Movie> movies = [];
-  int page = 1;
-  int totalPages = 1;
-  bool loading = false;
-
-  getMovies() async {
-    if (page > totalPages || loading) {
-      return;
-    }
-
-    setState(() {
-      loading = true;
-    });
-
-    try {
-      final MoviesResponse response = await MovieDbService.getMovies(
-        path: '/movie/now_playing',
-        page: page,
-      );
-      setState(() {
-        movies = [...movies, ...response.results];
-        page = page + 1;
-      });
-    } on ServiceException catch (e) {
-      throw Exception(e);
-    }
-    setState(() {
-      loading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Movie> movies = ref.watch(moviesProvider).movieCategories[1].movies;
+    if (movies.length >= 5) {
+      movies = movies.sublist(0, 5);
+    }
     return SizedBox(
       height: 400,
       child: Swiper(
         viewportFraction: 0.6,
         scale: 0.8,
         autoplay: true,
-        pagination: const SwiperPagination(
-          margin: EdgeInsets.only(top: 0),
-          builder: DotSwiperPaginationBuilder(
-            activeColor: AppColors.primaryBlueAccent,
-            color: AppColors.textDarkGrey,
-          ),
-        ),
         itemCount: movies.length,
-        itemBuilder: (context, index) => _Slide(movie: movies[index]),
+        itemBuilder: (context, index) => _Slide(
+          movie: movies[index],
+        ),
       ),
     );
   }

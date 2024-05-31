@@ -22,7 +22,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
     super.initState();
 
     scrollController.addListener(() {
-      if ((scrollController.position.pixels + 0) <
+      if ((scrollController.position.pixels + 200) <
           scrollController.position.maxScrollExtent) return;
       ref.read(searchProvider.notifier).loadMoreMovies();
     });

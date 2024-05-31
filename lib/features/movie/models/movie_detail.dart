@@ -5,7 +5,7 @@ class MovieDetail {
   final String backdropPath;
   final List<Genre> genres;
   final int id;
-  final String imdbId;
+  final String? imdbId;
   final List<String> originCountry;
   final String originalLanguage;
   final String originalTitle;
