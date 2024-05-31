@@ -4,8 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 
-// https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
-
 class Tabs extends ConsumerStatefulWidget {
   const Tabs({
     super.key,
@@ -36,7 +34,6 @@ class TabsState extends ConsumerState<Tabs> {
     return Scaffold(
       body: widget.navigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        
         backgroundColor: AppColors.backgroundColor,
         currentIndex: widget.navigationShell.currentIndex,
         onTap: (value) {
@@ -82,6 +79,27 @@ class TabsState extends ConsumerState<Tabs> {
             ),
             activeIcon: SvgPicture.asset(
               'assets/icons/search.svg',
+              colorFilter: const ColorFilter.mode(
+                AppColors.primaryBlueAccent,
+                BlendMode.srcIn,
+              ),
+              width: 24,
+              height: 24,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: SvgPicture.asset(
+              'assets/icons/profile_outlined.svg',
+              colorFilter: const ColorFilter.mode(
+                AppColors.textGrey,
+                BlendMode.srcIn,
+              ),
+              width: 24,
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/profile_solid.svg',
               colorFilter: const ColorFilter.mode(
                 AppColors.primaryBlueAccent,
                 BlendMode.srcIn,

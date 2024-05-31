@@ -4,6 +4,7 @@ import 'package:moviesplus/features/dashboard/models/genres_response.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/profile/models/country.dart';
 
 class MovieDbService {
   static Future<MoviesResponse> getMovies({
@@ -72,6 +73,18 @@ class MovieDbService {
       );
 
       return GenresResponse.fromJson(response.data).genres;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future<List<Country>> getCountries() async {
+    try {
+      final response = await Api.get(
+        '/configuration/countries',
+      );
+
+      return List<Country>.from(response.data.map((x) => Country.fromJson(x)));
     } catch (e) {
       throw Exception(e);
     }

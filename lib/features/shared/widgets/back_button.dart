@@ -13,28 +13,25 @@ class CustomBackButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: AppColors.primarySoft,
-      ),
+    return SizedBox(
+      width: 42,
+      height: 42,
       child: TextButton(
         onPressed: () {
           context.pop();
         },
         style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            )),
+          padding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
         child: SvgPicture.asset(
           kIsWeb || Platform.isAndroid
               ? 'assets/icons/arrow_back_material.svg'
               : 'assets/icons/arrow_back_ios.svg',
-          width: 24,
-          height: 24,
+          width: 28,
+          height: 28,
           colorFilter: const ColorFilter.mode(
             AppColors.white,
             BlendMode.srcIn,
