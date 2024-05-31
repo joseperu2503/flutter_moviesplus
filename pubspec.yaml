@@ -1,10 +1,10 @@
 name: moviesplus
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
   card_swiper: ^3.0.1
@@ -29,3 +29,19 @@ flutter:
     - assets/loaders/
     - assets/images/
     - assets/icons/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/nunito/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/nunito/Nunito-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/nunito/Nunito-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/nunito/Nunito-Light.ttf
+          weight: 300
+        - asset: assets/fonts/nunito/Nunito-ExtraLight.ttf
+          weight: 200

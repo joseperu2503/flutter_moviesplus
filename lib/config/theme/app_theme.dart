@@ -3,7 +3,7 @@ import 'package:moviesplus/config/constants/app_colors.dart';
 
 class AppTheme {
   static ThemeData getTheme() => ThemeData(
-        fontFamily: 'Poppins',
+        fontFamily: 'Nunito',
         scaffoldBackgroundColor: AppColors.backgroundColor,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSwatch(),
