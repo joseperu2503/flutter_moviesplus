@@ -9,6 +9,7 @@ import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
+import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 
 class MovieScreen extends StatefulWidget {
   const MovieScreen({
@@ -108,7 +109,7 @@ class _MovieScreenState extends State<MovieScreen> {
     if (movie == null) {
       return const Scaffold(
         body: Center(
-          child: CircularProgressIndicator(),
+          child: CustomProgressIndicator(),
         ),
       );
     }

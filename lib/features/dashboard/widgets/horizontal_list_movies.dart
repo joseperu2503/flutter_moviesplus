@@ -65,7 +65,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 16,
+            horizontal: 24,
           ),
           child: Row(
             children: [
@@ -90,7 +90,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
           child: ListView.separated(
             controller: scrollController,
             padding: const EdgeInsets.symmetric(
-              horizontal: 16,
+              horizontal: 24,
             ),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {

@@ -1,7 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
@@ -39,33 +38,33 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
             pinned: true,
             title: Container(
               padding: const EdgeInsets.only(
-                left: 16,
-                right: 8,
+                left: 24,
+                right: 24,
               ),
-              child: Row(
+              child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Movies ',
                     style: TextStyle(
-                      fontSize: 19,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: AppColors.white,
-                      height: 19.5 / 16,
+                      height: 1,
                       leadingDistribution: TextLeadingDistribution.even,
                     ),
                   ),
-                  const Text(
+                  Text(
                     'Plus',
                     style: TextStyle(
-                      fontSize: 19,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: AppColors.primaryBlueAccent,
-                      height: 19.5 / 16,
+                      height: 1,
                       leadingDistribution: TextLeadingDistribution.even,
                     ),
                   ),
-                  const Text(
+                  Text(
                     '+',
                     style: TextStyle(
                       fontSize: 14,
@@ -73,24 +72,6 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                       color: AppColors.primaryBlueAccent,
                       height: 19.5 / 16,
                       leadingDistribution: TextLeadingDistribution.even,
-                    ),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      shape: const OvalBorder(),
-                      minimumSize: const Size(42, 42),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/icons/search.svg',
-                      colorFilter: const ColorFilter.mode(
-                        AppColors.white,
-                        BlendMode.srcIn,
-                      ),
-                      width: 24,
-                      height: 24,
                     ),
                   ),
                 ],
