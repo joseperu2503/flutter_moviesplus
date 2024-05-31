@@ -5,6 +5,7 @@ import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/profile/models/country.dart';
+import 'package:moviesplus/features/profile/models/language.dart';
 
 class MovieDbService {
   static Future<MoviesResponse> getMovies({
@@ -85,6 +86,19 @@ class MovieDbService {
       );
 
       return List<Country>.from(response.data.map((x) => Country.fromJson(x)));
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future<List<Language>> getLanguages() async {
+    try {
+      final response = await Api.get(
+        '/configuration/languages',
+      );
+
+      return List<Language>.from(
+          response.data.map((x) => Language.fromJson(x)));
     } catch (e) {
       throw Exception(e);
     }

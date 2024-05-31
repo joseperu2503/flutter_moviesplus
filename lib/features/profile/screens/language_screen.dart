@@ -1,76 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/features/profile/widgets/option_item.dart';
 import 'package:moviesplus/features/shared/widgets/custom_appbar.dart';
 
-class LanguageScreen extends StatefulWidget {
+class LanguageScreen extends ConsumerStatefulWidget {
   const LanguageScreen({super.key});
 
   @override
-  State<LanguageScreen> createState() => _LanguageScreenState();
+  LanguageScreenState createState() => LanguageScreenState();
 }
 
-class _LanguageScreenState extends State<LanguageScreen> {
+class LanguageScreenState extends ConsumerState<LanguageScreen> {
+  @override
+  void initState() {
+    Future.microtask(() {
+      ref.read(profileProvider.notifier).getLanguages();
+      ref.read(profileProvider.notifier).getLanguage();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final profileState = ref.watch(profileProvider);
+    final screen = MediaQuery.of(context);
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Language',
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24,
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: AppColors.primarySoft,
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 24,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        OptionItem(
-                          label: 'English',
-                          onPress: () {},
-                          isSelected: false,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 32),
-                          height: 1,
-                          color: AppColors.primarySoft,
-                        ),
-                        OptionItem(
-                          label: 'Español',
-                          onPress: () {},
-                          isSelected: false,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 32),
-                          height: 1,
-                          color: AppColors.primarySoft,
-                        ),
-                        OptionItem(
-                          label: 'Portugues',
-                          isSelected: false,
-                          onPress: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+          SliverPadding(
+            padding: EdgeInsets.only(
+              top: 20,
+              bottom: 30 + screen.padding.bottom,
             ),
-          )
+            sliver: SliverList.separated(
+              itemBuilder: (context, index) {
+                final language = profileState.languages[index];
+                return OptionItem(
+                  label: language.name ?? '',
+                  onPress: () {
+                    ref.read(profileProvider.notifier).changeLanguage(language);
+                  },
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                  ),
+                  isSelected:
+                      language.iso6391 == profileState.language?.iso6391,
+                );
+              },
+              itemCount: profileState.languages.length,
+              separatorBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  height: 1,
+                  color: AppColors.primarySoft,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:moviesplus/config/constants/environment.dart';
+import 'package:moviesplus/features/profile/models/language.dart';
+import 'package:moviesplus/features/profile/services/profile_service.dart';
 
 class Api {
   static final Dio _dioBase = Dio(BaseOptions(
@@ -11,11 +13,11 @@ class Api {
     Map<String, dynamic> queryParameters = const {},
   }) async {
     final movieApiKey = Environment.movieApiKey;
-
+    final Language language = await ProfileService.getLanguage();
     return _dioBase.get(path, queryParameters: {
       ...queryParameters,
       'api_key': movieApiKey,
-      'language': 'es-MX'
+      'language': language.iso6391,
     });
   }
 
