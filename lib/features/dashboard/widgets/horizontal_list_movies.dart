@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
-import 'package:moviesplus/features/dashboard/models/movies_response.dart';
+import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 
 class HorizonalListMovies extends ConsumerStatefulWidget {

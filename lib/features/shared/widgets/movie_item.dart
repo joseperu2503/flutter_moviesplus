@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moviesplus/features/dashboard/models/movies_response.dart';
+import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 
 class MovieItem extends StatelessWidget {

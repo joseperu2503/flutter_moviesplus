@@ -36,6 +36,7 @@ class TabsState extends ConsumerState<Tabs> {
     return Scaffold(
       body: widget.navigationShell,
       bottomNavigationBar: BottomNavigationBar(
+        
         backgroundColor: AppColors.backgroundColor,
         currentIndex: widget.navigationShell.currentIndex,
         onTap: (value) {

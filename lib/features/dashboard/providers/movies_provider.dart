@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/features/dashboard/models/genre.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
+import 'package:moviesplus/features/shared/models/movie.dart';
+import 'package:moviesplus/features/shared/models/movie_category.dart';
 
 final moviesProvider =
     StateNotifierProvider<MoviesNotifier, MoviesState>((ref) {
@@ -131,44 +133,5 @@ class MoviesState {
       MoviesState(
         movieCategories: movieCategories ?? this.movieCategories,
         movieGenres: movieGenres ?? this.movieGenres,
-      );
-}
-
-class MovieCategory {
-  final String name;
-  final String url;
-  final Map<String, dynamic> queryParameters;
-  final List<Movie> movies;
-  final int page;
-  final int totalPages;
-  final bool loading;
-
-  MovieCategory({
-    required this.name,
-    required this.url,
-    this.queryParameters = const {},
-    this.movies = const [],
-    this.page = 1,
-    this.totalPages = 1,
-    this.loading = false,
-  });
-
-  MovieCategory copyWith({
-    String? name,
-    String? url,
-    Map<String, dynamic>? queryParameters,
-    List<Movie>? movies,
-    int? page,
-    int? totalPages,
-    bool? loading,
-  }) =>
-      MovieCategory(
-        name: name ?? this.name,
-        url: url ?? this.url,
-        queryParameters: queryParameters ?? this.queryParameters,
-        movies: movies ?? this.movies,
-        page: page ?? this.page,
-        totalPages: totalPages ?? this.totalPages,
-        loading: loading ?? this.loading,
       );
 }

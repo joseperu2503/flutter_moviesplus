@@ -7,6 +7,8 @@ import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
+import 'package:moviesplus/features/shared/models/movie.dart';
+import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/models/service_exception.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 

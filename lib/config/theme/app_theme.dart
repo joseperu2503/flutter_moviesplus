@@ -18,5 +18,8 @@ class AppTheme {
             foregroundColor: AppColors.textDarkGrey,
           ),
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: AppColors.primaryBlueAccent,
+        ),
       );
 }

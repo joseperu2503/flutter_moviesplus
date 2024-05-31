@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
-import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/dashboard/widgets/temporal_horizontal_list_movies.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
@@ -8,6 +7,7 @@ import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
 import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
+import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
 
 class MovieScreen extends StatefulWidget {
