@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
@@ -20,7 +21,6 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     Future.microtask(() {
-      ref.read(moviesProvider.notifier).initData();
       ref.read(moviesProvider.notifier).getMovieGenres();
     });
     super.initState();
@@ -172,18 +172,14 @@ class _Slide extends StatelessWidget {
   Widget build(BuildContext context) {
     final decoration = BoxDecoration(
       borderRadius: BorderRadius.circular(20),
-      boxShadow: const [
-        BoxShadow(
-          color: Colors.black45,
-          blurRadius: 10,
-          offset: Offset(0, 10),
-        )
-      ],
     );
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30),
-      child: DecoratedBox(
+    return GestureDetector(
+      onTap: () {
+        context.push('/movie/${movie.id}');
+      },
+      child: Container(
+        padding: const EdgeInsets.only(bottom: 0),
         decoration: decoration,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),

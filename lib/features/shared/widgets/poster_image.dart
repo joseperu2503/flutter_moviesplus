@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviesplus/config/constants/app_colors.dart';
 
 class PosterImage extends StatelessWidget {
   const PosterImage({
@@ -11,17 +12,35 @@ class PosterImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (path != null) {
-      return FadeInImage(
+      return Image(
+        image: NetworkImage(
+          'https://image.tmdb.org/t/p/w500$path',
+        ),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          } else {
+            return Container(
+              color: AppColors.primarySoft,
+            );
+          }
+        },
         fit: BoxFit.cover,
-        placeholder: const AssetImage('assets/loaders/bottle-loader.gif'),
-        image: NetworkImage('https://image.tmdb.org/t/p/w500$path'),
       );
     }
 
-    return const FadeInImage(
+    return Image(
+      image: const AssetImage('assets/images/no-image-found.png'),
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        } else {
+          return Container(
+            color: AppColors.primarySoft,
+          );
+        }
+      },
       fit: BoxFit.cover,
-      placeholder: AssetImage('assets/loaders/bottle-loader.gif'),
-      image: AssetImage('assets/images/no-image-found.png'),
     );
   }
 }

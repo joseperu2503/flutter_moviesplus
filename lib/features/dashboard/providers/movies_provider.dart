@@ -11,34 +11,31 @@ final moviesProvider =
 });
 
 class MoviesNotifier extends StateNotifier<MoviesState> {
-  MoviesNotifier(this.ref) : super(MoviesState());
+  MoviesNotifier(this.ref)
+      : super(MoviesState(
+          movieCategories: [
+            MovieCategory(
+              name: 'Now Playing',
+              url: '/movie/now_playing',
+            ),
+            MovieCategory(
+              name: 'Popular',
+              url: '/movie/popular',
+            ),
+            MovieCategory(
+              name: 'Top Rated',
+              url: '/movie/top_rated',
+            ),
+            MovieCategory(
+              name: 'Upcoming',
+              url: '/movie/upcoming',
+              queryParameters: {
+                'region': 'us',
+              },
+            ),
+          ],
+        ));
   final StateNotifierProviderRef ref;
-
-  initData() {
-    state = state.copyWith(
-      movieCategories: [
-        MovieCategory(
-          name: 'Now Playing',
-          url: '/movie/now_playing',
-        ),
-        MovieCategory(
-          name: 'Popular',
-          url: '/movie/popular',
-        ),
-        MovieCategory(
-          name: 'Top Rated',
-          url: '/movie/top_rated',
-        ),
-        MovieCategory(
-          name: 'Upcoming',
-          url: '/movie/upcoming',
-          queryParameters: {
-            'region': 'us',
-          },
-        ),
-      ],
-    );
-  }
 
   getMovieGenres() async {
     try {
