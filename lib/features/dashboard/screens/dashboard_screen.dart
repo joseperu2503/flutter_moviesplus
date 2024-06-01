@@ -113,7 +113,6 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
         itemBuilder: (context, index) => _Slide(
           movie: movies[index],
         ),
-        autoplayDelay: 5000,
       ),
     );
   }

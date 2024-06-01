@@ -9,6 +9,7 @@ import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
+import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 
 class MovieScreen extends StatefulWidget {
@@ -143,13 +144,11 @@ class _MovieScreenState extends State<MovieScreen> {
                 collapsedHeight: 200,
                 flexibleSpace: Stack(
                   children: [
-                    Image.network(
-                      movie!.posterPath,
-                      alignment: Alignment.topCenter,
-                      fit: BoxFit.cover,
+                    PosterImage(
+                      path: movie!.posterPath,
+                      height: 550,
                       width: double.infinity,
                       opacity: const AlwaysStoppedAnimation(0.4),
-                      height: 550,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -171,10 +170,9 @@ class _MovieScreenState extends State<MovieScreen> {
                         alignment: Alignment.topCenter,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            movie!.posterPath,
+                          child: PosterImage(
+                            path: movie!.posterPath,
                             width: width,
-                            fit: BoxFit.cover,
                           ),
                         ),
                       ),

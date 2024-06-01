@@ -5,14 +5,22 @@ class PosterImage extends StatelessWidget {
   const PosterImage({
     super.key,
     required this.path,
+    this.width,
+    this.height,
+    this.opacity,
   });
 
   final String? path;
-
+  final double? width;
+  final double? height;
+  final Animation<double>? opacity;
   @override
   Widget build(BuildContext context) {
     if (path != null) {
       return Image(
+        width: width,
+        height: height,
+        opacity: opacity,
         image: NetworkImage(
           'https://image.tmdb.org/t/p/w500$path',
         ),
@@ -30,6 +38,9 @@ class PosterImage extends StatelessWidget {
     }
 
     return Image(
+      width: width,
+      height: height,
+      opacity: opacity,
       image: const AssetImage('assets/images/no-image-found.png'),
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) {

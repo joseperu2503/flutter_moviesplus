@@ -2,7 +2,7 @@ import 'package:moviesplus/features/dashboard/models/genre.dart';
 
 class MovieDetail {
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final List<Genre> genres;
   final int id;
   final String? imdbId;
@@ -11,7 +11,7 @@ class MovieDetail {
   final String originalTitle;
   final String overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final List<ProductionCompany> productionCompanies;
   final List<ProductionCountry> productionCountries;
   final DateTime releaseDate;
@@ -51,9 +51,7 @@ class MovieDetail {
 
   factory MovieDetail.fromJson(Map<String, dynamic> json) => MovieDetail(
         adult: json["adult"],
-        backdropPath: json["backdrop_path"] != null
-            ? 'https://image.tmdb.org/t/p/w500${json["backdrop_path"]}'
-            : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png',
+        backdropPath: json["backdrop_path"],
         genres: List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
         id: json["id"],
         imdbId: json["imdb_id"],
@@ -62,9 +60,7 @@ class MovieDetail {
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"]?.toDouble(),
-        posterPath: json["poster_path"] != null
-            ? 'https://image.tmdb.org/t/p/w500${json["poster_path"]}'
-            : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png',
+        posterPath: json["poster_path"],
         productionCompanies: List<ProductionCompany>.from(
             json["production_companies"]
                 .map((x) => ProductionCompany.fromJson(x))),

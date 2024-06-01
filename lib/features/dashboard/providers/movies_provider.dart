@@ -115,23 +115,33 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
       movieCategories: newMovieCategories,
     );
   }
+
+  setTemporalMovie(Movie temporalMovie) {
+    state = state.copyWith(
+      temporalMovie: temporalMovie,
+    );
+  }
 }
 
 class MoviesState {
   final List<MovieCategory> movieCategories;
   final List<Genre> movieGenres;
+  final Movie? temporalMovie;
 
   MoviesState({
     this.movieCategories = const [],
     this.movieGenres = const [],
+    this.temporalMovie,
   });
 
   MoviesState copyWith({
     List<MovieCategory>? movieCategories,
     List<Genre>? movieGenres,
+    Movie? temporalMovie,
   }) =>
       MoviesState(
         movieCategories: movieCategories ?? this.movieCategories,
         movieGenres: movieGenres ?? this.movieGenres,
+        temporalMovie: temporalMovie ?? this.temporalMovie,
       );
 }
