@@ -108,11 +108,12 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
       child: Swiper(
         viewportFraction: 0.6,
         scale: 0.8,
-        autoplay: true,
+        autoplay: movies.isNotEmpty,
         itemCount: movies.length,
         itemBuilder: (context, index) => _Slide(
           movie: movies[index],
         ),
+        autoplayDelay: 5000,
       ),
     );
   }
