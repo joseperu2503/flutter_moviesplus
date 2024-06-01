@@ -118,19 +118,20 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
   }
 }
 
-class _Slide extends StatelessWidget {
+class _Slide extends ConsumerWidget {
   final Movie movie;
 
   const _Slide({required this.movie});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final decoration = BoxDecoration(
       borderRadius: BorderRadius.circular(20),
     );
 
     return GestureDetector(
       onTap: () {
+        ref.read(moviesProvider.notifier).setTemporalMovie(movie);
         context.push('/movie/${movie.id}');
       },
       child: Container(

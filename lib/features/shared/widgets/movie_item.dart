@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 
-class MovieItem extends StatelessWidget {
+class MovieItem extends ConsumerWidget {
   const MovieItem({
     super.key,
     required this.movie,
@@ -12,7 +14,7 @@ class MovieItem extends StatelessWidget {
   final Movie movie;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: 150,
       height: double.infinity,
@@ -20,6 +22,7 @@ class MovieItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: GestureDetector(
           onTap: () {
+            ref.read(moviesProvider.notifier).setTemporalMovie(movie);
             context.push('/movie/${movie.id}');
           },
           child: PosterImage(

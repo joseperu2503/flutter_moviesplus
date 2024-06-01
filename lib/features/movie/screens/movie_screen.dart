@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/dashboard/widgets/temporal_horizontal_list_movies.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
@@ -7,12 +9,13 @@ import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
 import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
+import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 
-class MovieScreen extends StatefulWidget {
+class MovieScreen extends ConsumerStatefulWidget {
   const MovieScreen({
     super.key,
     required this.movieId,
@@ -21,10 +24,10 @@ class MovieScreen extends StatefulWidget {
   final int movieId;
 
   @override
-  State<MovieScreen> createState() => _MovieScreenState();
+  MovieScreenState createState() => MovieScreenState();
 }
 
-class _MovieScreenState extends State<MovieScreen> {
+class MovieScreenState extends ConsumerState<MovieScreen> {
   bool loading = false;
   MovieDetail? movie;
   MovieCredits? credits;
@@ -36,15 +39,36 @@ class _MovieScreenState extends State<MovieScreen> {
   @override
   void initState() {
     super.initState();
+
     getMovie();
     getMovieCredits();
     scrollListener();
   }
 
   getMovie() async {
-    setState(() {
-      loading = true;
-    });
+    final Movie? temporalMovie = ref.read(moviesProvider).temporalMovie;
+    if (temporalMovie != null) {
+      setState(() {
+        movie = MovieDetail(
+          adult: temporalMovie.adult,
+          backdropPath: temporalMovie.backdropPath,
+          id: temporalMovie.id,
+          originalTitle: temporalMovie.originalTitle,
+          overview: temporalMovie.overview,
+          popularity: temporalMovie.popularity,
+          posterPath: temporalMovie.posterPath,
+          releaseDate: temporalMovie.releaseDate,
+          title: temporalMovie.title,
+          video: temporalMovie.video,
+          voteAverage: temporalMovie.voteAverage,
+          voteCount: temporalMovie.voteCount,
+        );
+      });
+    }
+
+    // setState(() {
+    //   loading = true;
+    // });
 
     try {
       final MovieDetail response = await MovieDbService.getMovieDetail(
@@ -203,7 +227,7 @@ class _MovieScreenState extends State<MovieScreen> {
                           children: [
                             Expanded(
                               child: Text(
-                                movie!.title,
+                                movie!.title ?? '',
                                 style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600,
@@ -237,7 +261,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         height: 24,
                       ),
                       Text(
-                        movie!.overview,
+                        movie!.overview ?? '',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
