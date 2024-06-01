@@ -18,9 +18,16 @@ dependencies:
   shared_preferences: ^2.2.3
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app/icon.png"
+  min_sdk_android: 21
 
 flutter:
   uses-material-design: true
@@ -29,6 +36,7 @@ flutter:
     - assets/loaders/
     - assets/images/
     - assets/icons/
+    - assets/app/
 
   fonts:
     - family: Nunito
