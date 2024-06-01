@@ -41,38 +41,12 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                 left: 24,
                 right: 24,
               ),
-              child: const Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Movies ',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.white,
-                      height: 1,
-                      leadingDistribution: TextLeadingDistribution.even,
-                    ),
-                  ),
-                  Text(
-                    'Plus',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primaryBlueAccent,
-                      height: 1,
-                      leadingDistribution: TextLeadingDistribution.even,
-                    ),
-                  ),
-                  Text(
-                    '+',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primaryBlueAccent,
-                      height: 19.5 / 16,
-                      leadingDistribution: TextLeadingDistribution.even,
-                    ),
+                  Image.asset(
+                    'assets/images/logo.png',
+                    height: 18,
                   ),
                 ],
               ),
@@ -80,7 +54,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           SliverToBoxAdapter(
             child: Container(
-              padding: const EdgeInsets.only(bottom: 24),
+              padding: const EdgeInsets.only(top: 20, bottom: 24),
               child: const SwiperMovies(),
             ),
           ),
