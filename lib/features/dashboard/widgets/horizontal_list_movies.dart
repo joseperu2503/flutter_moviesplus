@@ -95,7 +95,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               final Movie movie = widget.movies[index];
-              return MovieItem(movie: movie);
+              return MovieItem(
+                movie: movie,
+              );
             },
             separatorBuilder: (context, index) {
               return const SizedBox(

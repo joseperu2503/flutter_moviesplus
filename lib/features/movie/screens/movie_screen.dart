@@ -29,7 +29,8 @@ class MovieScreen extends ConsumerStatefulWidget {
 
 class MovieScreenState extends ConsumerState<MovieScreen> {
   bool loading = false;
-  MovieDetail? movie;
+  MovieDetail? movieDetail;
+  String heroTag = '';
   MovieCredits? credits;
   double top = 0;
   double width = 205;
@@ -38,44 +39,46 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
 
   @override
   void initState() {
-    super.initState();
-
     getMovie();
     getMovieCredits();
     scrollListener();
+    super.initState();
   }
 
   getMovie() async {
-    final Movie? temporalMovie = ref.read(moviesProvider).temporalMovie;
-    if (temporalMovie != null) {
+    final moviesState = ref.read(moviesProvider);
+    final Movie? movie = moviesState.temporalMovie;
+
+    if (movie != null) {
       setState(() {
-        movie = MovieDetail(
-          adult: temporalMovie.adult,
-          backdropPath: temporalMovie.backdropPath,
-          id: temporalMovie.id,
-          originalTitle: temporalMovie.originalTitle,
-          overview: temporalMovie.overview,
-          popularity: temporalMovie.popularity,
-          posterPath: temporalMovie.posterPath,
-          releaseDate: temporalMovie.releaseDate,
-          title: temporalMovie.title,
-          video: temporalMovie.video,
-          voteAverage: temporalMovie.voteAverage,
-          voteCount: temporalMovie.voteCount,
+        movieDetail = MovieDetail(
+          adult: movie.adult,
+          backdropPath: movie.backdropPath,
+          id: movie.id,
+          originalTitle: movie.originalTitle,
+          overview: movie.overview,
+          popularity: movie.popularity,
+          posterPath: movie.posterPath,
+          releaseDate: movie.releaseDate,
+          title: movie.title,
+          video: movie.video,
+          voteAverage: movie.voteAverage,
+          voteCount: movie.voteCount,
         );
+        heroTag = moviesState.heroTag;
+      });
+    } else {
+      setState(() {
+        loading = true;
       });
     }
-
-    // setState(() {
-    //   loading = true;
-    // });
 
     try {
       final MovieDetail response = await MovieDbService.getMovieDetail(
         id: widget.movieId,
       );
       setState(() {
-        movie = response;
+        movieDetail = response;
       });
     } catch (e) {
       throw Exception(e);
@@ -131,7 +134,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
-    if (movie == null) {
+    if (movieDetail == null) {
       return const Scaffold(
         body: Center(
           child: CustomProgressIndicator(),
@@ -169,7 +172,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                 flexibleSpace: Stack(
                   children: [
                     PosterImage(
-                      path: movie!.posterPath,
+                      path: movieDetail!.posterPath,
                       height: 550,
                       width: double.infinity,
                       opacity: const AlwaysStoppedAnimation(0.4),
@@ -194,9 +197,14 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                         alignment: Alignment.topCenter,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: PosterImage(
-                            path: movie!.posterPath,
-                            width: width,
+                          child: Hero(
+                            tag: heroTag,
+                            child: Material(
+                              child: PosterImage(
+                                path: movieDetail!.posterPath,
+                                width: width,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -227,7 +235,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                           children: [
                             Expanded(
                               child: Text(
-                                movie!.title ?? '',
+                                movieDetail!.title ?? '',
                                 style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600,
@@ -252,7 +260,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      MovieInfo(movie: movie!),
+                      MovieInfo(movie: movieDetail!),
                       const SizedBox(
                         height: 24,
                       ),
@@ -261,7 +269,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                         height: 24,
                       ),
                       Text(
-                        movie!.overview ?? '',
+                        movieDetail!.overview ?? '',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -302,7 +310,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                     TemporalHorizonalListMovies(
                       movieCategory: MovieCategory(
                         name: 'Recommendations',
-                        url: '/movie/${movie!.id}/recommendations',
+                        url: '/movie/${movieDetail!.id}/recommendations',
                       ),
                     ),
                     const SizedBox(
@@ -311,7 +319,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                     TemporalHorizonalListMovies(
                       movieCategory: MovieCategory(
                         name: 'Similar',
-                        url: '/movie/${movie!.id}/similar',
+                        url: '/movie/${movieDetail!.id}/similar',
                       ),
                     ),
                   ],

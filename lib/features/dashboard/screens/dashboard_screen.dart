@@ -8,6 +8,7 @@ import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dar
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
+import 'package:uuid/uuid.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -118,30 +119,43 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
   }
 }
 
-class _Slide extends ConsumerWidget {
+class _Slide extends ConsumerStatefulWidget {
   final Movie movie;
 
   const _Slide({required this.movie});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  SlideState createState() => SlideState();
+}
+
+class SlideState extends ConsumerState<_Slide> {
+  String tag = const Uuid().v4();
+
+  @override
+  Widget build(BuildContext context) {
     final decoration = BoxDecoration(
       borderRadius: BorderRadius.circular(20),
     );
 
-    return GestureDetector(
-      onTap: () {
-        ref.read(moviesProvider.notifier).setTemporalMovie(movie);
-        context.push('/movie/${movie.id}');
-      },
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 0),
-        decoration: decoration,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: GestureDetector(
-            child: PosterImage(
-              path: movie.posterPath,
+    return Hero(
+      tag: '${widget.movie.id}$tag',
+      child: GestureDetector(
+        onTap: () {
+          ref
+              .read(moviesProvider.notifier)
+              .setHeroTag('${widget.movie.id}$tag');
+          ref.read(moviesProvider.notifier).setTemporalMovie(widget.movie);
+          context.push('/movie/${widget.movie.id}');
+        },
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 0),
+          decoration: decoration,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: GestureDetector(
+              child: PosterImage(
+                path: widget.movie.posterPath,
+              ),
             ),
           ),
         ),

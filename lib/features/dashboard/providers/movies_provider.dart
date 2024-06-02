@@ -121,27 +121,37 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
       temporalMovie: temporalMovie,
     );
   }
+
+  setHeroTag(String heroTag) {
+    state = state.copyWith(
+      heroTag: heroTag,
+    );
+  }
 }
 
 class MoviesState {
   final List<MovieCategory> movieCategories;
   final List<Genre> movieGenres;
   final Movie? temporalMovie;
+  final String heroTag;
 
   MoviesState({
     this.movieCategories = const [],
     this.movieGenres = const [],
     this.temporalMovie,
+    this.heroTag = '',
   });
 
   MoviesState copyWith({
     List<MovieCategory>? movieCategories,
     List<Genre>? movieGenres,
     Movie? temporalMovie,
+    String? heroTag,
   }) =>
       MoviesState(
         movieCategories: movieCategories ?? this.movieCategories,
         movieGenres: movieGenres ?? this.movieGenres,
         temporalMovie: temporalMovie ?? this.temporalMovie,
+        heroTag: heroTag ?? this.heroTag,
       );
 }
