@@ -12,20 +12,20 @@ final moviesProvider =
 });
 
 class MoviesNotifier extends StateNotifier<MoviesState> {
-  MoviesNotifier(this.ref)
-      : super(MoviesState(
-          movieCategories: initMovieCategories,
-        ));
+  MoviesNotifier(this.ref) : super(MoviesState());
   final StateNotifierProviderRef ref;
 
-  initDashboard() {
+  initDashboard() async {
     state = state.copyWith(
       movieCategories: [],
     );
-    state = state.copyWith(
-      movieCategories: initMovieCategories,
-    );
     getMovieGenres();
+  }
+
+  resetDashboard() {
+    state = state.copyWith(
+      movieCategories: [],
+    );
   }
 
   getMovieGenres() async {
@@ -33,7 +33,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
       final genres = await MovieDbService.getMovieGenres();
       state = state.copyWith(
         movieCategories: [
-          ...state.movieCategories,
+          ...initMovieCategories,
           ...genres.map(
             (genre) => MovieCategory(
               name: (context) {

@@ -1,16 +1,17 @@
 {
   "Profile": "Perfil",
   "Language": "Linguagem",
-  "País": "País",
+  "Country": "País",
   "NowPlaying": "Em reprodução",
   "Popular": "Popular",
   "TopRated": "Melhor avaliado",
-  "Próximos": "Próximos",
-  "Recomendado": "Recomendado",
-  "Pesquisar": "Pesquisar",
-  "Cancelar": "Cancelar",
+  "Upcoming": "Próximos",
+  "Recommended": "Recomendado",
+  "Search": "Pesquisar",
+  "Cancel": "Cancelar",
   "CastAndCrew": "Elenco e equipe",
-  "Recomendações": "Recomendações",
-  "Semelhante": "Semelhante",
-  "Minutos": "Minutos"
+  "Recommendations": "Recomendações",
+  "Similar": "Semelhante",
+  "Minutes": "Minutos",
+  "Results": "Resultados"
 }

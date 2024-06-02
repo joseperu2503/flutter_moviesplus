@@ -36,9 +36,8 @@ class MainApp extends ConsumerStatefulWidget {
 class MainAppState extends ConsumerState<MainApp> {
   @override
   void initState() {
-    Future.microtask(() {
-      ref.read(profileProvider.notifier).getLanguage();
-    });
+    ref.read(profileProvider.notifier).getLanguage();
+
     super.initState();
   }
 

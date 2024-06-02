@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Recommendations":
             MessageLookupByLibrary.simpleMessage("Recommendations"),
         "Recommended": MessageLookupByLibrary.simpleMessage("Recommended"),
+        "Results": MessageLookupByLibrary.simpleMessage("Results"),
         "Search": MessageLookupByLibrary.simpleMessage("Search"),
         "Similar": MessageLookupByLibrary.simpleMessage("Similar"),
         "TopRated": MessageLookupByLibrary.simpleMessage("Top Rated"),

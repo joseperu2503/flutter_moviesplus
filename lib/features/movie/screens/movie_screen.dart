@@ -193,13 +193,13 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                     ),
                     Positioned(
                       top: top,
-                      child: Container(
-                        width: screen.size.width,
-                        alignment: Alignment.topCenter,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Hero(
-                            tag: heroTag,
+                      child: Hero(
+                        tag: heroTag,
+                        child: Container(
+                          width: screen.size.width,
+                          alignment: Alignment.topCenter,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
                             child: Material(
                               child: PosterImage(
                                 path: movieDetail!.posterPath,

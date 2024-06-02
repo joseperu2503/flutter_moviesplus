@@ -22,11 +22,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
         "CastAndCrew": MessageLookupByLibrary.simpleMessage("Elenco e equipe"),
+        "Country": MessageLookupByLibrary.simpleMessage("País"),
         "Language": MessageLookupByLibrary.simpleMessage("Linguagem"),
+        "Minutes": MessageLookupByLibrary.simpleMessage("Minutos"),
         "NowPlaying": MessageLookupByLibrary.simpleMessage("Em reprodução"),
         "Popular": MessageLookupByLibrary.simpleMessage("Popular"),
         "Profile": MessageLookupByLibrary.simpleMessage("Perfil"),
-        "TopRated": MessageLookupByLibrary.simpleMessage("Melhor avaliado")
+        "Recommendations":
+            MessageLookupByLibrary.simpleMessage("Recomendações"),
+        "Recommended": MessageLookupByLibrary.simpleMessage("Recomendado"),
+        "Results": MessageLookupByLibrary.simpleMessage("Resultados"),
+        "Search": MessageLookupByLibrary.simpleMessage("Pesquisar"),
+        "Similar": MessageLookupByLibrary.simpleMessage("Semelhante"),
+        "TopRated": MessageLookupByLibrary.simpleMessage("Melhor avaliado"),
+        "Upcoming": MessageLookupByLibrary.simpleMessage("Próximos")
       };
 }

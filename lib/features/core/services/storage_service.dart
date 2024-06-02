@@ -26,6 +26,6 @@ class StorageService {
   static Future<void> set<T>(String key, T value) async {
     final prefs = await getSharedPreferences();
     final Map<String, dynamic> data = {'data': value};
-    prefs.setString(key, jsonEncode(data));
+    await prefs.setString(key, jsonEncode(data));
   }
 }

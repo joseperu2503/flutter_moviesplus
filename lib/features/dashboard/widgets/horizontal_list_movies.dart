@@ -28,14 +28,14 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
   void initState() {
     super.initState();
     Future.microtask(() {
-      getMovies();
+      loadMoreMovies();
     });
     scrollController.addListener(() {
-      getMovies();
+      loadMoreMovies();
     });
   }
 
-  getMovies() async {
+  loadMoreMovies() async {
     if ((scrollController.position.pixels + 600) <
         scrollController.position.maxScrollExtent) return;
 
@@ -59,6 +59,14 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    // ref.listen(profileProvider, (previous, next) {
+    //   if (previous?.language?.iso6391 != next.language?.iso6391) {
+    //     print('listen ${widget.label}');
+
+    //     widget.getMovies();
+    //   }
+    // });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

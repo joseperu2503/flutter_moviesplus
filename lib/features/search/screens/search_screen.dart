@@ -8,6 +8,7 @@ import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
@@ -95,9 +96,9 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (showResults)
-                      const Text(
-                        'Results',
-                        style: TextStyle(
+                      Text(
+                        S.of(context).Recommended,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: AppColors.white,
@@ -106,9 +107,9 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                         ),
                       ),
                     if (showRecommended)
-                      const Text(
-                        'Recommended',
-                        style: TextStyle(
+                      Text(
+                        S.of(context).Recommended,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: AppColors.white,

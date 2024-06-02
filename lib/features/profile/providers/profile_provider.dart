@@ -52,7 +52,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     );
   }
 
-  getLanguage() async {
+  Future<void> getLanguage() async {
     final Language language = await ProfileService.getLanguage();
 
     state = state.copyWith(
@@ -66,7 +66,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     state = state.copyWith(
       language: () => language,
     );
-    ref.read(moviesProvider.notifier).initDashboard();
+    await ref.read(moviesProvider.notifier).initDashboard();
   }
 
   getLanguages() async {
