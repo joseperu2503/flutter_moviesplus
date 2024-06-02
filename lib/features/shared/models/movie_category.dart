@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 
 class MovieCategory {
-  final String name;
+  final String Function(BuildContext context) name;
   final String url;
   final Map<String, dynamic> queryParameters;
   final List<Movie> movies;
@@ -20,7 +21,7 @@ class MovieCategory {
   });
 
   MovieCategory copyWith({
-    String? name,
+    String Function(BuildContext context)? name,
     String? url,
     Map<String, dynamic>? queryParameters,
     List<Movie>? movies,

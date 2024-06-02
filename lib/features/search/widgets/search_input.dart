@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class SearchInput extends StatefulWidget {
   const SearchInput({
@@ -67,7 +68,7 @@ class _SearchInputState extends State<SearchInput> {
                       ),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    hintText: 'Search',
+                    hintText: S.of(context).Search,
                     hintStyle: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w400,
@@ -117,9 +118,9 @@ class _SearchInputState extends State<SearchInput> {
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              child: const Text(
-                'Cancel',
-                style: TextStyle(
+              child: Text(
+                S.of(context).Cancel,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: AppColors.white,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/profile/models/country.dart';
 import 'package:moviesplus/features/profile/models/language.dart';
@@ -65,6 +66,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     state = state.copyWith(
       language: () => language,
     );
+    ref.read(moviesProvider.notifier).initDashboard();
   }
 
   getLanguages() async {

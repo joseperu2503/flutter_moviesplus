@@ -14,6 +14,7 @@ import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   const MovieScreen({
@@ -282,9 +283,9 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                       const SizedBox(
                         height: 24,
                       ),
-                      const Text(
-                        'Cast and Crew',
-                        style: TextStyle(
+                      Text(
+                        S.of(context).CastAndCrew,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: AppColors.white,
@@ -309,7 +310,9 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                   children: [
                     TemporalHorizonalListMovies(
                       movieCategory: MovieCategory(
-                        name: 'Recommendations',
+                        name: (context) {
+                          return S.of(context).Recommendations;
+                        },
                         url: '/movie/${movieDetail!.id}/recommendations',
                       ),
                     ),
@@ -318,7 +321,9 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
                     ),
                     TemporalHorizonalListMovies(
                       movieCategory: MovieCategory(
-                        name: 'Similar',
+                        name: (context) {
+                          return S.of(context).Similar;
+                        },
                         url: '/movie/${movieDetail!.id}/similar',
                       ),
                     ),

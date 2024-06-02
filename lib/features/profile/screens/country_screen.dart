@@ -4,6 +4,7 @@ import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/features/profile/widgets/option_item.dart';
 import 'package:moviesplus/features/shared/widgets/custom_appbar.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class CountryScreen extends ConsumerStatefulWidget {
   const CountryScreen({super.key});
@@ -27,8 +28,8 @@ class CountryScreenState extends ConsumerState<CountryScreen> {
     final profileState = ref.watch(profileProvider);
     final screen = MediaQuery.of(context);
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Country',
+      appBar: CustomAppBar(
+        title: S.of(context).Country,
       ),
       body: CustomScrollView(
         slivers: [

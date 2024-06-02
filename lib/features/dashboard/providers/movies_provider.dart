@@ -4,6 +4,7 @@ import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 final moviesProvider =
     StateNotifierProvider<MoviesNotifier, MoviesState>((ref) {
@@ -13,29 +14,19 @@ final moviesProvider =
 class MoviesNotifier extends StateNotifier<MoviesState> {
   MoviesNotifier(this.ref)
       : super(MoviesState(
-          movieCategories: [
-            MovieCategory(
-              name: 'Now Playing',
-              url: '/movie/now_playing',
-            ),
-            MovieCategory(
-              name: 'Popular',
-              url: '/movie/popular',
-            ),
-            MovieCategory(
-              name: 'Top Rated',
-              url: '/movie/top_rated',
-            ),
-            MovieCategory(
-              name: 'Upcoming',
-              url: '/movie/upcoming',
-              queryParameters: {
-                'region': 'us',
-              },
-            ),
-          ],
+          movieCategories: initMovieCategories,
         ));
   final StateNotifierProviderRef ref;
+
+  initDashboard() {
+    state = state.copyWith(
+      movieCategories: [],
+    );
+    state = state.copyWith(
+      movieCategories: initMovieCategories,
+    );
+    getMovieGenres();
+  }
 
   getMovieGenres() async {
     try {
@@ -45,7 +36,9 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
           ...state.movieCategories,
           ...genres.map(
             (genre) => MovieCategory(
-              name: genre.name,
+              name: (context) {
+                return genre.name;
+              },
               url: '/discover/movie',
               queryParameters: {
                 "with_genres": genre.id,
@@ -155,3 +148,33 @@ class MoviesState {
         heroTag: heroTag ?? this.heroTag,
       );
 }
+
+final List<MovieCategory> initMovieCategories = [
+  MovieCategory(
+    name: (context) {
+      return S.of(context).NowPlaying;
+    },
+    url: '/movie/now_playing',
+  ),
+  MovieCategory(
+    name: (context) {
+      return S.of(context).Popular;
+    },
+    url: '/movie/popular',
+  ),
+  MovieCategory(
+    name: (context) {
+      return S.of(context).TopRated;
+    },
+    url: '/movie/top_rated',
+  ),
+  MovieCategory(
+    name: (context) {
+      return S.of(context).Upcoming;
+    },
+    url: '/movie/upcoming',
+    queryParameters: {
+      'region': 'us',
+    },
+  ),
+];

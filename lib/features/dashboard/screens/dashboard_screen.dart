@@ -21,7 +21,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     Future.microtask(() {
-      ref.read(moviesProvider.notifier).getMovieGenres();
+      ref.read(moviesProvider.notifier).initDashboard();
     });
     super.initState();
   }
@@ -63,7 +63,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
             itemBuilder: (context, index) {
               final MovieCategory movieCategory = movieCategories[index];
               return HorizonalListMovies(
-                label: movieCategory.name,
+                label: movieCategory.name(context),
                 getMovies: () async {
                   ref.read(moviesProvider.notifier).getMovies(index);
                 },

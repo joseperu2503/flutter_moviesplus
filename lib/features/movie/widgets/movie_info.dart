@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class MovieInfo extends StatefulWidget {
   const MovieInfo({
@@ -63,9 +64,9 @@ class _MovieInfoState extends State<MovieInfo> {
         const SizedBox(
           width: 4,
         ),
-        const Text(
-          '148 Minutes',
-          style: TextStyle(
+        Text(
+          '148 ${S.of(context).Minutes}',
+          style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
             color: AppColors.textGrey,
@@ -94,9 +95,9 @@ class _MovieInfoState extends State<MovieInfo> {
         const SizedBox(
           width: 4,
         ),
-        const Text(
-          'Action',
-          style: TextStyle(
+        Text(
+          widget.movie.genres?[0].name ?? '',
+          style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
             color: AppColors.textGrey,
