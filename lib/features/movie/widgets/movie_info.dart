@@ -4,19 +4,13 @@ import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/generated/l10n.dart';
 
-class MovieInfo extends StatefulWidget {
+class MovieInfo extends StatelessWidget {
   const MovieInfo({
     super.key,
     required this.movie,
   });
-
   final MovieDetail movie;
 
-  @override
-  State<MovieInfo> createState() => _MovieInfoState();
-}
-
-class _MovieInfoState extends State<MovieInfo> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -33,9 +27,9 @@ class _MovieInfoState extends State<MovieInfo> {
         const SizedBox(
           width: 4,
         ),
-        const Text(
-          '2021',
-          style: TextStyle(
+        Text(
+          movie.releaseDate != null ? movie.releaseDate!.year.toString() : '',
+          style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
             color: AppColors.textGrey,
@@ -65,7 +59,7 @@ class _MovieInfoState extends State<MovieInfo> {
           width: 4,
         ),
         Text(
-          '148 ${S.of(context).Minutes}',
+          '${movie.runtime} ${S.of(context).Minutes}',
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -96,7 +90,9 @@ class _MovieInfoState extends State<MovieInfo> {
           width: 4,
         ),
         Text(
-          widget.movie.genres?[0].name ?? '',
+          movie.genres != null && movie.genres!.isNotEmpty
+              ? movie.genres![0].name
+              : '',
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
