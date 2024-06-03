@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/environment.dart';
-import 'package:moviesplus/config/router/app_router.dart';
+import 'package:moviesplus/config/router/app_router_mobile.dart';
+import 'package:moviesplus/config/router/app_router_web.dart';
 import 'package:moviesplus/config/theme/app_theme.dart';
 import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/generated/l10n.dart';
@@ -47,7 +49,7 @@ class MainAppState extends ConsumerState<MainApp> {
     return MaterialApp.router(
       title: 'Movies Plus',
       debugShowCheckedModeBanner: false,
-      routerConfig: appRouter,
+      routerConfig: kIsWeb ? appRouterWeb : appRouterMobile,
       theme: AppTheme.getTheme(),
       localizationsDelegates: const [
         S.delegate,
