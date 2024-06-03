@@ -59,7 +59,9 @@ class MovieInfo extends StatelessWidget {
           width: 4,
         ),
         Text(
-          '${movie.runtime} ${S.of(context).Minutes}',
+          movie.runtime != null
+              ? '${movie.runtime} ${S.of(context).Minutes}'
+              : '',
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
-import 'package:moviesplus/features/dashboard/widgets/temporal_horizontal_list_movies.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
 import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
-import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
+import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 import 'package:moviesplus/generated/l10n.dart';
@@ -28,21 +28,28 @@ class MovieScreen extends ConsumerStatefulWidget {
   MovieScreenState createState() => MovieScreenState();
 }
 
-class MovieScreenState extends ConsumerState<MovieScreen> {
+class MovieScreenState extends ConsumerState<MovieScreen>
+    with SingleTickerProviderStateMixin {
   bool loading = false;
-  MovieDetail? movieDetail;
+  MovieDetail movieDetail = MovieDetail();
   String heroTag = '';
-  MovieCredits? credits;
+  List<Cast> cast = [];
   double top = 0;
   double width = 205;
-
+  List<Movie> similarMovies = [];
+  List<Movie> recommendationsMovies = [];
   ScrollController scrollController = ScrollController();
+  late TabController _tabController;
 
   @override
   void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+
     getMovie();
     getMovieCredits();
     scrollListener();
+    getSimilarMovies();
+    getRecommendationsdMovies();
     super.initState();
   }
 
@@ -60,7 +67,6 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
           overview: movie.overview,
           popularity: movie.popularity,
           posterPath: movie.posterPath,
-          releaseDate: movie.releaseDate,
           title: movie.title,
           video: movie.video,
           voteAverage: movie.voteAverage,
@@ -95,7 +101,33 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
         id: widget.movieId,
       );
       setState(() {
-        credits = response;
+        cast = response.cast;
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  getSimilarMovies() async {
+    try {
+      final MoviesResponse response = await MovieDbService.getMovies(
+        path: '/movie/${movieDetail.id}/similar',
+      );
+      setState(() {
+        similarMovies = response.results;
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  getRecommendationsdMovies() async {
+    try {
+      final MoviesResponse response = await MovieDbService.getMovies(
+        path: '/movie/${movieDetail.id}/recommendations',
+      );
+      setState(() {
+        recommendationsMovies = response.results;
       });
     } catch (e) {
       throw Exception(e);
@@ -134,8 +166,13 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+    List<String> tabs = [
+      S.of(context).CastAndCrew,
+      S.of(context).Recommendations,
+      S.of(context).Similar,
+    ];
 
-    if (movieDetail == null) {
+    if (loading) {
       return const Scaffold(
         body: Center(
           child: CustomProgressIndicator(),
@@ -143,200 +180,252 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
       );
     }
     return Scaffold(
-      body: Stack(
-        children: [
-          CustomScrollView(
-            controller: scrollController,
-            slivers: [
-              SliverAppBar(
-                titleSpacing: 0,
-                toolbarHeight: 42,
-                title: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
+      body: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          SliverAppBar(
+            titleSpacing: 0,
+            toolbarHeight: 42,
+            title: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              child: const Row(
+                children: [
+                  CustomBackButton(),
+                  SizedBox(
+                    width: 12,
                   ),
-                  child: const Row(
-                    children: [
-                      CustomBackButton(),
-                      SizedBox(
-                        width: 12,
-                      ),
-                    ],
+                ],
+              ),
+            ),
+            scrolledUnderElevation: 0,
+            automaticallyImplyLeading: false,
+            pinned: true,
+            backgroundColor: AppColors.backgroundColor,
+            expandedHeight: 450,
+            collapsedHeight: 200,
+            flexibleSpace: Stack(
+              children: [
+                PosterImage(
+                  path: movieDetail.posterPath,
+                  height: 550,
+                  width: double.infinity,
+                  opacity: const AlwaysStoppedAnimation(0.4),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: const [0, 1],
+                      colors: [
+                        AppColors.backgroundColor.withOpacity(0.2),
+                        AppColors.backgroundColor,
+                      ],
+                    ),
                   ),
                 ),
-                scrolledUnderElevation: 0,
-                automaticallyImplyLeading: false,
-                pinned: true,
-                backgroundColor: AppColors.backgroundColor,
-                expandedHeight: 450,
-                collapsedHeight: 200,
-                flexibleSpace: Stack(
-                  children: [
-                    PosterImage(
-                      path: movieDetail!.posterPath,
-                      height: 550,
-                      width: double.infinity,
-                      opacity: const AlwaysStoppedAnimation(0.4),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          stops: const [0, 1],
-                          colors: [
-                            AppColors.backgroundColor.withOpacity(0.2),
-                            AppColors.backgroundColor,
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: top,
-                      child: Hero(
-                        tag: heroTag,
-                        child: Container(
-                          width: screen.size.width,
-                          alignment: Alignment.topCenter,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Material(
-                              child: PosterImage(
-                                path: movieDetail!.posterPath,
-                                width: width,
-                              ),
-                            ),
+                Positioned(
+                  top: top,
+                  child: Hero(
+                    tag: heroTag,
+                    child: Container(
+                      width: screen.size.width,
+                      alignment: Alignment.topCenter,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Material(
+                          child: PosterImage(
+                            path: movieDetail.posterPath,
+                            width: width,
                           ),
                         ),
                       ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
-                        height: 80,
-                        width: screen.size.width,
-                        padding: const EdgeInsets.only(
-                          left: 24,
-                          bottom: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: const [0, 1],
-                            colors: [
-                              AppColors.backgroundColor.withOpacity(0),
-                              AppColors.backgroundColor,
-                            ],
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    height: 80,
+                    width: screen.size.width,
+                    padding: const EdgeInsets.only(
+                      left: 24,
+                      bottom: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: const [0, 1],
+                        colors: [
+                          AppColors.backgroundColor.withOpacity(0),
+                          AppColors.backgroundColor,
+                        ],
+                      ),
+                    ),
+                    // child: MovieInfo(),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            movieDetail.title ?? '',
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.white,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
                           ),
                         ),
-                        // child: MovieInfo(),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                movieDetail!.title ?? '',
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.white,
-                                  leadingDistribution:
-                                      TextLeadingDistribution.even,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      MovieInfo(movie: movieDetail!),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      const MovieButtons(),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Text(
-                        movieDetail!.overview ?? '',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.white,
-                          height: 17.07 / 14,
-                          letterSpacing: 0.12,
-                          leadingDistribution: TextLeadingDistribution.even,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Text(
-                        S.of(context).CastAndCrew,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.white,
-                          height: 19.5 / 16,
-                          letterSpacing: 0.12,
-                          leadingDistribution: TextLeadingDistribution.even,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      if (credits != null) MovieCast(credits: credits!),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                    ],
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    TemporalHorizonalListMovies(
-                      movieCategory: MovieCategory(
-                        name: (context) {
-                          return S.of(context).Recommendations;
-                        },
-                        url: '/movie/${movieDetail!.id}/recommendations',
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    TemporalHorizonalListMovies(
-                      movieCategory: MovieCategory(
-                        name: (context) {
-                          return S.of(context).Similar;
-                        },
-                        url: '/movie/${movieDetail!.id}/similar',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  height: 40 + screen.padding.bottom,
-                ),
-              )
-            ],
+              ],
+            ),
           ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  MovieInfo(movie: movieDetail),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  const MovieButtons(),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  Text(
+                    movieDetail.overview ?? '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.white,
+                      height: 17.07 / 14,
+                      letterSpacing: 0.12,
+                      leadingDistribution: TextLeadingDistribution.even,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            scrolledUnderElevation: 0,
+            backgroundColor: AppColors.backgroundColor,
+            pinned: true,
+            toolbarHeight: 70,
+            primary: false,
+            flexibleSpace: Container(
+              padding: const EdgeInsets.only(
+                bottom: 12,
+              ),
+              height: 70,
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                ),
+                labelPadding: EdgeInsets.zero,
+                onTap: (value) {
+                  setState(() {
+                    _tabController.animateTo(value);
+                  });
+                },
+                tabAlignment: TabAlignment.start,
+                indicatorColor: AppColors.primaryBlueAccent,
+                overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return AppColors.white.withOpacity(0.3);
+                  }
+
+                  return null;
+                }),
+                dividerColor: AppColors.textDarkGrey,
+                dividerHeight: 2,
+                tabs: tabs.map((tab) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 16,
+                    ),
+                    child: Text(
+                      tab,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.white,
+                        height: 19.5 / 16,
+                        letterSpacing: 0.12,
+                        leadingDistribution: TextLeadingDistribution.even,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 12),
+          ),
+          if (_tabController.index == 0)
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              sliver: MovieCast(cast: cast),
+            ),
+          if (_tabController.index == 1)
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              sliver: SliverGrid.builder(
+                itemBuilder: (context, index) {
+                  final movie = similarMovies[index];
+                  return MovieItem(movie: movie);
+                },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 20,
+                  mainAxisExtent: 210,
+                ),
+                itemCount: similarMovies.length,
+              ),
+            ),
+          if (_tabController.index == 2)
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              sliver: SliverGrid.builder(
+                itemBuilder: (context, index) {
+                  final movie = recommendationsMovies[index];
+                  return MovieItem(movie: movie);
+                },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 20,
+                  mainAxisExtent: 210,
+                ),
+                itemCount: recommendationsMovies.length,
+              ),
+            ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: 20 + screen.padding.bottom,
+            ),
+          )
         ],
       ),
     );
