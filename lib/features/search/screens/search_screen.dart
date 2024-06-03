@@ -97,7 +97,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                   children: [
                     if (showResults)
                       Text(
-                        S.of(context).Recommended,
+                        S.of(context).Results,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
