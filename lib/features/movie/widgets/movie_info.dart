@@ -28,7 +28,9 @@ class MovieInfo extends StatelessWidget {
           width: 4,
         ),
         Text(
-          movie.releaseDate != null ? movie.releaseDate!.year.toString() : '',
+          movie.releaseDate?.year != null
+              ? movie.releaseDate!.year.toString()
+              : '',
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
