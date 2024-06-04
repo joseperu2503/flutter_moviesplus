@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,6 +65,9 @@ class MainAppState extends ConsumerState<MainApp> {
         Locale('pt'),
       ],
       locale: Locale(profileState.language?.iso6391 ?? 'en'),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {PointerDeviceKind.mouse},
+      ),
     );
   }
 }
