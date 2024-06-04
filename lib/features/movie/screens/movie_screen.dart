@@ -23,7 +23,7 @@ class MovieScreen extends ConsumerStatefulWidget {
     required this.movieId,
   });
 
-  final int movieId;
+  final String movieId;
 
   @override
   MovieScreenState createState() => MovieScreenState();
@@ -55,8 +55,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   getMovie() async {
     final moviesState = ref.read(moviesProvider);
     final Movie? movie = moviesState.temporalMovie;
-
-    if (movie != null) {
+    if (movie != null && !kIsWeb) {
       setState(() {
         movieDetail = MovieDetail(
           adult: movie.adult,
@@ -81,7 +80,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
 
     try {
       final MovieDetail response = await MovieDbService.getMovieDetail(
-        id: widget.movieId,
+        id: int.tryParse(widget.movieId) ?? 0,
       );
       setState(() {
         movieDetail = response;
@@ -97,7 +96,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   getMovieCredits() async {
     try {
       final MovieCredits response = await MovieDbService.getMovieCredits(
-        id: widget.movieId,
+        id: int.tryParse(widget.movieId) ?? 0,
       );
       setState(() {
         cast = response.cast;
@@ -154,6 +153,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
+        anchor: 0,
         slivers: [
           if (!kIsWeb)
             MovieAppbarMobile(

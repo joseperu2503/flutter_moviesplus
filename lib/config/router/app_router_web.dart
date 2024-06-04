@@ -9,27 +9,33 @@ import 'package:moviesplus/features/search/screens/search_screen.dart';
 import 'package:moviesplus/features/shared/widgets/dialog_page.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> rootasdasNavigatorKey =
+    GlobalKey<NavigatorState>();
 
 final appRouterWeb = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: '/',
   routes: [
     GoRoute(
-        path: '/',
-        builder: (context, state) => const DashboardScreen(),
-        routes: [
-          GoRoute(
-            path: 'movie/:movieId',
-            pageBuilder: (context, state) {
-              return DialogPage(
-                builder: (context) => MovieDialog(
-                  movieId:
-                      int.tryParse(state.pathParameters['movieId'] ?? '0') ?? 0,
-                ),
-              );
-            },
-          ),
-        ]),
+      path: '/',
+      builder: (context, state) => const DashboardScreen(),
+      routes: [
+        GoRoute(
+          path: 'movie/:movieId',
+          pageBuilder: (context, state) {
+            return DialogPage(
+              key: PageStorageKey(state.uri),
+              builder: (context) {
+                return MovieDialog(
+                  // key: PageStorageKey(state.uri),
+                  movieId: state.pathParameters['movieId'] ?? '0',
+                );
+              },
+            );
+          },
+        ),
+      ],
+    ),
     GoRoute(
       path: '/search',
       builder: (context, state) => const SearchScreen(),

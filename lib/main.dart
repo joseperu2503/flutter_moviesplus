@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/environment.dart';
 import 'package:moviesplus/config/router/app_router_mobile.dart';
@@ -12,6 +13,7 @@ import 'package:moviesplus/config/router/app_router_web.dart';
 import 'package:moviesplus/config/theme/app_theme.dart';
 import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/generated/l10n.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   await Environment.initEnvironment();
@@ -22,6 +24,8 @@ void main() async {
       systemNavigationBarColor: AppColors.backgroundColor,
     ),
   );
+  setPathUrlStrategy();
+  GoRouter.optionURLReflectsImperativeAPIs = true;
 
   runApp(
     const ProviderScope(

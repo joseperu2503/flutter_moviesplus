@@ -52,7 +52,7 @@ final appRouterMobile = GoRouter(
       path: '/movie/:movieId',
       builder: (context, state) {
         return MovieScreen(
-          movieId: int.tryParse(state.pathParameters['movieId'] ?? '0') ?? 0,
+          movieId: state.pathParameters['movieId'] ?? '0',
         );
       },
     ),
