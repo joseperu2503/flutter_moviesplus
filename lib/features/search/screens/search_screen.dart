@@ -30,11 +30,19 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
   }
 
   final scrollController = ScrollController();
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final MovieCategory movieCategory =
-        ref.watch(moviesProvider).movieCategories[1];
+    MovieCategory? movieCategory;
+    if (ref.watch(moviesProvider).movieCategories.length > 1) {
+      movieCategory = ref.watch(moviesProvider).movieCategories[1];
+    }
+
     final searchState = ref.watch(searchProvider);
 
     final bool showResults =
@@ -121,7 +129,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                 ),
               ),
             ),
-          if (showRecommended)
+          if (showRecommended && movieCategory != null)
             SliverPadding(
               padding: const EdgeInsets.only(
                 left: 24,
@@ -135,7 +143,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                   childAspectRatio: 0.65,
                 ),
                 itemBuilder: (context, index) {
-                  final Movie movie = movieCategory.movies[index];
+                  final Movie movie = movieCategory!.movies[index];
 
                   return MovieItem(movie: movie);
                 },

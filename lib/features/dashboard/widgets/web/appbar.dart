@@ -17,6 +17,10 @@ class AppbarWeb extends StatefulWidget {
 
 class _AppbarWebState extends State<AppbarWeb> {
   double get opacity {
+    if (!widget.scrollController.hasClients) {
+      return 0;
+    }
+
     if (widget.scrollController.offset < 0) {
       return 0;
     }
