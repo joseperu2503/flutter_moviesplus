@@ -12,14 +12,14 @@ class MovieDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Container(
         constraints: const BoxConstraints(
           maxWidth: 800,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(24),
           child: MovieScreen(
             movieId: movieId,
           ),

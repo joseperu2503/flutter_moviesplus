@@ -66,7 +66,10 @@ class MainAppState extends ConsumerState<MainApp> {
       ],
       locale: Locale(profileState.language?.iso6391 ?? 'en'),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {PointerDeviceKind.mouse},
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+        },
       ),
     );
   }

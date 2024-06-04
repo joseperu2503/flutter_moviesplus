@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
@@ -6,13 +7,13 @@ import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/movie/widgets/mobile/movie_appbar_mobile.dart';
 import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
 import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
+import 'package:moviesplus/features/movie/widgets/web/movie_appbar_web.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
-import 'package:moviesplus/features/shared/widgets/back_button.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
-import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 import 'package:moviesplus/generated/l10n.dart';
 
@@ -34,13 +35,11 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   MovieDetail movieDetail = MovieDetail();
   String heroTag = '';
   List<Cast> cast = [];
-  double top = 0;
-  double width = 205;
-  List<Movie> similarMovies = [];
-  List<Movie> recommendationsMovies = [];
-  ScrollController scrollController = ScrollController();
+
+  List<Movie> _similarMovies = [];
+  List<Movie> _recommendationsMovies = [];
+  final ScrollController _scrollController = ScrollController();
   late TabController _tabController;
-  final GlobalKey _key = GlobalKey();
 
   @override
   void initState() {
@@ -48,7 +47,6 @@ class MovieScreenState extends ConsumerState<MovieScreen>
 
     getMovie();
     getMovieCredits();
-    scrollListener();
     getSimilarMovies();
     getRecommendationsdMovies();
     super.initState();
@@ -115,7 +113,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
         path: '/movie/${widget.movieId}/similar',
       );
       setState(() {
-        similarMovies = response.results;
+        _similarMovies = response.results;
       });
     } catch (e) {
       throw Exception(e);
@@ -128,47 +126,11 @@ class MovieScreenState extends ConsumerState<MovieScreen>
         path: '/movie/${widget.movieId}/recommendations',
       );
       setState(() {
-        recommendationsMovies = response.results;
+        _recommendationsMovies = response.results;
       });
     } catch (e) {
       throw Exception(e);
     }
-  }
-
-  scrollListener() {
-    scrollController.addListener(() {
-      final screen = MediaQuery.of(context);
-      if (scaffold == null) return;
-      setState(() {
-        if (scrollController.offset < 0) {
-          top = screen.padding.top + 60;
-          width = 205;
-        } else if (scrollController.offset < screen.padding.top + 60) {
-          top = screen.padding.top + 60 - scrollController.offset;
-          width = 205 +
-              (scaffold!.size.width - 205) *
-                  (scrollController.offset) /
-                  (screen.padding.top + 60);
-        } else {
-          top = 0;
-          width = scaffold!.size.width;
-        }
-      });
-    });
-  }
-
-  RenderBox? get scaffold {
-    if (_key.currentContext != null) {
-      return _key.currentContext!.findRenderObject() as RenderBox;
-    }
-    return null;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final screen = MediaQuery.of(context);
-    top = screen.padding.top + 60;
   }
 
   @override
@@ -189,112 +151,20 @@ class MovieScreenState extends ConsumerState<MovieScreen>
       );
     }
     return Scaffold(
-      key: _key,
       body: CustomScrollView(
-        controller: scrollController,
+        controller: _scrollController,
         slivers: [
-          SliverAppBar(
-            titleSpacing: 0,
-            toolbarHeight: 42,
-            title: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24,
-              ),
-              child: const Row(
-                children: [
-                  CustomBackButton(),
-                  SizedBox(
-                    width: 12,
-                  ),
-                ],
-              ),
+          if (!kIsWeb)
+            MovieAppbarMobile(
+              movieDetail: movieDetail,
+              scrollController: _scrollController,
+              heroTag: heroTag,
             ),
-            scrolledUnderElevation: 0,
-            automaticallyImplyLeading: false,
-            pinned: true,
-            backgroundColor: AppColors.backgroundColor,
-            expandedHeight: 450,
-            collapsedHeight: 200,
-            flexibleSpace: Stack(
-              children: [
-                PosterImage(
-                  path: movieDetail.posterPath,
-                  height: 550,
-                  width: double.infinity,
-                  opacity: const AlwaysStoppedAnimation(0.4),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0, 1],
-                      colors: [
-                        AppColors.backgroundColor.withOpacity(0.2),
-                        AppColors.backgroundColor,
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: top,
-                  child: Hero(
-                    tag: heroTag,
-                    child: Container(
-                      width: scaffold?.size.width,
-                      alignment: Alignment.topCenter,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: PosterImage(
-                          path: movieDetail.posterPath,
-                          width: width,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    height: 80,
-                    width: scaffold?.size.width,
-                    padding: const EdgeInsets.only(
-                      left: 24,
-                      bottom: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: const [0, 1],
-                        colors: [
-                          AppColors.backgroundColor.withOpacity(0),
-                          AppColors.backgroundColor,
-                        ],
-                      ),
-                    ),
-                    // child: MovieInfo(),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            movieDetail.title ?? '',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.white,
-                              leadingDistribution: TextLeadingDistribution.even,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          if (kIsWeb)
+            MovieAppbarWeb(
+              movieDetail: movieDetail,
+              heroTag: heroTag,
             ),
-          ),
           SliverToBoxAdapter(
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -400,7 +270,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
               padding: const EdgeInsets.symmetric(horizontal: 24),
               sliver: SliverGrid.builder(
                 itemBuilder: (context, index) {
-                  final movie = similarMovies[index];
+                  final movie = _similarMovies[index];
                   return MovieItem(movie: movie);
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -409,7 +279,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   mainAxisSpacing: 20,
                   mainAxisExtent: 210,
                 ),
-                itemCount: similarMovies.length,
+                itemCount: _similarMovies.length,
               ),
             ),
           if (_tabController.index == 2)
@@ -417,7 +287,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
               padding: const EdgeInsets.symmetric(horizontal: 24),
               sliver: SliverGrid.builder(
                 itemBuilder: (context, index) {
-                  final movie = recommendationsMovies[index];
+                  final movie = _recommendationsMovies[index];
                   return MovieItem(movie: movie);
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -426,7 +296,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   mainAxisSpacing: 20,
                   mainAxisExtent: 210,
                 ),
-                itemCount: recommendationsMovies.length,
+                itemCount: _recommendationsMovies.length,
               ),
             ),
           SliverToBoxAdapter(
