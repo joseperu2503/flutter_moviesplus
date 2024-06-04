@@ -5,7 +5,7 @@ class PosterImage extends StatelessWidget {
   const PosterImage({
     super.key,
     required this.path,
-    this.width,
+    this.width = double.infinity,
     this.height,
     this.opacity,
   });

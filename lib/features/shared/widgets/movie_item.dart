@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
+import 'package:moviesplus/features/movie/widgets/dialog_movie.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:uuid/uuid.dart';
@@ -25,22 +28,51 @@ class MovieItemState extends ConsumerState<MovieItem> {
   Widget build(BuildContext context) {
     return Hero(
       tag: '${widget.movie.id}$tag',
-      child: SizedBox(
-        width: 150,
-        height: double.infinity,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: GestureDetector(
-            onTap: () {
-              ref
-                  .read(moviesProvider.notifier)
-                  .setHeroTag('${widget.movie.id}$tag');
-              ref.read(moviesProvider.notifier).setTemporalMovie(widget.movie);
-              context.push('/movie/${widget.movie.id}');
-            },
-            child: PosterImage(
-              path: widget.movie.posterPath,
-            ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: SizedBox(
+          width: 150,
+          height: double.infinity,
+          child: Stack(
+            children: [
+              PosterImage(
+                path: widget.movie.posterPath,
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.zero,
+                  foregroundColor: AppColors.textGrey,
+                ),
+                onPressed: () {
+                  if (kIsWeb) {
+                    ref
+                        .read(moviesProvider.notifier)
+                        .setHeroTag('${widget.movie.id}$tag');
+                    ref
+                        .read(moviesProvider.notifier)
+                        .setTemporalMovie(widget.movie);
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => DialogMovie(
+                        movieId: widget.movie.id,
+                      ),
+                    );
+                  } else {
+                    ref
+                        .read(moviesProvider.notifier)
+                        .setHeroTag('${widget.movie.id}$tag');
+                    ref
+                        .read(moviesProvider.notifier)
+                        .setTemporalMovie(widget.movie);
+                    context.push('/movie/${widget.movie.id}');
+                  }
+                },
+                child: Container(),
+              ),
+            ],
           ),
         ),
       ),

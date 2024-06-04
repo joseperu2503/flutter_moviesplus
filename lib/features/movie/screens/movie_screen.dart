@@ -111,7 +111,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   getSimilarMovies() async {
     try {
       final MoviesResponse response = await MovieDbService.getMovies(
-        path: '/movie/${movieDetail.id}/similar',
+        path: '/movie/${widget.movieId}/similar',
       );
       setState(() {
         similarMovies = response.results;
@@ -124,7 +124,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   getRecommendationsdMovies() async {
     try {
       final MoviesResponse response = await MovieDbService.getMovies(
-        path: '/movie/${movieDetail.id}/recommendations',
+        path: '/movie/${widget.movieId}/recommendations',
       );
       setState(() {
         recommendationsMovies = response.results;
