@@ -13,7 +13,10 @@ class MovieDbService {
     required String path,
     Map<String, dynamic> queryParameters = const {},
   }) async {
-    Map<String, dynamic> query = {"page": page, ...queryParameters};
+    Map<String, dynamic> query = {
+      "page": page,
+      ...queryParameters,
+    };
 
     try {
       final response = await Api.get(
