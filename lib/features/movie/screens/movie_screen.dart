@@ -40,6 +40,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   List<Movie> recommendationsMovies = [];
   ScrollController scrollController = ScrollController();
   late TabController _tabController;
+  final GlobalKey _key = GlobalKey();
 
   @override
   void initState() {
@@ -137,7 +138,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   scrollListener() {
     scrollController.addListener(() {
       final screen = MediaQuery.of(context);
-
+      if (scaffold == null) return;
       setState(() {
         if (scrollController.offset < 0) {
           top = screen.padding.top + 60;
@@ -145,15 +146,22 @@ class MovieScreenState extends ConsumerState<MovieScreen>
         } else if (scrollController.offset < screen.padding.top + 60) {
           top = screen.padding.top + 60 - scrollController.offset;
           width = 205 +
-              (screen.size.width - 205) *
+              (scaffold!.size.width - 205) *
                   (scrollController.offset) /
                   (screen.padding.top + 60);
         } else {
           top = 0;
-          width = screen.size.width;
+          width = scaffold!.size.width;
         }
       });
     });
+  }
+
+  RenderBox? get scaffold {
+    if (_key.currentContext != null) {
+      return _key.currentContext!.findRenderObject() as RenderBox;
+    }
+    return null;
   }
 
   @override
@@ -166,6 +174,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+
     List<String> tabs = [
       S.of(context).CastAndCrew,
       S.of(context).Recommendations,
@@ -180,6 +189,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
       );
     }
     return Scaffold(
+      key: _key,
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
@@ -231,15 +241,13 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   child: Hero(
                     tag: heroTag,
                     child: Container(
-                      width: screen.size.width,
+                      width: scaffold?.size.width,
                       alignment: Alignment.topCenter,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: Material(
-                          child: PosterImage(
-                            path: movieDetail.posterPath,
-                            width: width,
-                          ),
+                        child: PosterImage(
+                          path: movieDetail.posterPath,
+                          width: width,
                         ),
                       ),
                     ),
@@ -249,7 +257,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   bottom: 0,
                   child: Container(
                     height: 80,
-                    width: screen.size.width,
+                    width: scaffold?.size.width,
                     padding: const EdgeInsets.only(
                       left: 24,
                       bottom: 12,

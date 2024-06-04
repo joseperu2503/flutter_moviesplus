@@ -11,12 +11,18 @@ class MovieDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(32),
+      ),
       child: Container(
         constraints: const BoxConstraints(
           maxWidth: 800,
         ),
-        child: MovieScreen(
-          movieId: movieId,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: MovieScreen(
+            movieId: movieId,
+          ),
         ),
       ),
     );
