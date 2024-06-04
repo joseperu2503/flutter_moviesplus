@@ -8,6 +8,10 @@
 
     flutter build ios --release
 
+## Compilar web
+
+    flutter build web
+
 ## cambiar el icono de la app
 
     flutter pub run flutter_launcher_icons
