@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/features/movie/screens/movie_screen.dart';
 
-class DialogMovie extends StatelessWidget {
-  const DialogMovie({
+class MovieDialog extends StatelessWidget {
+  const MovieDialog({
     super.key,
     required this.movieId,
   });
