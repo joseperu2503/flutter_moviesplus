@@ -136,6 +136,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+    final widthScreen = screen.size.width;
 
     List<String> tabs = [
       S.of(context).CastAndCrew,
@@ -273,11 +274,15 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   final movie = _similarMovies[index];
                   return MovieItem(movie: movie);
                 },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 20,
-                  mainAxisExtent: 210,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: widthScreen > 600
+                      ? 4
+                      : widthScreen > 500
+                          ? 3
+                          : 2,
+                  crossAxisSpacing: widthScreen > 600 ? 16 : 16,
+                  mainAxisSpacing: widthScreen > 600 ? 24 : 20,
+                  childAspectRatio: 0.65,
                 ),
                 itemCount: _similarMovies.length,
               ),
@@ -290,11 +295,15 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   final movie = _recommendationsMovies[index];
                   return MovieItem(movie: movie);
                 },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 20,
-                  mainAxisExtent: 210,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: widthScreen > 600
+                      ? 4
+                      : widthScreen > 500
+                          ? 3
+                          : 2,
+                  crossAxisSpacing: widthScreen > 600 ? 16 : 16,
+                  mainAxisSpacing: widthScreen > 600 ? 24 : 20,
+                  childAspectRatio: 0.65,
                 ),
                 itemCount: _recommendationsMovies.length,
               ),

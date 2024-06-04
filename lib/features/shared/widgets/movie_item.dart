@@ -36,6 +36,7 @@ class MovieItemState extends ConsumerState<MovieItem> {
             children: [
               PosterImage(
                 path: widget.movie.posterPath,
+                height: double.infinity,
               ),
               TextButton(
                 style: TextButton.styleFrom(
