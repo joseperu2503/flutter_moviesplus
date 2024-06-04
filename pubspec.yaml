@@ -46,7 +46,7 @@ flutter_native_splash:
 flutter:
   uses-material-design: true
   assets:
-    - .env
+    - .dotenv
     - assets/loaders/
     - assets/images/
     - assets/icons/
