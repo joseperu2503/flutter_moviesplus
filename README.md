@@ -10,7 +10,7 @@
 
 ## Compilar web
 
-    flutter build web
+    flutter build web --release
 
 ## cambiar el icono de la app
 
@@ -23,3 +23,6 @@
 ## sha-256
 cd android
 ./gradlew signinReport
+
+## Android AAB
+    flutter build appbundle
