@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MovieButtons extends StatefulWidget {
   const MovieButtons({
     super.key,
+    required this.movie,
   });
+  final MovieDetail movie;
 
   @override
   State<MovieButtons> createState() => _MovieButtonsState();
 }
 
 class _MovieButtonsState extends State<MovieButtons> {
+  shareMovie() async {
+    await Share.share(
+      '${widget.movie.title} \n\n https://moviesplus.joseperezgil.com/movie/${widget.movie.id}',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -81,7 +91,9 @@ class _MovieButtonsState extends State<MovieButtons> {
           width: 16,
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            shareMovie();
+          },
           style: TextButton.styleFrom(
             backgroundColor: AppColors.primarySoft,
             minimumSize: const Size(48, 48),

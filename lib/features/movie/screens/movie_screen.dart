@@ -178,7 +178,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   const SizedBox(
                     height: 24,
                   ),
-                  const MovieButtons(),
+                  MovieButtons(movie: movieDetail),
                   const SizedBox(
                     height: 24,
                   ),
