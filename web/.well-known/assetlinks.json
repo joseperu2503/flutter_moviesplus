@@ -1,0 +1,9 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.joseperezgil.moviesplus",
+      "sha256_cert_fingerprints":
+      ["E3:FD:DF:34:4B:E0:11:F2:07:30:42:F8:0B:E5:5E:07:DC:39:A5:40:07:4F:4D:5E:30:CD:5F:8E:50:EC:72:30"]
+    }
+}]

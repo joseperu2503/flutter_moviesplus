@@ -19,3 +19,7 @@
 ## Cambiar el splashscreen
 
     dart run flutter_native_splash:create
+
+## sha-256
+cd android
+./gradlew signinReport
