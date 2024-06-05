@@ -16,11 +16,8 @@ class DashboardScreen extends ConsumerStatefulWidget {
 class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(moviesProvider.notifier).initDashboard();
-    });
-    _scrollController.addListener(() {
-      setState(() {});
     });
     super.initState();
   }
@@ -46,8 +43,8 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
               SliverList.separated(
                 itemBuilder: (context, index) {
                   final MovieCategory movieCategory = movieCategories[index];
-
                   return HorizontalListMoviesWeb(
+                    key: Key(movieCategory.name(context)),
                     label: movieCategory.name(context),
                     getMovies: () async {
                       await ref.read(moviesProvider.notifier).getMovies(index);

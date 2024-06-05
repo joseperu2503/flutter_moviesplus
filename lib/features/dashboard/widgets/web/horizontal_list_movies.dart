@@ -27,12 +27,12 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
   bool hover = false;
   @override
   void initState() {
-    Future.microtask(() {
-      loadMoreMovies();
-    });
     scrollController.addListener(() {
       loadMoreMovies();
       setState(() {});
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadMoreMovies();
     });
     super.initState();
   }
@@ -60,7 +60,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
 
   toRight() {
     scrollController.animateTo(
-      scrollController.offset + MediaQuery.of(context).size.width - 100,
+      scrollController.position.pixels +
+          MediaQuery.of(context).size.width -
+          100,
       duration: const Duration(
         milliseconds: 250,
       ),
@@ -69,8 +71,8 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
   }
 
   toLeft() {
-    double scroll =
-        scrollController.offset - (MediaQuery.of(context).size.width - 100);
+    double scroll = scrollController.position.pixels -
+        (MediaQuery.of(context).size.width - 100);
     if (scroll < 0) {
       scroll = 0;
     }
@@ -137,7 +139,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       final Movie movie = widget.movies[index];
+
                       return MovieItem(
+                        key: Key(movie.title),
                         movie: movie,
                       );
                     },
@@ -149,7 +153,8 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
                     itemCount: widget.movies.length,
                   ),
                 ),
-                if (scrollController.hasClients && scrollController.offset > 0)
+                if (scrollController.hasClients &&
+                    scrollController.position.pixels > 0)
                   Positioned(
                     left: 0,
                     top: 0,

@@ -22,6 +22,10 @@ class MovieItem extends ConsumerStatefulWidget {
 
 class MovieItemState extends ConsumerState<MovieItem> {
   String tag = const Uuid().v4();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +33,10 @@ class MovieItemState extends ConsumerState<MovieItem> {
       tag: '${widget.movie.id}$tag',
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: SizedBox(
+        child: Container(
           width: 150,
           height: double.infinity,
+          color: AppColors.primarySoft,
           child: Stack(
             children: [
               PosterImage(

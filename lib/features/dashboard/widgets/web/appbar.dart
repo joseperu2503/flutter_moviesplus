@@ -16,19 +16,44 @@ class AppbarWeb extends StatefulWidget {
 }
 
 class _AppbarWebState extends State<AppbarWeb> {
-  double get opacity {
+  scrollOpacity() {
     if (!widget.scrollController.hasClients) {
-      return 0;
+      setState(() {
+        opacity = 0;
+      });
+      return;
     }
 
-    if (widget.scrollController.offset < 0) {
-      return 0;
+    if (widget.scrollController.position.pixels < 0) {
+      setState(() {
+        opacity = 0;
+      });
+      return;
     }
-    if (widget.scrollController.offset < 100) {
-      return (widget.scrollController.offset) / 100;
+    if (widget.scrollController.position.pixels < 100) {
+      setState(() {
+        opacity = (widget.scrollController.position.pixels) / 100;
+      });
+      return;
     }
-    return 1;
+    setState(() {
+      opacity = 1;
+    });
   }
+
+  @override
+  void initState() {
+    widget.scrollController.addListener(scrollOpacity);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController.removeListener(scrollOpacity);
+    super.dispose();
+  }
+
+  double opacity = 0;
 
   @override
   Widget build(BuildContext context) {
