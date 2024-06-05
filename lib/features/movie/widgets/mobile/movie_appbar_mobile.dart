@@ -68,10 +68,10 @@ class _MovieAppbarMobileState extends State<MovieAppbarMobile> {
 
     return SliverAppBar(
       titleSpacing: 0,
-      toolbarHeight: 42,
+      toolbarHeight: 60,
       title: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 24,
+          horizontal: 16,
         ),
         child: const Row(
           children: [

@@ -18,7 +18,11 @@ class CustomBackButton extends ConsumerWidget {
       height: 42,
       child: TextButton(
         onPressed: () {
-          context.pop();
+          if (context.canPop()) {
+            context.pop();
+          } else {
+            context.go('/');
+          }
         },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
