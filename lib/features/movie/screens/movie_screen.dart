@@ -326,7 +326,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                     itemCount: _recommendationsMovies.length,
                   ),
                 ),
-              if (_tabController.index == 3)
+              if (_tabController.index == 2)
                 //** Cast */
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
