@@ -17,7 +17,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
 
   initDashboard() async {
     state = state.copyWith(
-      movieCategories: [],
+      movieCategories: initMovieCategories,
     );
     getMovieGenres();
   }

@@ -31,7 +31,6 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -67,6 +66,8 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
               final MovieCategory movieCategory = movieCategories[index];
 
               return HorizonalListMovies(
+                key: PageStorageKey(
+                    '${movieCategory.name(context)}${Localizations.localeOf(context)}'),
                 label: movieCategory.name(context),
                 getMovies: () async {
                   await ref.read(moviesProvider.notifier).getMovies(index);
