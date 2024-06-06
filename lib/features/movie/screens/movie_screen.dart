@@ -45,9 +45,6 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(moviesProvider.notifier).initDashboard();
-    });
     getMovie();
     getMovieCredits();
     getSimilarMovies();
