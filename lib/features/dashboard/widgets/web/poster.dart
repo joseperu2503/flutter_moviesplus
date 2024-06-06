@@ -21,17 +21,16 @@ class BackdropDashboardState extends ConsumerState<PosterDashboard>
   Widget build(BuildContext context) {
     super.build(context);
 
-    //TODO: CORREGIR
-    // ref.listen(moviesProvider, (previous, next) {
-    //   if (movie == null &&
-    //       next.movieCategories.isNotEmpty &&
-    //       next.movieCategories[0].movies.isNotEmpty) {
-    //     setState(() {
-    //       movie = next.movieCategories[0]
-    //           .movies[Random().nextInt(next.movieCategories[0].movies.length)];
-    //     });
-    //   }
-    // });
+    ref.listen(moviesProvider, (previous, next) {
+      if (movie == null &&
+          next.movieCategories['popular'] != null &&
+          next.movieCategories['popular']!.movies.isNotEmpty) {
+        setState(() {
+          movie = next.movieCategories['popular']!.movies[
+              Random().nextInt(next.movieCategories['popular']!.movies.length)];
+        });
+      }
+    });
     final screen = MediaQuery.of(context);
 
     return SliverToBoxAdapter(

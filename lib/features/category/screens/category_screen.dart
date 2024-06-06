@@ -1,97 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:moviesplus/config/constants/app_colors.dart';
-import 'package:moviesplus/features/profile/widgets/profile_item.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moviesplus/config/constants/styles.dart';
+import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
+import 'package:moviesplus/features/shared/models/movie.dart';
+import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/custom_appbar.dart';
-import 'package:moviesplus/generated/l10n.dart';
+import 'package:moviesplus/features/shared/widgets/movie_item.dart';
+import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 
-class CategoryScreen extends StatefulWidget {
+class CategoryScreen extends ConsumerStatefulWidget {
   const CategoryScreen({
     super.key,
-    required this.genreId,
+    required this.categoryKey,
   });
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
-  final String genreId;
+  CategoryScreenState createState() => CategoryScreenState();
+  final String categoryKey;
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class CategoryScreenState extends ConsumerState<CategoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if ((scrollController.position.pixels + 0) <
+          scrollController.position.maxScrollExtent) return;
+      ref.read(moviesProvider.notifier).getMovies(widget.categoryKey);
+    });
+  }
+
+  final scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
+    MovieCategory? movieCategory =
+        ref.watch(moviesProvider).movieCategories[widget.categoryKey];
+
     return Scaffold(
       appBar: CustomAppBar(
-        title: S.of(context).Profile,
-        onBack: false,
+        title: movieCategory != null ? movieCategory.name(context) : 'Category',
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24,
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: AppColors.primarySoft,
-                      ),
+      body: movieCategory == null
+          ? const Text('Not found')
+          : CustomScrollView(
+              controller: scrollController,
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.only(
+                    left: 24,
+                    right: 24,
+                  ),
+                  sliver: SliverGrid.builder(
+                    gridDelegate: movieSliverGridDelegate(context),
+                    itemBuilder: (context, index) {
+                      final Movie movie = movieCategory.movies[index];
+
+                      return MovieItem(movie: movie);
+                    },
+                    itemCount: movieCategory.movies.length,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                      top: 24,
+                      bottom: 24,
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 24,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                          ),
-                          child: const Text(
-                            'General',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.white,
-                              height: 21.94 / 18,
-                              leadingDistribution: TextLeadingDistribution.even,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        ProfileItem(
-                          icon: 'assets/icons/language.svg',
-                          label: S.of(context).Language,
-                          onPress: () {
-                            context.push('/language');
-                          },
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 32),
-                          height: 1,
-                          color: AppColors.primarySoft,
-                        ),
-                        ProfileItem(
-                          icon: 'assets/icons/earth.svg',
-                          label: S.of(context).Country,
-                          onPress: () {
-                            context.push('/country');
-                          },
-                        ),
-                      ],
+                    child: Center(
+                      child: movieCategory.loading &&
+                              movieCategory.movies.isNotEmpty
+                          ? const CustomProgressIndicator()
+                          : null,
                     ),
                   ),
-                ],
-              ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
     );
   }
 }

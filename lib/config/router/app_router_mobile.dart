@@ -71,7 +71,15 @@ final appRouterMobile = GoRouter(
       path: '/genre/:genreId',
       builder: (context, state) {
         return CategoryScreen(
-          genreId: state.pathParameters['genreId'] ?? '0',
+          categoryKey: state.pathParameters['genreId'] ?? '0',
+        );
+      },
+    ),
+    GoRoute(
+      path: '/movies/:categoryKey',
+      builder: (context, state) {
+        return CategoryScreen(
+          categoryKey: state.pathParameters['categoryKey'] ?? '0',
         );
       },
     ),

@@ -149,23 +149,26 @@ class MoviesState {
 }
 
 final Map<String, MovieCategory> initMovieCategories = {
-  'nowPlaying': MovieCategory(
+  'now-playing': MovieCategory(
     name: (context) {
       return S.of(context).NowPlaying;
     },
     url: '/movie/now_playing',
+    seeMoreUrl: '/movies/now-playing',
   ),
   'popular': MovieCategory(
     name: (context) {
       return S.of(context).Popular;
     },
     url: '/movie/popular',
+    seeMoreUrl: '/movies/popular',
   ),
-  'topRated': MovieCategory(
+  'top-rated': MovieCategory(
     name: (context) {
       return S.of(context).TopRated;
     },
     url: '/movie/top_rated',
+    seeMoreUrl: '/movies/top-rated',
   ),
   'upcoming': MovieCategory(
     name: (context) {
@@ -175,5 +178,6 @@ final Map<String, MovieCategory> initMovieCategories = {
     queryParameters: {
       'region': 'us',
     },
+    seeMoreUrl: '/movies/upcoming',
   ),
 };
