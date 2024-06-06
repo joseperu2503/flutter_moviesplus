@@ -19,13 +19,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
     state = state.copyWith(
       movieCategories: initMovieCategories,
     );
-    getMovieGenres();
-  }
-
-  resetDashboard() {
-    state = state.copyWith(
-      movieCategories: [],
-    );
+    await getMovieGenres();
   }
 
   getMovieGenres() async {
@@ -33,7 +27,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
       final genres = await MovieDbService.getMovieGenres();
       state = state.copyWith(
         movieCategories: [
-          ...initMovieCategories,
+          ...state.movieCategories,
           ...genres.map(
             (genre) => MovieCategory(
               name: (context) {
@@ -43,6 +37,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
               queryParameters: {
                 "with_genres": genre.id,
               },
+              seeMoreUrl: '/genre/${genre.id}',
             ),
           )
         ],

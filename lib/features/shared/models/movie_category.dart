@@ -9,6 +9,7 @@ class MovieCategory {
   final int page;
   final int totalPages;
   final bool loading;
+  final String? seeMoreUrl;
 
   MovieCategory({
     required this.name,
@@ -18,24 +19,23 @@ class MovieCategory {
     this.page = 1,
     this.totalPages = 1,
     this.loading = false,
+    this.seeMoreUrl,
   });
 
   MovieCategory copyWith({
-    String Function(BuildContext context)? name,
-    String? url,
-    Map<String, dynamic>? queryParameters,
     List<Movie>? movies,
     int? page,
     int? totalPages,
     bool? loading,
   }) =>
       MovieCategory(
-        name: name ?? this.name,
-        url: url ?? this.url,
-        queryParameters: queryParameters ?? this.queryParameters,
+        name: name,
+        url: url,
+        queryParameters: queryParameters,
         movies: movies ?? this.movies,
         page: page ?? this.page,
         totalPages: totalPages ?? this.totalPages,
         loading: loading ?? this.loading,
+        seeMoreUrl: seeMoreUrl,
       );
 }

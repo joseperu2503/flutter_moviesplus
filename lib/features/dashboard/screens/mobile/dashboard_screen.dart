@@ -67,12 +67,14 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
 
               return HorizonalListMovies(
                 key: PageStorageKey(
-                    '${movieCategory.name(context)}${Localizations.localeOf(context)}'),
+                  '${movieCategory.name(context)}${Localizations.localeOf(context)}',
+                ),
                 label: movieCategory.name(context),
                 getMovies: () async {
                   await ref.read(moviesProvider.notifier).getMovies(index);
                 },
                 movies: movieCategory.movies,
+                seeMoreUrl: movieCategory.seeMoreUrl,
               );
             },
             separatorBuilder: (context, index) {

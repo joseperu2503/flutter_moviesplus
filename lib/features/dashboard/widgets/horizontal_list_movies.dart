@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
@@ -10,11 +11,13 @@ class HorizonalListMovies extends ConsumerStatefulWidget {
     required this.label,
     required this.getMovies,
     required this.movies,
+    this.seeMoreUrl,
   });
 
   final String label;
   final Future<void> Function() getMovies;
   final List<Movie> movies;
+  final String? seeMoreUrl;
 
   @override
   HorizonalListMoviesState createState() => HorizonalListMoviesState();
@@ -64,8 +67,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
+          padding: const EdgeInsets.only(
+            left: 24,
+            right: 8,
           ),
           child: Row(
             children: [
@@ -79,6 +83,36 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
               ),
+              const Spacer(),
+              if (widget.seeMoreUrl != null)
+                TextButton(
+                  onPressed: () {
+                    context.push(widget.seeMoreUrl!);
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ),
+                  child: const Row(
+                    children: [
+                      Text(
+                        'See All',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryBlueAccent,
+                          height: 17.07 / 14,
+                          leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
