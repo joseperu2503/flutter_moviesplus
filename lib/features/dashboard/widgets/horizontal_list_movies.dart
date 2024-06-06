@@ -60,14 +60,6 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
   Widget build(BuildContext context) {
     super.build(context);
 
-    // ref.listen(profileProvider, (previous, next) {
-    //   if (previous?.language?.iso6391 != next.language?.iso6391) {
-    //     print('listen ${widget.label}');
-
-    //     widget.getMovies();
-    //   }
-    // });
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -94,7 +86,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
           height: 12,
         ),
         SizedBox(
-          height: 200,
+          height: 240,
           child: ListView.separated(
             controller: scrollController,
             padding: const EdgeInsets.symmetric(

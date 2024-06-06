@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
+import 'package:moviesplus/features/shared/widgets/backdrop_image.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:uuid/uuid.dart';
 
@@ -101,6 +103,8 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context);
+
     List<Movie> movies = [];
     final movieCategories = ref.watch(moviesProvider).movieCategories;
     if (movieCategories.length >= 2) {
@@ -110,15 +114,20 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
       movies = movies.sublist(0, 5);
     }
     return SizedBox(
-      height: 400,
+      height: screen.size.width > Breakpoints.mobile
+          ? screen.size.width * 0.5
+          : screen.size.width * 1,
       child: Swiper(
-        viewportFraction: 0.6,
-        scale: 0.8,
+        viewportFraction: screen.size.width > Breakpoints.mobile
+            ? (screen.size.width - 24 * 2) / screen.size.width
+            : 0.7,
+        scale: screen.size.width > Breakpoints.mobile ? 0.6 : 0.8,
         autoplay: movies.isNotEmpty,
         itemCount: movies.length,
         itemBuilder: (context, index) => _Slide(
           movie: movies[index],
         ),
+        autoplayDelay: 5000,
       ),
     );
   }
@@ -138,6 +147,8 @@ class SlideState extends ConsumerState<_Slide> {
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context);
+
     final decoration = BoxDecoration(
       borderRadius: BorderRadius.circular(20),
     );
@@ -158,9 +169,13 @@ class SlideState extends ConsumerState<_Slide> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: GestureDetector(
-              child: PosterImage(
-                path: widget.movie.posterPath,
-              ),
+              child: screen.size.width > Breakpoints.mobile
+                  ? BackdropImage(
+                      path: widget.movie.backdropPath,
+                    )
+                  : PosterImage(
+                      path: widget.movie.posterPath,
+                    ),
             ),
           ),
         ),

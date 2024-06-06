@@ -33,40 +33,41 @@ class MovieItemState extends ConsumerState<MovieItem> {
       tag: '${widget.movie.id}$tag',
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: Container(
-          width: 150,
-          height: double.infinity,
-          color: AppColors.primarySoft,
-          child: Stack(
-            children: [
-              PosterImage(
-                path: widget.movie.posterPath,
-                height: double.infinity,
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: EdgeInsets.zero,
-                  foregroundColor: AppColors.textGrey,
+        child: AspectRatio(
+          aspectRatio: 0.65,
+          child: Container(
+            color: AppColors.primarySoft,
+            child: Stack(
+              children: [
+                PosterImage(
+                  path: widget.movie.posterPath,
+                  height: double.infinity,
                 ),
-                onPressed: () {
-                  ref
-                      .read(moviesProvider.notifier)
-                      .setHeroTag('${widget.movie.id}$tag');
-                  ref
-                      .read(moviesProvider.notifier)
-                      .setTemporalMovie(widget.movie);
-                  if (kIsWeb) {
-                    context.go('/movie/${widget.movie.id}');
-                  } else {
-                    context.push('/movie/${widget.movie.id}');
-                  }
-                },
-                child: Container(),
-              ),
-            ],
+                TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.zero,
+                    foregroundColor: AppColors.textGrey,
+                  ),
+                  onPressed: () {
+                    ref
+                        .read(moviesProvider.notifier)
+                        .setHeroTag('${widget.movie.id}$tag');
+                    ref
+                        .read(moviesProvider.notifier)
+                        .setTemporalMovie(widget.movie);
+                    if (kIsWeb) {
+                      context.go('/movie/${widget.movie.id}');
+                    } else {
+                      context.push('/movie/${widget.movie.id}');
+                    }
+                  },
+                  child: Container(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
