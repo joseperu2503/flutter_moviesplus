@@ -13,6 +13,8 @@ SliverGridDelegateWithFixedCrossAxisCount movieSliverGridDelegate(
             : 2,
     crossAxisSpacing: widthScreen > 600 ? 16 : 16,
     mainAxisSpacing: widthScreen > 600 ? 24 : 20,
-    childAspectRatio: 0.65,
+    childAspectRatio: posterAspectRatio,
   );
 }
+
+const double posterAspectRatio = 0.65;

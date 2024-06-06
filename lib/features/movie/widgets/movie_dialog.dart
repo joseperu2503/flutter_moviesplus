@@ -16,7 +16,7 @@ class MovieDialog extends StatelessWidget {
       ),
       child: Container(
         constraints: const BoxConstraints(
-          maxWidth: 800,
+          maxWidth: 600,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),

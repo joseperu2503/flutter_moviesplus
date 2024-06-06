@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
@@ -34,7 +35,7 @@ class MovieItemState extends ConsumerState<MovieItem> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: AspectRatio(
-          aspectRatio: 0.65,
+          aspectRatio: posterAspectRatio,
           child: Container(
             color: AppColors.primarySoft,
             child: Stack(
