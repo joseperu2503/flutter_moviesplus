@@ -1,5 +1,18 @@
-const double formInputSpacing = 20;
-const double labelInputSpacing = 4;
-const double toolbarHeight = 58;
+import 'package:flutter/material.dart';
 
-const double radiusButton = 32;
+SliverGridDelegateWithFixedCrossAxisCount movieSliverGridDelegate(
+  BuildContext context,
+) {
+  final screen = MediaQuery.of(context);
+  final widthScreen = screen.size.width;
+  return SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: widthScreen > 600
+        ? 4
+        : widthScreen > 500
+            ? 3
+            : 2,
+    crossAxisSpacing: widthScreen > 600 ? 16 : 16,
+    mainAxisSpacing: widthScreen > 600 ? 24 : 20,
+    childAspectRatio: 0.65,
+  );
+}

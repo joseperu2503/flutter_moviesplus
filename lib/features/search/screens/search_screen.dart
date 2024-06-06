@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/search/providers/search_provider.dart';
 import 'package:moviesplus/features/search/widgets/search_input.dart';
@@ -23,7 +24,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
     super.initState();
 
     scrollController.addListener(() {
-      if ((scrollController.position.pixels + 200) <
+      if ((scrollController.position.pixels + 0) <
           scrollController.position.maxScrollExtent) return;
       ref.read(searchProvider.notifier).loadMoreMovies();
     });
@@ -57,27 +58,27 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
           SliverAppBar(
             scrolledUnderElevation: 0,
             automaticallyImplyLeading: false,
-            toolbarHeight: 70,
+            toolbarHeight: 100,
             pinned: true,
             backgroundColor: AppColors.backgroundColor,
             flexibleSpace: SafeArea(
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
+                padding: const EdgeInsets.only(
+                  left: 24,
+                  right: 24,
+                  bottom: 12,
                 ),
-                height: 70,
-                child: Row(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Expanded(
-                      child: SearchInput(
-                        value: searchState.query,
-                        onChanged: (value) {
-                          ref.read(searchProvider.notifier).changeQuery(value);
-                          if (value.isEmpty) {
-                            scrollController.jumpTo(0);
-                          }
-                        },
-                      ),
+                    SearchInput(
+                      value: searchState.query,
+                      onChanged: (value) {
+                        ref.read(searchProvider.notifier).changeQuery(value);
+                        if (value.isEmpty) {
+                          scrollController.jumpTo(0);
+                        }
+                      },
                     )
                   ],
                 ),
@@ -136,12 +137,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                 right: 24,
               ),
               sliver: SliverGrid.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 24,
-                  mainAxisSpacing: 24,
-                  childAspectRatio: 0.65,
-                ),
+                gridDelegate: movieSliverGridDelegate(context),
                 itemBuilder: (context, index) {
                   final Movie movie = movieCategory!.movies[index];
 
@@ -157,12 +153,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                 right: 24,
               ),
               sliver: SliverGrid.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 24,
-                  mainAxisSpacing: 24,
-                  childAspectRatio: 0.65,
-                ),
+                gridDelegate: movieSliverGridDelegate(context),
                 itemBuilder: (context, index) {
                   final Movie movie = searchState.movies[index];
 
@@ -174,8 +165,8 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
           SliverToBoxAdapter(
             child: Container(
               padding: const EdgeInsets.only(
-                top: 10,
-                bottom: 40,
+                top: 24,
+                bottom: 24,
               ),
               child: Center(
                 child: searchState.loading && searchState.movies.isNotEmpty
