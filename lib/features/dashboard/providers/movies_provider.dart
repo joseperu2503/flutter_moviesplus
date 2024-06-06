@@ -24,38 +24,41 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
 
   getMovieGenres() async {
     try {
-      final genres = await MovieDbService.getMovieGenres();
-      state = state.copyWith(
-        movieCategories: [
-          ...state.movieCategories,
-          ...genres.map(
-            (genre) => MovieCategory(
-              name: (context) {
-                return genre.name;
-              },
-              url: '/discover/movie',
-              queryParameters: {
-                "with_genres": genre.id,
-              },
-              seeMoreUrl: '/genre/${genre.id}',
-            ),
-          )
-        ],
-      );
+      final List<Genre> genres = await MovieDbService.getMovieGenres();
+      Map<String, MovieCategory> newMovieCategories = {
+        ...state.movieCategories
+      };
+      for (var genre in genres) {
+        newMovieCategories[genre.id.toString()] = MovieCategory(
+          name: (context) {
+            return genre.name;
+          },
+          url: '/discover/movie',
+          queryParameters: {
+            "with_genres": genre.id,
+          },
+          seeMoreUrl: '/genre/${genre.id}',
+        );
+
+        state = state.copyWith(
+          movieCategories: newMovieCategories,
+        );
+      }
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  getMovies(int index) async {
-    MovieCategory movieCategory = getMovieCategory(index: index);
+  getMovies(String key) async {
+    MovieCategory? movieCategory = getMovieCategory(key: key);
+    if (movieCategory == null) return;
 
     if (movieCategory.page > movieCategory.totalPages ||
         movieCategory.loading) {
       return;
     }
 
-    setMovieCategory(index: index, loading: true);
+    setMovieCategory(key: key, loading: true);
 
     try {
       final MoviesResponse response = await MovieDbService.getMovies(
@@ -65,7 +68,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
       );
 
       setMovieCategory(
-        index: index,
+        key: key,
         movies: [...movieCategory.movies, ...response.results],
         page: movieCategory.page + 1,
         totalPages: response.totalPages,
@@ -73,31 +76,32 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
     } catch (e) {
       throw Exception(e);
     }
-    setMovieCategory(index: index, loading: false);
+    setMovieCategory(key: key, loading: false);
   }
 
-  MovieCategory getMovieCategory({
-    required int index,
+  MovieCategory? getMovieCategory({
+    required String key,
   }) {
-    return state.movieCategories[index];
+    return state.movieCategories[key];
   }
 
   void setMovieCategory({
-    required int index,
+    required String key,
     List<Movie>? movies,
     int? page,
     int? totalPages,
     bool? loading,
   }) {
-    MovieCategory movieCategory = state.movieCategories[index];
+    MovieCategory? movieCategory = getMovieCategory(key: key);
+    if (movieCategory == null) return;
     movieCategory = movieCategory.copyWith(
       loading: loading,
       totalPages: totalPages,
       page: page,
       movies: movies,
     );
-    List<MovieCategory> newMovieCategories = [...state.movieCategories];
-    newMovieCategories[index] = movieCategory;
+    Map<String, MovieCategory> newMovieCategories = {...state.movieCategories};
+    newMovieCategories[key] = movieCategory;
 
     state = state.copyWith(
       movieCategories: newMovieCategories,
@@ -118,20 +122,20 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
 }
 
 class MoviesState {
-  final List<MovieCategory> movieCategories;
+  final Map<String, MovieCategory> movieCategories;
   final List<Genre> movieGenres;
   final Movie? temporalMovie;
   final String heroTag;
 
   MoviesState({
-    this.movieCategories = const [],
+    this.movieCategories = const {},
     this.movieGenres = const [],
     this.temporalMovie,
     this.heroTag = '',
   });
 
   MoviesState copyWith({
-    List<MovieCategory>? movieCategories,
+    Map<String, MovieCategory>? movieCategories,
     List<Genre>? movieGenres,
     Movie? temporalMovie,
     String? heroTag,
@@ -144,26 +148,26 @@ class MoviesState {
       );
 }
 
-final List<MovieCategory> initMovieCategories = [
-  MovieCategory(
+final Map<String, MovieCategory> initMovieCategories = {
+  'nowPlaying': MovieCategory(
     name: (context) {
       return S.of(context).NowPlaying;
     },
     url: '/movie/now_playing',
   ),
-  MovieCategory(
+  'popular': MovieCategory(
     name: (context) {
       return S.of(context).Popular;
     },
     url: '/movie/popular',
   ),
-  MovieCategory(
+  'topRated': MovieCategory(
     name: (context) {
       return S.of(context).TopRated;
     },
     url: '/movie/top_rated',
   ),
-  MovieCategory(
+  'upcoming': MovieCategory(
     name: (context) {
       return S.of(context).Upcoming;
     },
@@ -172,4 +176,4 @@ final List<MovieCategory> initMovieCategories = [
       'region': 'us',
     },
   ),
-];
+};

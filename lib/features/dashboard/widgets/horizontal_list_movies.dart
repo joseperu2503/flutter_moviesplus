@@ -30,8 +30,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      loadMoreMovies();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.getMovies();
     });
     scrollController.addListener(() {
       loadMoreMovies();

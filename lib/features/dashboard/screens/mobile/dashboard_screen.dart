@@ -31,6 +31,9 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
+    final List<MapEntry<String, MovieCategory>> categoryList =
+        movieCategories.entries.toList();
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -63,7 +66,8 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           SliverList.separated(
             itemBuilder: (context, index) {
-              final MovieCategory movieCategory = movieCategories[index];
+              final MovieCategory movieCategory = categoryList[index].value;
+              final String key = categoryList[index].key;
 
               return HorizonalListMovies(
                 key: PageStorageKey(
@@ -71,7 +75,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ),
                 label: movieCategory.name(context),
                 getMovies: () async {
-                  await ref.read(moviesProvider.notifier).getMovies(index);
+                  await ref.read(moviesProvider.notifier).getMovies(key);
                 },
                 movies: movieCategory.movies,
                 seeMoreUrl: movieCategory.seeMoreUrl,
@@ -111,8 +115,8 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
 
     List<Movie> movies = [];
     final movieCategories = ref.watch(moviesProvider).movieCategories;
-    if (movieCategories.length >= 2) {
-      movies = ref.watch(moviesProvider).movieCategories[1].movies;
+    if (movieCategories['popular'] != null) {
+      movies = movieCategories['popular']!.movies;
     }
     if (movies.length >= 5) {
       movies = movies.sublist(0, 5);

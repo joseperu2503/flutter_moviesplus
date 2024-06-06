@@ -33,6 +33,8 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
+    final List<MapEntry<String, MovieCategory>> categoryList =
+        movieCategories.entries.toList();
     return Scaffold(
       body: Stack(
         children: [
@@ -42,12 +44,14 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
               const PosterDashboard(),
               SliverList.separated(
                 itemBuilder: (context, index) {
-                  final MovieCategory movieCategory = movieCategories[index];
+                  final MovieCategory movieCategory = categoryList[index].value;
+                  final String key = categoryList[index].key;
+
                   return HorizontalListMoviesWeb(
                     key: Key(movieCategory.name(context)),
                     label: movieCategory.name(context),
                     getMovies: () async {
-                      await ref.read(moviesProvider.notifier).getMovies(index);
+                      await ref.read(moviesProvider.notifier).getMovies(key);
                     },
                     movies: movieCategory.movies,
                   );
