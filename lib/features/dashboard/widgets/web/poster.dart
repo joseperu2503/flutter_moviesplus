@@ -17,19 +17,30 @@ class BackdropDashboardState extends ConsumerState<PosterDashboard>
     with AutomaticKeepAliveClientMixin {
   Movie? movie;
 
+  setMovie() {
+    final movieCategories = ref.read(moviesProvider).movieCategories;
+    if (movie == null &&
+        movieCategories['popular'] != null &&
+        movieCategories['popular']!.movies.isNotEmpty) {
+      setState(() {
+        movie = movieCategories['popular']!.movies[
+            Random().nextInt(movieCategories['popular']!.movies.length)];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    setMovie();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
     ref.listen(moviesProvider, (previous, next) {
-      if (movie == null &&
-          next.movieCategories['popular'] != null &&
-          next.movieCategories['popular']!.movies.isNotEmpty) {
-        setState(() {
-          movie = next.movieCategories['popular']!.movies[
-              Random().nextInt(next.movieCategories['popular']!.movies.length)];
-        });
-      }
+      setMovie();
     });
     final screen = MediaQuery.of(context);
 

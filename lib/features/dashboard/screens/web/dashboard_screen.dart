@@ -16,9 +16,6 @@ class DashboardScreen extends ConsumerStatefulWidget {
 class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(moviesProvider.notifier).initDashboard();
-    });
     super.initState();
   }
 
@@ -48,7 +45,9 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                   final String key = categoryList[index].key;
 
                   return HorizontalListMoviesWeb(
-                    key: Key(movieCategory.name(context)),
+                    key: PageStorageKey(
+                      '${movieCategory.name(context)}${Localizations.localeOf(context)}',
+                    ),
                     label: movieCategory.name(context),
                     getMovies: () async {
                       await ref.read(moviesProvider.notifier).getMovies(key);
