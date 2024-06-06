@@ -37,7 +37,6 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   MovieDetail movieDetail = MovieDetail();
   String heroTag = '';
   List<Cast> cast = [];
-
   List<Movie> _similarMovies = [];
   List<Movie> _recommendationsMovies = [];
   final ScrollController _scrollController = ScrollController();
@@ -46,7 +45,9 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(moviesProvider.notifier).initDashboard();
+    });
     getMovie();
     getMovieCredits();
     getSimilarMovies();
@@ -159,7 +160,6 @@ class MovieScreenState extends ConsumerState<MovieScreen>
           ),
           child: CustomScrollView(
             controller: _scrollController,
-            anchor: 0,
             slivers: [
               MovieAppbar(
                 movieDetail: movieDetail,

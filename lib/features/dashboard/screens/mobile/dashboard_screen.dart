@@ -22,7 +22,7 @@ class DashboardScreen extends ConsumerStatefulWidget {
 class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(moviesProvider.notifier).initDashboard();
     });
     super.initState();
@@ -31,6 +31,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [

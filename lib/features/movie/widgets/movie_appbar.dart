@@ -89,7 +89,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
         child: Row(
           children: const [
             if (!kIsWeb) CustomBackButton(),
-            if (kIsWeb) Spacer(),
+            Spacer(),
             if (kIsWeb) CustomCloseButton(),
           ],
         ),
