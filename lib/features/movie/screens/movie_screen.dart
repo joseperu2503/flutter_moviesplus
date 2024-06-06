@@ -139,9 +139,9 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     final screen = MediaQuery.of(context);
 
     List<String> tabs = [
-      S.of(context).CastAndCrew,
-      S.of(context).Recommendations,
       S.of(context).Similar,
+      S.of(context).Recommendations,
+      S.of(context).CastAndCrew,
     ];
 
     if (loading) {
@@ -304,11 +304,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                 child: SizedBox(height: 12),
               ),
               if (_tabController.index == 0)
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  sliver: MovieCast(cast: cast),
-                ),
-              if (_tabController.index == 1)
+                //** Similar movies */
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   sliver: SliverGrid.builder(
@@ -320,7 +316,8 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                     itemCount: _similarMovies.length,
                   ),
                 ),
-              if (_tabController.index == 2)
+              if (_tabController.index == 1)
+                //** Recommentadions movies */
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   sliver: SliverGrid.builder(
@@ -331,6 +328,12 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                     gridDelegate: movieSliverGridDelegate(context),
                     itemCount: _recommendationsMovies.length,
                   ),
+                ),
+              if (_tabController.index == 3)
+                //** Cast */
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  sliver: MovieCast(cast: cast),
                 ),
               SliverToBoxAdapter(
                 child: Container(
