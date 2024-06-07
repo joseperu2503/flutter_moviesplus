@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -15,6 +16,7 @@ import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/features/shared/services/device_service.dart';
 import 'package:moviesplus/generated/l10n.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:window_manager/window_manager.dart';
 
 void main() async {
   await Environment.initEnvironment();
@@ -28,6 +30,22 @@ void main() async {
   setPathUrlStrategy();
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
+  //** configuracion desktop */
+  if (!kIsWeb && (Platform.isMacOS)) {
+    await windowManager.ensureInitialized();
+
+    WindowOptions windowOptions = const WindowOptions(
+      minimumSize: Size(1000, 600),
+      center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.hidden,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
   runApp(
     const ProviderScope(
       child: MainApp(),
@@ -85,7 +103,6 @@ class MainAppState extends ConsumerState<MainApp> {
           PointerDeviceKind.touch,
         },
       ),
-      
     );
   }
 }
