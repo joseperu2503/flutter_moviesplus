@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
@@ -5,7 +7,6 @@ import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
 import 'package:moviesplus/features/shared/widgets/backdrop_image.dart';
-import 'package:moviesplus/features/shared/widgets/close_button.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 
 class MovieAppbar extends StatefulWidget {
@@ -14,11 +15,13 @@ class MovieAppbar extends StatefulWidget {
     required this.movieDetail,
     required this.scrollController,
     required this.heroTag,
+    required this.widthScreen,
   });
 
   final MovieDetail movieDetail;
   final ScrollController scrollController;
   final String heroTag;
+  final double widthScreen;
 
   @override
   State<MovieAppbar> createState() => _MovieAppbarState();
@@ -35,7 +38,6 @@ class _MovieAppbarState extends State<MovieAppbar> {
   }
 
   _scrollListenerPoster() {
-    final screen = MediaQuery.of(context);
     setState(() {
       if (widget.scrollController.offset < 0) {
         top = screen.padding.top + 60;
@@ -43,21 +45,40 @@ class _MovieAppbarState extends State<MovieAppbar> {
       } else if (widget.scrollController.offset < screen.padding.top + 60) {
         top = screen.padding.top + 60 - widget.scrollController.offset;
         width = 205 +
-            (screen.size.width - 205) *
+            (widget.widthScreen - 205) *
                 (widget.scrollController.offset) /
                 (screen.padding.top + 60);
       } else {
         top = 0;
-        width = screen.size.width;
+        width = widget.widthScreen;
       }
     });
   }
+
+  MediaQueryData get screen => MediaQuery.of(context);
+
+  bool get isPhone => !(Breakpoints.mobile < widget.widthScreen);
 
   bool get showTitle {
     if (isPhone) {
       return true;
     }
-    return (widget.scrollController.offset > 160);
+    return (widget.scrollController.offset >
+        expandedHeight - collapsedHeight + 60);
+  }
+
+  double get expandedHeight {
+    if (isPhone) {
+      return 450;
+    }
+    return widget.widthScreen * 0.5;
+  }
+
+  double get collapsedHeight {
+    if (isPhone) {
+      return 200;
+    }
+    return min(widget.widthScreen * 0.5, screen.size.height * 0.3);
   }
 
   @override
@@ -69,16 +90,11 @@ class _MovieAppbarState extends State<MovieAppbar> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final screen = MediaQuery.of(context);
     top = screen.padding.top + 60;
   }
 
-  bool get isPhone => MediaQuery.of(context).size.width < Breakpoints.mobile;
-
   @override
   Widget build(BuildContext context) {
-    final screen = MediaQuery.of(context);
-
     return SliverAppBar(
       titleSpacing: 0,
       toolbarHeight: 60,
@@ -89,8 +105,6 @@ class _MovieAppbarState extends State<MovieAppbar> {
         child: Row(
           children: const [
             if (!kIsWeb) CustomBackButton(),
-            Spacer(),
-            if (kIsWeb) CustomCloseButton(),
           ],
         ),
       ),
@@ -98,8 +112,8 @@ class _MovieAppbarState extends State<MovieAppbar> {
       automaticallyImplyLeading: false,
       pinned: true,
       backgroundColor: AppColors.backgroundColor,
-      expandedHeight: !isPhone ? 300 : 450,
-      collapsedHeight: 200,
+      expandedHeight: expandedHeight,
+      collapsedHeight: collapsedHeight,
       flexibleSpace: Stack(
         children: [
           if (isPhone)
@@ -112,7 +126,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
             ),
 
           if (isPhone)
-            //** Filter Tablet */
+            //** Filter Phone */
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -133,7 +147,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
               child: Hero(
                 tag: widget.heroTag,
                 child: Container(
-                  width: screen.size.width,
+                  width: widget.widthScreen,
                   alignment: Alignment.topCenter,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
@@ -149,7 +163,6 @@ class _MovieAppbarState extends State<MovieAppbar> {
             //** Backdrop Tablet */
             BackdropImage(
               path: widget.movieDetail.backdropPath,
-              height: 550,
               width: double.infinity,
             ),
           //** Movie Title */
@@ -159,7 +172,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
             left: 0,
             child: Container(
               height: 80,
-              width: screen.size.width,
+              width: widget.widthScreen,
               padding: const EdgeInsets.only(
                 left: 24,
                 bottom: 12,

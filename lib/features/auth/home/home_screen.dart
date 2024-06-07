@@ -16,11 +16,11 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const CustomInput(),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             const CustomInput(),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             TextButton(

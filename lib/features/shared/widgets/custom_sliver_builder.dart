@@ -7,18 +7,18 @@ class CustomSliverBuilder extends StatelessWidget {
     super.key,
     required this.builder,
     this.padding = EdgeInsets.zero,
+    this.maxWidth = 1200,
   });
 
   final Widget Function(BuildContext context, SliverConstraints constraints)
       builder;
   final EdgeInsets padding;
+  final double maxWidth;
 
   @override
   Widget build(BuildContext context) {
     return SliverLayoutBuilder(
       builder: (context, constraints) {
-        const maxWidth = 1200;
-
         final double horizontalPadding = max(
           (constraints.crossAxisExtent - maxWidth) / 2,
           0,
@@ -31,7 +31,13 @@ class CustomSliverBuilder extends StatelessWidget {
           ),
           sliver: SliverPadding(
             padding: padding,
-            sliver: builder(context, constraints),
+            sliver: builder(
+              context,
+              constraints.copyWith(
+                crossAxisExtent:
+                    constraints.crossAxisExtent - 2 * horizontalPadding,
+              ),
+            ),
           ),
         );
       },

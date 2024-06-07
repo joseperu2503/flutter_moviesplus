@@ -57,7 +57,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
     }
 
     setMovieCategory(key: key, loading: true);
-    print('get Movies $key page ${movieCategory.page}');
+    // print('get Movies $key page ${movieCategory.page}');
 
     try {
       final MoviesResponse response = await MovieDbService.getMovies(

@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/breakpoints.dart';
+import 'package:moviesplus/config/constants/styles.dart';
+import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
+import 'package:moviesplus/features/movie/widgets/movie_info.dart';
+import 'package:moviesplus/features/shared/widgets/poster_image.dart';
+
+class MovieDetails extends StatelessWidget {
+  const MovieDetails({
+    super.key,
+    required this.widthScreen,
+    required this.movieDetail,
+  });
+
+  final double widthScreen;
+  final MovieDetail movieDetail;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widthScreen > Breakpoints.mobile)
+            Container(
+              height: 240,
+              margin: const EdgeInsets.only(
+                right: 24,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: AspectRatio(
+                  aspectRatio: posterAspectRatio,
+                  child: PosterImage(
+                    path: movieDetail.posterPath,
+                  ),
+                ),
+              ),
+            ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widthScreen > Breakpoints.mobile)
+                  Container(
+                    margin: const EdgeInsets.only(
+                      bottom: 12,
+                    ),
+                    child: Text(
+                      movieDetail.title ?? '',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.white,
+                        leadingDistribution: TextLeadingDistribution.even,
+                      ),
+                    ),
+                  ),
+                MovieInfo(movie: movieDetail),
+                const SizedBox(
+                  height: 24,
+                ),
+                MovieButtons(movie: movieDetail),
+                const SizedBox(
+                  height: 24,
+                ),
+                Text(
+                  movieDetail.overview ?? '',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white,
+                    height: 17.07 / 14,
+                    letterSpacing: 0.12,
+                    leadingDistribution: TextLeadingDistribution.even,
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

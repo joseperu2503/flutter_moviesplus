@@ -60,7 +60,7 @@ class MovieItemState extends ConsumerState<MovieItem> {
                         .read(moviesProvider.notifier)
                         .setTemporalMovie(widget.movie);
                     if (kIsWeb) {
-                      context.go('/movie/${widget.movie.id}');
+                      context.push('/movie/${widget.movie.id}');
                     } else {
                       context.push('/movie/${widget.movie.id}');
                     }

@@ -40,8 +40,8 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     MovieCategory? movieCategory;
-    if (ref.watch(moviesProvider).movieCategories.length > 1) {
-      movieCategory = ref.watch(moviesProvider).movieCategories[1];
+    if (ref.watch(moviesProvider).movieCategories['popular'] != null) {
+      movieCategory = ref.watch(moviesProvider).movieCategories['popular'];
     }
 
     final searchState = ref.watch(searchProvider);

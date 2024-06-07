@@ -47,6 +47,7 @@ class MainAppState extends ConsumerState<MainApp> {
   void initState() {
     ref.read(profileProvider.notifier).getLanguage();
 
+    //** En caso de ser celular bloquea el giro */
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!kIsWeb && Device(context).isPhone) {
         SystemChrome.setPreferredOrientations([
