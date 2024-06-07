@@ -22,6 +22,8 @@ class ProfileImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipOval(
       child: Container(
+        width: width,
+        height: height,
         color: AppColors.primarySoft,
         child: path != null
             ? Opacity(
