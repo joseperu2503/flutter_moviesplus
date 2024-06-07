@@ -25,23 +25,26 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
   getMovieGenres() async {
     try {
       final List<Genre> genres = await MovieDbService.getMovieGenres();
-      Map<String, MovieCategory> newMovieCategories = {};
       for (var genre in genres) {
-        newMovieCategories[genre.id.toString()] = MovieCategory(
-          name: (context) {
-            return genre.name;
-          },
-          url: '/discover/movie',
-          queryParameters: {
-            "with_genres": genre.id,
-          },
-          seeMoreUrl: '/genre/${genre.id}',
-        );
+        Map<String, MovieCategory> newMovieCategories = {
+          ...state.movieCategories
+        };
+        if (newMovieCategories[genre.id.toString()] == null) {
+          newMovieCategories[genre.id.toString()] = MovieCategory(
+            name: (context) {
+              return genre.name;
+            },
+            url: '/discover/movie',
+            queryParameters: {
+              "with_genres": genre.id,
+            },
+            seeMoreUrl: '/genre/${genre.id}',
+          );
+          state = state.copyWith(
+            movieCategories: newMovieCategories,
+          );
+        }
       }
-
-      state = state.copyWith(
-        movieCategories: {...newMovieCategories, ...state.movieCategories},
-      );
     } catch (e) {
       throw Exception(e);
     }
