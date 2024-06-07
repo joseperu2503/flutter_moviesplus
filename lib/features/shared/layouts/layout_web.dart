@@ -42,30 +42,30 @@ class _LayoutWebState extends State<LayoutWeb> {
                 ),
               ),
               const Spacer(),
-              SizedBox(
-                width: 42,
-                height: 42,
-                child: TextButton(
-                  onPressed: () {
-                    context.go('/search');
-                  },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: SvgPicture.asset(
-                    'assets/icons/search.svg',
-                    width: 28,
-                    height: 28,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.white,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   width: 42,
+              //   height: 42,
+              //   child: TextButton(
+              //     onPressed: () {
+              //       context.go('/search');
+              //     },
+              //     style: TextButton.styleFrom(
+              //       padding: EdgeInsets.zero,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //     ),
+              //     child: SvgPicture.asset(
+              //       'assets/icons/search.svg',
+              //       width: 28,
+              //       height: 28,
+              //       colorFilter: const ColorFilter.mode(
+              //         AppColors.white,
+              //         BlendMode.srcIn,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

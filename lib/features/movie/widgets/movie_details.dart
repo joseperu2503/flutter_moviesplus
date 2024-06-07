@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
+import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
-import 'package:moviesplus/features/shared/widgets/poster_image.dart';
+import 'package:moviesplus/features/shared/widgets/movie_image.dart';
 
 class MovieDetails extends StatelessWidget {
   const MovieDetails({
@@ -33,8 +34,9 @@ class MovieDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: AspectRatio(
                   aspectRatio: posterAspectRatio,
-                  child: PosterImage(
+                  child: MovieImage(
                     path: movieDetail.posterPath,
+                    fileSize: ImageSize.posterW500,
                   ),
                 ),
               ),

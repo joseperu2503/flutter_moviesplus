@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/shared/widgets/profile_image.dart';
 
@@ -17,6 +18,7 @@ class CastItem extends StatelessWidget {
       children: [
         ProfileImage(
           path: cast.profilePath,
+          fileSize: ImageSize.profileW185,
         ),
         const SizedBox(
           width: 8,

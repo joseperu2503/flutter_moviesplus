@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
-import 'package:moviesplus/features/shared/widgets/backdrop_image.dart';
+import 'package:moviesplus/features/shared/widgets/movie_image.dart';
 
 class PosterDashboard extends ConsumerStatefulWidget {
   const PosterDashboard({super.key});
@@ -52,7 +52,8 @@ class BackdropDashboardState extends ConsumerState<PosterDashboard>
               ),
               child: Stack(
                 children: [
-                  BackdropImage(
+                  MovieImage(
+                    width: double.infinity,
                     path: movie?.backdropPath,
                   ),
                   Positioned(

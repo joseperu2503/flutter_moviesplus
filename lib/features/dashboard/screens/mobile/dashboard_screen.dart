@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
+import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
-import 'package:moviesplus/features/shared/widgets/backdrop_image.dart';
-import 'package:moviesplus/features/shared/widgets/poster_image.dart';
+import 'package:moviesplus/features/shared/widgets/movie_image.dart';
 import 'package:uuid/uuid.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
@@ -177,13 +177,14 @@ class SlideState extends ConsumerState<_Slide> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: GestureDetector(
-              child: screen.size.width > Breakpoints.mobile
-                  ? BackdropImage(
-                      path: widget.movie.backdropPath,
-                    )
-                  : PosterImage(
-                      path: widget.movie.posterPath,
-                    ),
+              child: MovieImage(
+                path: screen.size.width > Breakpoints.mobile
+                    ? widget.movie.backdropPath
+                    : widget.movie.posterPath,
+                fileSize: screen.size.width > Breakpoints.mobile
+                    ? ImageSize.original
+                    : ImageSize.posterW500,
+              ),
             ),
           ),
         ),

@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
-import 'package:moviesplus/features/shared/widgets/poster_image.dart';
+import 'package:moviesplus/features/shared/widgets/movie_image.dart';
 import 'package:uuid/uuid.dart';
 
 class MovieItem extends ConsumerStatefulWidget {
@@ -36,39 +37,37 @@ class MovieItemState extends ConsumerState<MovieItem> {
         borderRadius: BorderRadius.circular(20),
         child: AspectRatio(
           aspectRatio: posterAspectRatio,
-          child: Container(
-            color: AppColors.primarySoft,
-            child: Stack(
-              children: [
-                PosterImage(
-                  path: widget.movie.posterPath,
-                  height: double.infinity,
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: EdgeInsets.zero,
-                    foregroundColor: AppColors.textGrey,
+          child: Stack(
+            children: [
+              MovieImage(
+                path: widget.movie.posterPath,
+                height: double.infinity,
+                fileSize: ImageSize.posterW500,
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () {
-                    ref
-                        .read(moviesProvider.notifier)
-                        .setHeroTag('${widget.movie.id}$tag');
-                    ref
-                        .read(moviesProvider.notifier)
-                        .setTemporalMovie(widget.movie);
-                    if (kIsWeb) {
-                      context.push('/movie/${widget.movie.id}');
-                    } else {
-                      context.push('/movie/${widget.movie.id}');
-                    }
-                  },
-                  child: Container(),
+                  padding: EdgeInsets.zero,
+                  foregroundColor: AppColors.textGrey,
                 ),
-              ],
-            ),
+                onPressed: () {
+                  ref
+                      .read(moviesProvider.notifier)
+                      .setHeroTag('${widget.movie.id}$tag');
+                  ref
+                      .read(moviesProvider.notifier)
+                      .setTemporalMovie(widget.movie);
+                  if (kIsWeb) {
+                    context.push('/movie/${widget.movie.id}');
+                  } else {
+                    context.push('/movie/${widget.movie.id}');
+                  }
+                },
+                child: Container(),
+              ),
+            ],
           ),
         ),
       ),

@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
+import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
-import 'package:moviesplus/features/shared/widgets/backdrop_image.dart';
-import 'package:moviesplus/features/shared/widgets/poster_image.dart';
+import 'package:moviesplus/features/shared/widgets/movie_image.dart';
 
 class MovieAppbar extends StatefulWidget {
   const MovieAppbar({
@@ -117,12 +117,13 @@ class _MovieAppbarState extends State<MovieAppbar> {
       flexibleSpace: Stack(
         children: [
           if (isPhone)
-            //** Poster Phone */
-            PosterImage(
+            //** Background Poster Opacity Phone */
+            MovieImage(
               path: widget.movieDetail.posterPath,
               height: 550,
               width: double.infinity,
-              opacity: const AlwaysStoppedAnimation(0.4),
+              opacity: 0.4,
+              fileSize: ImageSize.posterW500,
             ),
 
           if (isPhone)
@@ -151,9 +152,10 @@ class _MovieAppbarState extends State<MovieAppbar> {
                   alignment: Alignment.topCenter,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: PosterImage(
+                    child: MovieImage(
                       path: widget.movieDetail.posterPath,
                       width: width,
+                      fileSize: ImageSize.posterW500,
                     ),
                   ),
                 ),
@@ -161,7 +163,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
             ),
           if (!isPhone)
             //** Backdrop Tablet */
-            BackdropImage(
+            MovieImage(
               path: widget.movieDetail.backdropPath,
               width: double.infinity,
             ),
