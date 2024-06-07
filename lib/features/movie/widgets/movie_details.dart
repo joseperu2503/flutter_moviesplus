@@ -13,10 +13,12 @@ class MovieDetails extends StatelessWidget {
     super.key,
     required this.widthScreen,
     required this.movieDetail,
+    required this.heroTag,
   });
 
   final double widthScreen;
   final MovieDetail movieDetail;
+  final String heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +32,16 @@ class MovieDetails extends StatelessWidget {
               margin: const EdgeInsets.only(
                 right: 24,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: AspectRatio(
-                  aspectRatio: posterAspectRatio,
-                  child: MovieImage(
-                    path: movieDetail.posterPath,
-                    fileSize: ImageSize.posterW500,
+              child: Hero(
+                tag: heroTag,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: AspectRatio(
+                    aspectRatio: posterAspectRatio,
+                    child: MovieImage(
+                      path: movieDetail.posterPath,
+                      fileSize: ImageSize.posterW500,
+                    ),
                   ),
                 ),
               ),

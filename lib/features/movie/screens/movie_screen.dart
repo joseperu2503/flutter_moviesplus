@@ -176,6 +176,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                 ),
                 builder: (context, constraints) {
                   return MovieDetails(
+                    heroTag: heroTag,
                     movieDetail: movieDetail,
                     widthScreen: constraints.crossAxisExtent,
                   );
