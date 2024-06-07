@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 
@@ -91,8 +92,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 42,
+          padding: const EdgeInsets.only(
+            left: horizontalPaddingWeb,
+            right: horizontalPaddingWeb - 16,
           ),
           child: Row(
             children: [
