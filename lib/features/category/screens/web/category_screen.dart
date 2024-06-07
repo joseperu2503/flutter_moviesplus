@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
+import 'package:moviesplus/features/shared/widgets/custom_sliver_builder.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 
@@ -37,6 +39,12 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
         (scrollController.position.pixels + 200) <
             scrollController.position.maxScrollExtent) return;
     await ref.read(moviesProvider.notifier).getMovies(widget.categoryKey);
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+      () async {
+        await getMovies();
+      },
+    );
   }
 
   @override
@@ -58,20 +66,42 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
           : CustomScrollView(
               controller: scrollController,
               slivers: [
-                SliverToBoxAdapter(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      top: heightAppbar + 10,
+                CustomSliverBuilder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPaddingWeb,
+                  ),
+                  builder: (context, constraints) => SliverAppBar(
+                    backgroundColor: AppColors.headerWeb,
+                    toolbarHeight: 150,
+                    pinned: true,
+                    automaticallyImplyLeading: false,
+                    scrolledUnderElevation: 0,
+                    flexibleSpace: Container(
+                      alignment: Alignment.bottomLeft,
+                      padding: const EdgeInsets.only(
+                        top: heightAppbar + 10,
+                        bottom: 20,
+                      ),
+                      child: Text(
+                        movieCategory.name(context),
+                        style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.white,
+                          height: 19.5 / 16,
+                          leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: const EdgeInsets.only(
-                    left: 24,
-                    right: 24,
+                CustomSliverBuilder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPaddingWeb,
                   ),
-                  sliver: SliverGrid.builder(
-                    gridDelegate: movieSliverGridDelegate(context),
+                  builder: (context, constraints) => SliverGrid.builder(
+                    gridDelegate: movieSliverGridDelegate(
+                        MediaQuery.of(context).size.width),
                     itemBuilder: (context, index) {
                       final Movie movie = movieCategory.movies[index];
 
@@ -93,7 +123,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
                           : null,
                     ),
                   ),
-                )
+                ),
               ],
             ),
     );

@@ -14,6 +14,7 @@ import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
 import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
+import 'package:moviesplus/features/shared/widgets/custom_sliver_builder.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/poster_image.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
@@ -302,29 +303,41 @@ class MovieScreenState extends ConsumerState<MovieScreen>
               ),
               if (_tabController.index == 0)
                 //** Similar movies */
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  sliver: SliverGrid.builder(
-                    itemBuilder: (context, index) {
-                      final movie = _similarMovies[index];
-                      return MovieItem(movie: movie);
-                    },
-                    gridDelegate: movieSliverGridDelegate(context),
-                    itemCount: _similarMovies.length,
+                CustomSliverBuilder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPaddingMobile,
                   ),
+                  builder: (context, constraints) {
+                    return SliverGrid.builder(
+                      itemBuilder: (context, index) {
+                        final movie = _similarMovies[index];
+                        return MovieItem(movie: movie);
+                      },
+                      gridDelegate: movieSliverGridDelegate(
+                        constraints.crossAxisExtent,
+                      ),
+                      itemCount: _similarMovies.length,
+                    );
+                  },
                 ),
               if (_tabController.index == 1)
                 //** Recommentadions movies */
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  sliver: SliverGrid.builder(
-                    itemBuilder: (context, index) {
-                      final movie = _recommendationsMovies[index];
-                      return MovieItem(movie: movie);
-                    },
-                    gridDelegate: movieSliverGridDelegate(context),
-                    itemCount: _recommendationsMovies.length,
+                CustomSliverBuilder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPaddingMobile,
                   ),
+                  builder: (context, constraints) {
+                    return SliverGrid.builder(
+                      itemBuilder: (context, index) {
+                        final movie = _recommendationsMovies[index];
+                        return MovieItem(movie: movie);
+                      },
+                      gridDelegate: movieSliverGridDelegate(
+                        constraints.crossAxisExtent,
+                      ),
+                      itemCount: _recommendationsMovies.length,
+                    );
+                  },
                 ),
               if (_tabController.index == 2)
                 //** Cast */

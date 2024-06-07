@@ -137,7 +137,8 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                 right: 24,
               ),
               sliver: SliverGrid.builder(
-                gridDelegate: movieSliverGridDelegate(context),
+                gridDelegate:
+                    movieSliverGridDelegate(MediaQuery.of(context).size.width),
                 itemBuilder: (context, index) {
                   final Movie movie = movieCategory!.movies[index];
 
@@ -153,7 +154,8 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                 right: 24,
               ),
               sliver: SliverGrid.builder(
-                gridDelegate: movieSliverGridDelegate(context),
+                gridDelegate:
+                    movieSliverGridDelegate(MediaQuery.of(context).size.width),
                 itemBuilder: (context, index) {
                   final Movie movie = searchState.movies[index];
 

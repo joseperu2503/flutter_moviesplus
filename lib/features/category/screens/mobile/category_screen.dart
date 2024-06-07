@@ -39,7 +39,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreen> {
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: movieCategory != null ? movieCategory.name(context) : 'Category',
+        title: movieCategory != null ? movieCategory.name(context) : '404',
       ),
       body: movieCategory == null
           ? const Text('Not found')
@@ -52,7 +52,8 @@ class CategoryScreenState extends ConsumerState<CategoryScreen> {
                     right: 24,
                   ),
                   sliver: SliverGrid.builder(
-                    gridDelegate: movieSliverGridDelegate(context),
+                    gridDelegate: movieSliverGridDelegate(
+                        MediaQuery.of(context).size.width),
                     itemBuilder: (context, index) {
                       final Movie movie = movieCategory.movies[index];
 

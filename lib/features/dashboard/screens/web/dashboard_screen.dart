@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
+import 'package:moviesplus/features/dashboard/widgets/web/appbar.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/horizontal_list_movies.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/poster.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
-  const DashboardScreen({super.key});
+  const DashboardScreen({
+    super.key,
+  });
 
   @override
   DashboardScreenState createState() => DashboardScreenState();
@@ -67,6 +70,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
               )
             ],
           ),
+          AppbarWeb(scrollController: _scrollController),
         ],
       ),
     );

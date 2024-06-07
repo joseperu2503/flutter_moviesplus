@@ -22,5 +22,7 @@ class AppColors {
   static const Color lineDark = Color(0xFFEAEAEA);
 
   static const Color backgroundColor = primaryDark;
+  static const Color headerWeb = primaryDark;
+
   static const Color bgInput = Colors.transparent;
 }

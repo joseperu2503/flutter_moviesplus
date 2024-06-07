@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/features/category/screens/web/category_screen.dart';
 import 'package:moviesplus/features/dashboard/screens/web/dashboard_screen.dart';
-import 'package:moviesplus/features/dashboard/widgets/web/appbar.dart';
 import 'package:moviesplus/features/movie/widgets/movie_dialog.dart';
 import 'package:moviesplus/features/search/screens/search_screen.dart';
+import 'package:moviesplus/features/shared/layouts/layout_web.dart';
 import 'package:moviesplus/features/shared/widgets/dialog_page.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -17,13 +17,8 @@ final appRouterWeb = GoRouter(
   routes: [
     ShellRoute(
       builder: (context, state, child) {
-        final ScrollController _scrollController = ScrollController();
-
-        return Stack(
-          children: [
-            child,
-            AppbarWeb(scrollController: _scrollController),
-          ],
+        return LayoutWeb(
+          child: child,
         );
       },
       routes: [

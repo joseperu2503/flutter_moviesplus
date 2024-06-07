@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 SliverGridDelegateWithFixedCrossAxisCount movieSliverGridDelegate(
-  BuildContext context,
+  double width,
 ) {
-  final screen = MediaQuery.of(context);
-  final widthScreen = screen.size.width;
+  final widthScreen = width;
   return SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: widthScreen > 600
-        ? 4
-        : widthScreen > 500
-            ? 3
-            : 2,
+    crossAxisCount: widthScreen > 992
+        ? 6
+        : widthScreen > 768
+            ? 5
+            : widthScreen > 640
+                ? 4
+                : widthScreen > 500
+                    ? 3
+                    : 2,
     crossAxisSpacing: widthScreen > 600 ? 16 : 16,
     mainAxisSpacing: widthScreen > 600 ? 24 : 20,
     childAspectRatio: posterAspectRatio,
@@ -19,3 +22,5 @@ SliverGridDelegateWithFixedCrossAxisCount movieSliverGridDelegate(
 
 const double posterAspectRatio = 0.65;
 const double heightAppbar = 80;
+const double horizontalPaddingWeb = 42;
+const double horizontalPaddingMobile = 24;
