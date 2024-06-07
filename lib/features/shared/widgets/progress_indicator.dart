@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +16,22 @@ class CustomProgressIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    TargetPlatform platform = defaultTargetPlatform;
+
+    bool isIos =
+        platform == TargetPlatform.iOS || platform == TargetPlatform.macOS;
+
     return SizedBox(
       width: size,
       height: size,
-      child: kIsWeb || Platform.isAndroid
-          ? CircularProgressIndicator(
-              color: AppColors.white,
-              strokeWidth: strokeWidth,
-            )
-          : CupertinoActivityIndicator(
+      child: isIos
+          ? CupertinoActivityIndicator(
               radius: size / 2,
               color: AppColors.white,
+            )
+          : CircularProgressIndicator(
+              color: AppColors.white,
+              strokeWidth: strokeWidth,
             ),
     );
   }
