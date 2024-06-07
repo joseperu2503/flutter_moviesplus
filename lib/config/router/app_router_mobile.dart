@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moviesplus/features/category/screens/category_screen.dart';
+import 'package:moviesplus/features/category/screens/mobile/category_screen.dart';
 import 'package:moviesplus/features/dashboard/screens/mobile/dashboard_screen.dart';
 import 'package:moviesplus/features/movie/screens/movie_screen.dart';
 import 'package:moviesplus/features/profile/screens/country_screen.dart';

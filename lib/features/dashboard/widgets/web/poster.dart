@@ -56,7 +56,7 @@ class BackdropDashboardState extends ConsumerState<PosterDashboard>
                     path: movie?.backdropPath,
                   ),
                   Positioned(
-                    bottom: 0,
+                    bottom: -5,
                     left: 0,
                     child: Container(
                       height: 200,

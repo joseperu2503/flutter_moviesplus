@@ -11,7 +11,6 @@ import 'package:moviesplus/config/constants/environment.dart';
 import 'package:moviesplus/config/router/app_router_mobile.dart';
 import 'package:moviesplus/config/router/app_router_web.dart';
 import 'package:moviesplus/config/theme/app_theme.dart';
-import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/features/shared/services/device_service.dart';
 import 'package:moviesplus/generated/l10n.dart';
@@ -47,9 +46,6 @@ class MainAppState extends ConsumerState<MainApp> {
   @override
   void initState() {
     ref.read(profileProvider.notifier).getLanguage();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(moviesProvider.notifier).initDashboard();
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!kIsWeb && Device(context).isPhone) {

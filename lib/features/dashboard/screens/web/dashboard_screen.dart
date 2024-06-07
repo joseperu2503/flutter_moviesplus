@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
-import 'package:moviesplus/features/dashboard/widgets/web/appbar.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/horizontal_list_movies.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/poster.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
@@ -17,6 +16,9 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(moviesProvider.notifier).initDashboard();
+    });
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -53,6 +55,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                       await ref.read(moviesProvider.notifier).getMovies(key);
                     },
                     movies: movieCategory.movies,
+                    seeMoreUrl: movieCategory.seeMoreUrl,
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -64,7 +67,6 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
               )
             ],
           ),
-          AppbarWeb(scrollController: _scrollController),
         ],
       ),
     );

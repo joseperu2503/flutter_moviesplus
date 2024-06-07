@@ -17,7 +17,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
 
   initDashboard() async {
     state = state.copyWith(
-      movieCategories: initMovieCategories,
+      movieCategories: {...initMovieCategories, ...state.movieCategories},
     );
     await getMovieGenres();
   }
@@ -25,9 +25,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
   getMovieGenres() async {
     try {
       final List<Genre> genres = await MovieDbService.getMovieGenres();
-      Map<String, MovieCategory> newMovieCategories = {
-        ...state.movieCategories
-      };
+      Map<String, MovieCategory> newMovieCategories = {};
       for (var genre in genres) {
         newMovieCategories[genre.id.toString()] = MovieCategory(
           name: (context) {
@@ -39,11 +37,11 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
           },
           seeMoreUrl: '/genre/${genre.id}',
         );
-
-        state = state.copyWith(
-          movieCategories: newMovieCategories,
-        );
       }
+
+      state = state.copyWith(
+        movieCategories: {...newMovieCategories, ...state.movieCategories},
+      );
     } catch (e) {
       throw Exception(e);
     }
@@ -59,6 +57,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
     }
 
     setMovieCategory(key: key, loading: true);
+    print('get Movies $key page ${movieCategory.page}');
 
     try {
       final MoviesResponse response = await MovieDbService.getMovies(

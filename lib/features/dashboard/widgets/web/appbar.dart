@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 
 class AppbarWeb extends StatefulWidget {
   const AppbarWeb({
@@ -68,7 +69,7 @@ class _AppbarWebState extends State<AppbarWeb> {
             left: 0,
             right: 0,
             child: Container(
-              height: 80,
+              height: heightAppbar,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -82,11 +83,11 @@ class _AppbarWebState extends State<AppbarWeb> {
             ),
           ),
           Container(
-            height: 80,
+            height: heightAppbar,
             color: AppColors.textBlack.withOpacity(opacity),
           ),
           Container(
-            height: 80,
+            height: heightAppbar,
             padding: const EdgeInsets.symmetric(
               horizontal: 42,
             ),

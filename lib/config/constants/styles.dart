@@ -18,3 +18,4 @@ SliverGridDelegateWithFixedCrossAxisCount movieSliverGridDelegate(
 }
 
 const double posterAspectRatio = 0.65;
+const double heightAppbar = 80;
