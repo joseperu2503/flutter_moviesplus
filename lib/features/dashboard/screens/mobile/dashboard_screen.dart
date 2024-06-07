@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/config/constants/sizes.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
@@ -113,6 +114,14 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
+    final double height = screen.size.width > Breakpoints.mobile
+        ? (screen.size.width - 24 * 2) * 0.5
+        : screen.size.width;
+
+    final double viewportFraction = screen.size.width > Breakpoints.mobile
+        ? (screen.size.width - 24 * 2) / screen.size.width
+        : height * posterAspectRatio / screen.size.width;
+
     List<Movie> movies = [];
     final movieCategories = ref.watch(moviesProvider).movieCategories;
     if (movieCategories['popular'] != null) {
@@ -122,14 +131,10 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
       movies = movies.sublist(0, 5);
     }
     return SizedBox(
-      height: screen.size.width > Breakpoints.mobile
-          ? screen.size.width * 0.5
-          : screen.size.width * 1,
+      height: height,
       child: Swiper(
-        viewportFraction: screen.size.width > Breakpoints.mobile
-            ? (screen.size.width - 24 * 2) / screen.size.width
-            : 0.7,
-        scale: screen.size.width > Breakpoints.mobile ? 0.6 : 0.8,
+        viewportFraction: viewportFraction,
+        scale: 0.8,
         autoplay: movies.isNotEmpty,
         itemCount: movies.length,
         itemBuilder: (context, index) => _Slide(
