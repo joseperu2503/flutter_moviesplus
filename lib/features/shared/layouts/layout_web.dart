@@ -29,9 +29,17 @@ class _LayoutWebState extends State<LayoutWeb> {
           ),
           child: Row(
             children: [
-              Image.asset(
-                'assets/images/logo.png',
-                height: 20,
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    context.go('/');
+                  },
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    height: 20,
+                  ),
+                ),
               ),
               const Spacer(),
               SizedBox(
