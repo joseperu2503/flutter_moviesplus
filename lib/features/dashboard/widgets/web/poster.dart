@@ -53,7 +53,8 @@ class BackdropDashboardState extends ConsumerState<PosterDashboard>
               child: Stack(
                 children: [
                   MovieImage(
-                    width: double.infinity,
+                    width: screen.size.width,
+                    height: screen.size.width * 0.5,
                     path: movie?.backdropPath,
                   ),
                   Positioned(
