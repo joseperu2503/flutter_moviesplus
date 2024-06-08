@@ -183,6 +183,7 @@ class SlideState extends ConsumerState<_Slide> {
             child: GestureDetector(
               child: MovieImage(
                 height: double.infinity,
+                width: double.infinity,
                 path: screen.size.width > Breakpoints.mobile
                     ? widget.movie.backdropPath
                     : widget.movie.posterPath,
