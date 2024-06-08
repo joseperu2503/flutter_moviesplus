@@ -1,9 +1,22 @@
-[{
+[
+  {
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
       "package_name": "com.joseperezgil.moviesplus",
-      "sha256_cert_fingerprints":
-      ["E3:FD:DF:34:4B:E0:11:F2:07:30:42:F8:0B:E5:5E:07:DC:39:A5:40:07:4F:4D:5E:30:CD:5F:8E:50:EC:72:30"]
+      "sha256_cert_fingerprints": [
+        "0A:B6:3E:28:F7:39:3E:BD:62:CF:F3:62:6D:13:68:9F:F7:99:4F:3A:85:30:9C:33:E6:65:97:E1:C7:E4:C3:5D"
+      ]
     }
-}]
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.joseperezgil.moviesplus",
+      "sha256_cert_fingerprints": [
+        "F8:4B:CF:64:7B:01:C1:A5:CD:A7:55:B0:CE:7C:A5:1E:FB:F2:D5:45:B2:6A:CE:33:62:AF:74:6C:44:9E:48:0B"
+      ]
+    }
+  }
+]
