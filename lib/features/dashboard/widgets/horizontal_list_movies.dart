@@ -118,7 +118,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
           ),
         ),
         const SizedBox(
-          height: 12,
+          height: 4,
         ),
         SizedBox(
           height: 240,
