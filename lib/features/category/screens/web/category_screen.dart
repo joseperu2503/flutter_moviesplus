@@ -39,6 +39,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
         (scrollController.position.pixels + 400) <
             scrollController.position.maxScrollExtent) return;
     await ref.read(moviesProvider.notifier).getMovies(widget.categoryKey);
+    //** Sigue realizando peticiones hasta llenar toda la pantalla con peliculas */
     await Future.delayed(
       const Duration(milliseconds: 500),
       () async {
