@@ -1,35 +1,12 @@
 {
-    "name": "moviesplus",
-    "short_name": "moviesplus",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
-    "prefer_related_applications": false,
-    "icons": [
-        {
-            "src": "icons/Icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/Icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/Icon-maskable-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "maskable"
-        },
-        {
-            "src": "icons/Icon-maskable-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
-        }
-    ]
+  "name": "Movies Plus",
+  "short_name": "Movies Plus",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1F1D2B",
+  "theme_color": "#1F1D2B",
+  "description": "A movie project",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": []
 }
