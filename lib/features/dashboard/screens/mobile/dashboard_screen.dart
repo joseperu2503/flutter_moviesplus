@@ -177,12 +177,12 @@ class SlideState extends ConsumerState<_Slide> {
           context.push('/movie/${widget.movie.id}');
         },
         child: Container(
-          padding: const EdgeInsets.only(bottom: 0),
           decoration: decoration,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: GestureDetector(
               child: MovieImage(
+                height: double.infinity,
                 path: screen.size.width > Breakpoints.mobile
                     ? widget.movie.backdropPath
                     : widget.movie.posterPath,
