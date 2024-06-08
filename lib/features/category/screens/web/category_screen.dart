@@ -36,7 +36,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
   final scrollController = ScrollController();
   getMovies() async {
     if (scrollController.hasClients &&
-        (scrollController.position.pixels + 200) <
+        (scrollController.position.pixels + 400) <
             scrollController.position.maxScrollExtent) return;
     await ref.read(moviesProvider.notifier).getMovies(widget.categoryKey);
     await Future.delayed(
@@ -59,6 +59,8 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
   Widget build(BuildContext context) {
     MovieCategory? movieCategory =
         ref.watch(moviesProvider).movieCategories[widget.categoryKey];
+    final screen = MediaQuery.of(context);
+    final double maxWidth = screen.size.height * 1.1;
 
     return Scaffold(
       body: movieCategory == null
@@ -67,6 +69,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
               controller: scrollController,
               slivers: [
                 CustomSliverBuilder(
+                  maxWidth: maxWidth,
                   padding: const EdgeInsets.symmetric(
                     horizontal: horizontalPaddingWeb,
                   ),
@@ -96,12 +99,14 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
                   ),
                 ),
                 CustomSliverBuilder(
+                  maxWidth: maxWidth,
                   padding: const EdgeInsets.symmetric(
                     horizontal: horizontalPaddingWeb,
                   ),
                   builder: (context, constraints) => SliverGrid.builder(
                     gridDelegate: movieSliverGridDelegate(
-                        MediaQuery.of(context).size.width),
+                      constraints.crossAxisExtent,
+                    ),
                     itemBuilder: (context, index) {
                       final Movie movie = movieCategory.movies[index];
 
