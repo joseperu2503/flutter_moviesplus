@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
-import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
+import 'package:moviesplus/features/dashboard/widgets/mobile/horizontal_list_movies.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 

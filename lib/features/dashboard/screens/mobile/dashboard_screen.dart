@@ -7,7 +7,7 @@ import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
-import 'package:moviesplus/features/dashboard/widgets/horizontal_list_movies.dart';
+import 'package:moviesplus/features/dashboard/widgets/mobile/horizontal_list_movies.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/movie_image.dart';
@@ -84,7 +84,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
             },
             separatorBuilder: (context, index) {
               return const SizedBox(
-                height: 24,
+                height: 16,
               );
             },
             itemCount: movieCategories.length,

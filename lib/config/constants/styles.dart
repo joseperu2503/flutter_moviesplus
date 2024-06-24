@@ -9,9 +9,9 @@ SliverGridDelegateWithFixedCrossAxisCount movieSliverGridDelegate(
         ? 6
         : widthScreen > 768
             ? 5
-            : widthScreen > 640
+            : widthScreen > 500
                 ? 4
-                : widthScreen > 500
+                : widthScreen > 330
                     ? 3
                     : 2,
     crossAxisSpacing: widthScreen > 600 ? 16 : 16,

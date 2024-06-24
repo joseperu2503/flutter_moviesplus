@@ -121,7 +121,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
           height: 4,
         ),
         SizedBox(
-          height: 240,
+          height: 170,
           child: ListView.separated(
             controller: scrollController,
             padding: const EdgeInsets.symmetric(
