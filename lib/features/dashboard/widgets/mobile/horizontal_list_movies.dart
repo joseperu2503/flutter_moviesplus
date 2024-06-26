@@ -66,8 +66,8 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
   //mas una parte de la siguiente pelicula
   double get _listViewHeight =>
       (_screen.size.width -
-          2 * horizontalPaddingMobile -
-          (_numMovies - 1) * _widthSeparator) /
+          horizontalPaddingMobile -
+          (_numMovies) * _widthSeparator) /
       ((_numMovies + 0.3) * posterAspectRatio);
 
   @override
