@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 
@@ -51,7 +52,7 @@ class _SliverInfinityScrollState extends State<SliverInfinityScroll> {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: horizontalPaddingMobile),
       sliver: SliverGrid.builder(
         itemBuilder: (context, index) {
           final movie = widget.movies[index];

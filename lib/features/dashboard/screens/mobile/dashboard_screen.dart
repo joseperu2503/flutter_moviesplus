@@ -45,8 +45,8 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
             pinned: true,
             title: Container(
               padding: const EdgeInsets.only(
-                left: 24,
-                right: 24,
+                left: horizontalPaddingMobile,
+                right: horizontalPaddingMobile,
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +84,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
             },
             separatorBuilder: (context, index) {
               return const SizedBox(
-                height: 16,
+                height: 12,
               );
             },
             itemCount: movieCategories.length,
@@ -114,12 +114,12 @@ class SwiperMoviesState extends ConsumerState<SwiperMovies> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
-    final double height = screen.size.width > Breakpoints.mobile
-        ? (screen.size.width - 24 * 2) * 0.5
+    final double height = screen.size.width > Breakpoints.md
+        ? (screen.size.width - horizontalPaddingMobile * 2) * 0.5
         : screen.size.width;
 
-    final double viewportFraction = screen.size.width > Breakpoints.mobile
-        ? (screen.size.width - 24 * 2) / screen.size.width
+    final double viewportFraction = screen.size.width > Breakpoints.md
+        ? (screen.size.width - horizontalPaddingMobile * 2) / screen.size.width
         : height * posterAspectRatio / screen.size.width;
 
     List<Movie> movies = [];
@@ -184,10 +184,10 @@ class SlideState extends ConsumerState<_Slide> {
               child: MovieImage(
                 height: double.infinity,
                 width: double.infinity,
-                path: screen.size.width > Breakpoints.mobile
+                path: screen.size.width > Breakpoints.md
                     ? widget.movie.backdropPath
                     : widget.movie.posterPath,
-                fileSize: screen.size.width > Breakpoints.mobile
+                fileSize: screen.size.width > Breakpoints.md
                     ? ImageSize.original
                     : ImageSize.posterW500,
               ),

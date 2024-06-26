@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,7 +10,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 24,
+          horizontal: horizontalPaddingMobile,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

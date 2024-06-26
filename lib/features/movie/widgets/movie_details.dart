@@ -26,7 +26,7 @@ class MovieDetails extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widthScreen > Breakpoints.mobile)
+          if (widthScreen > Breakpoints.md)
             Container(
               height: 240,
               margin: const EdgeInsets.only(
@@ -50,7 +50,7 @@ class MovieDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (widthScreen > Breakpoints.mobile)
+                if (widthScreen > Breakpoints.md)
                   Container(
                     margin: const EdgeInsets.only(
                       bottom: 12,

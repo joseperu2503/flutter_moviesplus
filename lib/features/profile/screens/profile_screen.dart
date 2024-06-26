@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/profile/widgets/profile_item.dart';
 import 'package:moviesplus/features/shared/widgets/custom_appbar.dart';
 import 'package:moviesplus/generated/l10n.dart';
@@ -25,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SliverToBoxAdapter(
             child: Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 24,
+                horizontal: horizontalPaddingMobile,
               ),
               child: Column(
                 children: [

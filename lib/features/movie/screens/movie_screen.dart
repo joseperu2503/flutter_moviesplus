@@ -170,9 +170,9 @@ class MovieScreenState extends ConsumerState<MovieScreen>
               CustomSliverBuilder(
                 maxWidth: maxWidth,
                 padding: EdgeInsets.only(
-                  right: 24,
-                  left: 24,
-                  top: screen.size.width > Breakpoints.mobile ? 12 : 0,
+                  right: horizontalPaddingMobile,
+                  left: horizontalPaddingMobile,
+                  top: screen.size.width > Breakpoints.md ? 12 : 0,
                 ),
                 builder: (context, constraints) {
                   return MovieDetails(
@@ -201,7 +201,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                         controller: _tabController,
                         isScrollable: true,
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
+                          horizontal: horizontalPaddingMobile,
                         ),
                         labelPadding: EdgeInsets.zero,
                         onTap: (value) {

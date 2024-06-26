@@ -64,8 +64,8 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
             flexibleSpace: SafeArea(
               child: Container(
                 padding: const EdgeInsets.only(
-                  left: 24,
-                  right: 24,
+                  left: horizontalPaddingMobile,
+                  right: horizontalPaddingMobile,
                   bottom: 12,
                 ),
                 child: Column(
@@ -96,10 +96,10 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
             SliverToBoxAdapter(
               child: Container(
                 padding: const EdgeInsets.only(
-                  left: 24,
+                  left: horizontalPaddingMobile,
                   top: 24,
                   bottom: 24,
-                  right: 24,
+                  right: horizontalPaddingMobile,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -133,8 +133,8 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
           if (showRecommended && movieCategory != null)
             SliverPadding(
               padding: const EdgeInsets.only(
-                left: 24,
-                right: 24,
+                left: horizontalPaddingMobile,
+                right: horizontalPaddingMobile,
               ),
               sliver: SliverGrid.builder(
                 gridDelegate:
@@ -150,8 +150,8 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
           if (showResults)
             SliverPadding(
               padding: const EdgeInsets.only(
-                left: 24,
-                right: 24,
+                left: horizontalPaddingMobile,
+                right: horizontalPaddingMobile,
               ),
               sliver: SliverGrid.builder(
                 gridDelegate:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/features/profile/widgets/option_item.dart';
 import 'package:moviesplus/features/shared/widgets/custom_appbar.dart';
@@ -47,7 +48,7 @@ class CountryScreenState extends ConsumerState<CountryScreen> {
                     ref.read(profileProvider.notifier).changeCountry(country);
                   },
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
+                    horizontal: horizontalPaddingMobile,
                   ),
                   isSelected:
                       country.iso31661 == profileState.country?.iso31661,
@@ -56,7 +57,9 @@ class CountryScreenState extends ConsumerState<CountryScreen> {
               itemCount: profileState.countries.length,
               separatorBuilder: (context, index) {
                 return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: horizontalPaddingMobile,
+                  ),
                   height: 1,
                   color: AppColors.primarySoft,
                 );

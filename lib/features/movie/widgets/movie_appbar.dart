@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/config/constants/sizes.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
 import 'package:moviesplus/features/shared/widgets/movie_image.dart';
@@ -57,7 +58,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
 
   MediaQueryData get screen => MediaQuery.of(context);
 
-  bool get isPhone => !(Breakpoints.mobile < widget.widthScreen);
+  bool get isPhone => !(Breakpoints.md < widget.widthScreen);
 
   bool get showTitle {
     if (isPhone) {
@@ -176,7 +177,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
               height: 80,
               width: widget.widthScreen,
               padding: const EdgeInsets.only(
-                left: 24,
+                left: horizontalPaddingMobile,
                 bottom: 12,
               ),
               decoration: BoxDecoration(

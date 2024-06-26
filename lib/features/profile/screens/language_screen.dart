@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/features/profile/widgets/option_item.dart';
 import 'package:moviesplus/features/shared/widgets/custom_appbar.dart';
@@ -47,7 +48,7 @@ class LanguageScreenState extends ConsumerState<LanguageScreen> {
                     ref.read(profileProvider.notifier).changeLanguage(language);
                   },
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
+                    horizontal: horizontalPaddingMobile,
                   ),
                   isSelected:
                       language.iso6391 == profileState.language?.iso6391,
@@ -56,7 +57,9 @@ class LanguageScreenState extends ConsumerState<LanguageScreen> {
               itemCount: profileState.languages.length,
               separatorBuilder: (context, index) {
                 return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: horizontalPaddingMobile,
+                  ),
                   height: 1,
                   color: AppColors.primarySoft,
                 );

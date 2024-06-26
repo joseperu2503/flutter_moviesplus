@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 
@@ -57,6 +58,18 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
     super.dispose();
   }
 
+  final double _widthSeparator = 10;
+  MediaQueryData get _screen => MediaQuery.of(context);
+  int get _numMovies => numMovieColumns(_screen.size.width);
+
+  //calculo para que se vea la cantidad de peliculas establecidas po numMovieColumns
+  //mas una parte de la siguiente pelicula
+  double get _listViewHeight =>
+      (_screen.size.width -
+          2 * horizontalPaddingMobile -
+          (_numMovies - 1) * _widthSeparator) /
+      ((_numMovies + 0.3) * posterAspectRatio);
+
   @override
   bool get wantKeepAlive => true;
 
@@ -69,18 +82,18 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            left: 24,
-            right: 8,
+            left: horizontalPaddingMobile,
+            right: horizontalPaddingMobile - 16,
           ),
           child: Row(
             children: [
               Text(
                 widget.label,
                 style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
                   color: AppColors.white,
-                  height: 19.5 / 16,
+                  height: 1.2,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
               ),
@@ -93,7 +106,6 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 8,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32),
@@ -121,11 +133,11 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
           height: 4,
         ),
         SizedBox(
-          height: 170,
+          height: _listViewHeight,
           child: ListView.separated(
             controller: scrollController,
             padding: const EdgeInsets.symmetric(
-              horizontal: 24,
+              horizontal: horizontalPaddingMobile,
             ),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
@@ -135,8 +147,8 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
               );
             },
             separatorBuilder: (context, index) {
-              return const SizedBox(
-                width: 10,
+              return SizedBox(
+                width: _widthSeparator,
               );
             },
             itemCount: widget.movies.length,

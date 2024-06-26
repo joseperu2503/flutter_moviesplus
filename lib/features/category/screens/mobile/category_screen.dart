@@ -48,8 +48,8 @@ class CategoryScreenState extends ConsumerState<CategoryScreen> {
               slivers: [
                 SliverPadding(
                   padding: const EdgeInsets.only(
-                    left: 24,
-                    right: 24,
+                    left: horizontalPaddingMobile,
+                    right: horizontalPaddingMobile,
                   ),
                   sliver: SliverGrid.builder(
                     gridDelegate: movieSliverGridDelegate(
