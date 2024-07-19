@@ -34,7 +34,7 @@ class MovieItemState extends ConsumerState<MovieItem> {
     return Hero(
       tag: '${widget.movie.id}$tag',
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         child: AspectRatio(
           aspectRatio: posterAspectRatio,
           child: Stack(
