@@ -24,7 +24,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreen> {
   void initState() {
     super.initState();
     scrollController.addListener(() {
-      if ((scrollController.position.pixels + 0) <
+      if ((scrollController.position.pixels + 100) <
           scrollController.position.maxScrollExtent) return;
       ref.read(moviesProvider.notifier).getMovies(widget.categoryKey);
     });
@@ -36,6 +36,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreen> {
   Widget build(BuildContext context) {
     MovieCategory? movieCategory =
         ref.watch(moviesProvider).movieCategories[widget.categoryKey];
+    final screen = MediaQuery.of(context);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -50,6 +51,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreen> {
                   padding: const EdgeInsets.only(
                     left: horizontalPaddingMobile,
                     right: horizontalPaddingMobile,
+                    top: 20,
                   ),
                   sliver: SliverGrid.builder(
                     gridDelegate: movieSliverGridDelegate(
@@ -64,14 +66,19 @@ class CategoryScreenState extends ConsumerState<CategoryScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                    padding: const EdgeInsets.only(
+                    padding: EdgeInsets.only(
                       top: 24,
-                      bottom: 24,
+                      bottom: screen.padding.bottom,
                     ),
                     child: Center(
                       child: movieCategory.loading &&
                               movieCategory.movies.isNotEmpty
-                          ? const CustomProgressIndicator()
+                          ? const Padding(
+                              padding: EdgeInsets.only(
+                                bottom: 20,
+                              ),
+                              child: CustomProgressIndicator(),
+                            )
                           : null,
                     ),
                   ),

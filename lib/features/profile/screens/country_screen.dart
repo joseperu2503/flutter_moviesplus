@@ -61,7 +61,7 @@ class CountryScreenState extends ConsumerState<CountryScreen> {
                     horizontal: horizontalPaddingMobile,
                   ),
                   height: 1,
-                  color: AppColors.textDarkGrey,
+                  color: AppColors.textDarkGrey.withOpacity(0.7),
                 );
               },
             ),

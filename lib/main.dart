@@ -1,13 +1,11 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/environment.dart';
 import 'package:moviesplus/config/router/app_router_mobile.dart';
 import 'package:moviesplus/config/router/app_router_web.dart';
@@ -24,10 +22,13 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      systemNavigationBarColor: AppColors.backgroundColor,
+      systemNavigationBarColor: Colors.transparent,
     ),
   );
+
+  //** Quitar el # de las rutas web*/
   setPathUrlStrategy();
+
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
   //** configuracion desktop */
@@ -46,6 +47,12 @@ void main() async {
       await windowManager.focus();
     });
   }
+
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+    overlays: [SystemUiOverlay.bottom],
+  );
+
   runApp(
     const ProviderScope(
       child: MainApp(),

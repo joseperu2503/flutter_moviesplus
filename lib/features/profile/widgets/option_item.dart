@@ -21,7 +21,7 @@ class OptionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 64,
+      height: 72,
       child: TextButton(
         onPressed: () {
           onPress();

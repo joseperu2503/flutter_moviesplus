@@ -25,8 +25,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         slivers: [
           SliverToBoxAdapter(
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: horizontalPaddingMobile,
+              padding: const EdgeInsets.only(
+                left: horizontalPaddingMobile,
+                right: horizontalPaddingMobile,
+                top: 20,
               ),
               child: Column(
                 children: [
@@ -34,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.textDarkGrey,
+                        color: AppColors.textDarkGrey.withOpacity(0.7),
                       ),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -71,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 32),
                           height: 1,
-                          color: AppColors.textDarkGrey,
+                          color: AppColors.textDarkGrey.withOpacity(0.7),
                         ),
                         ProfileItem(
                           icon: 'assets/icons/earth.svg',
