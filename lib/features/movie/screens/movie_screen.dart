@@ -153,6 +153,9 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     return Stack(
       children: [
         Scaffold(
+          extendBodyBehindAppBar: kIsWeb,
+          appBar:
+              kIsWeb ? AppbarWeb(scrollController: _scrollController) : null,
           body: CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -308,7 +311,6 @@ class MovieScreenState extends ConsumerState<MovieScreen>
             ],
           ),
         ),
-        if (kIsWeb) const AppbarWeb()
       ],
     );
   }

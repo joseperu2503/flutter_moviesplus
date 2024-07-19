@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 
-class AppbarWeb extends StatefulWidget {
+class AppbarWeb extends StatefulWidget implements PreferredSizeWidget {
   const AppbarWeb({
     super.key,
     this.scrollController,
@@ -12,6 +12,9 @@ class AppbarWeb extends StatefulWidget {
 
   @override
   State<AppbarWeb> createState() => _AppbarWebState();
+
+  @override
+  Size get preferredSize => const Size(double.infinity, heightAppbar);
 }
 
 class _AppbarWebState extends State<AppbarWeb> {
@@ -61,36 +64,31 @@ class _AppbarWebState extends State<AppbarWeb> {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: heightAppbar,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.headerWeb,
-                    Colors.transparent,
-                  ],
-                ),
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: heightAppbar,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  AppColors.headerWeb,
+                  Colors.transparent,
+                ],
               ),
             ),
           ),
-          Container(
-            height: heightAppbar,
-            color: AppColors.headerWeb.withOpacity(opacity),
-          ),
-        ],
-      ),
+        ),
+        Container(
+          height: heightAppbar,
+          color: AppColors.headerWeb.withOpacity(opacity),
+        ),
+      ],
     );
   }
 }

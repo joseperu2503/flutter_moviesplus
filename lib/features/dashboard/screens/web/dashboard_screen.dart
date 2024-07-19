@@ -38,39 +38,36 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
     final List<MapEntry<String, MovieCategory>> categoryList =
         movieCategories.entries.toList();
     return Scaffold(
-      body: Stack(
-        children: [
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              const PosterDashboard(),
-              SliverList.separated(
-                itemBuilder: (context, index) {
-                  final MovieCategory movieCategory = categoryList[index].value;
-                  final String key = categoryList[index].key;
+      extendBodyBehindAppBar: true,
+      appBar: AppbarWeb(scrollController: _scrollController),
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          const PosterDashboard(),
+          SliverList.separated(
+            itemBuilder: (context, index) {
+              final MovieCategory movieCategory = categoryList[index].value;
+              final String key = categoryList[index].key;
 
-                  return HorizontalListMoviesWeb(
-                    key: PageStorageKey(
-                      '${movieCategory.name(context)}${Localizations.localeOf(context)}',
-                    ),
-                    label: movieCategory.name(context),
-                    getMovies: () async {
-                      await ref.read(moviesProvider.notifier).getMovies(key);
-                    },
-                    movies: movieCategory.movies,
-                    seeMoreUrl: movieCategory.seeMoreUrl,
-                  );
+              return HorizontalListMoviesWeb(
+                key: PageStorageKey(
+                  '${movieCategory.name(context)}${Localizations.localeOf(context)}',
+                ),
+                label: movieCategory.name(context),
+                getMovies: () async {
+                  await ref.read(moviesProvider.notifier).getMovies(key);
                 },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 32,
-                  );
-                },
-                itemCount: movieCategories.length,
-              )
-            ],
-          ),
-          AppbarWeb(scrollController: _scrollController),
+                movies: movieCategory.movies,
+                seeMoreUrl: movieCategory.seeMoreUrl,
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(
+                height: 32,
+              );
+            },
+            itemCount: movieCategories.length,
+          )
         ],
       ),
     );
