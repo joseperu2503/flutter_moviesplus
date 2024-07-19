@@ -17,7 +17,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
 
   initDashboard() async {
     state = state.copyWith(
-      movieCategories: {...initMovieCategories, ...state.movieCategories},
+      movieCategories: {...initMovieCategories},
     );
     await getMovieGenres();
   }
@@ -29,6 +29,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
         Map<String, MovieCategory> newMovieCategories = {
           ...state.movieCategories
         };
+
         if (newMovieCategories[genre.id.toString()] == null) {
           newMovieCategories[genre.id.toString()] = MovieCategory(
             name: (context) {

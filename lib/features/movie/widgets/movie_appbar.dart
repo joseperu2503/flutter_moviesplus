@@ -156,6 +156,7 @@ class _MovieAppbarState extends State<MovieAppbar> {
                     child: MovieImage(
                       path: widget.movieDetail.posterPath,
                       width: width,
+                      height: width / posterAspectRatio,
                       fileSize: ImageSize.posterW500,
                     ),
                   ),
