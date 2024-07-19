@@ -1,28 +1,49 @@
-# moviesplus
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="./assets/app/icon.png" width="150" style="border-radius: 20px;" alt="Snappyshop Logo"></a></p>
+
+# Movies Plus
 
 ## Compilar android
 
-    flutter build apk --release
+```bash
+flutter build apk --release
+```
 
 ## Compilar ios
 
-    flutter build ios --release
+```bash
+flutter build ios --release
+```
 
 ## Compilar web
 
-    flutter build web --release
+```bash
+flutter build web --release
+```
 
 ## cambiar el icono de la app
 
-    flutter pub run flutter_launcher_icons
+```bash
+flutter pub run flutter_launcher_icons
+```
 
 ## Cambiar el splashscreen
 
-    dart run flutter_native_splash:create
+```bash
+dart run flutter_native_splash:create
+```
 
 ## sha-256
+
+```bash
 cd android
+```
+
+```bash
 ./gradlew signinReport
+```
 
 ## Android AAB
-    flutter build appbundle
+
+```bash
+flutter build appbundle
+```
