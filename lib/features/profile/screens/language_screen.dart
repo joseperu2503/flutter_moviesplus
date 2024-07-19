@@ -61,7 +61,7 @@ class LanguageScreenState extends ConsumerState<LanguageScreen> {
                     horizontal: horizontalPaddingMobile,
                   ),
                   height: 1,
-                  color: AppColors.primarySoft,
+                  color: AppColors.textDarkGrey,
                 );
               },
             ),

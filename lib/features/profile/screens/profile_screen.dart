@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.primarySoft,
+                        color: AppColors.textDarkGrey,
                       ),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -71,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 32),
                           height: 1,
-                          color: AppColors.primarySoft,
+                          color: AppColors.textDarkGrey,
                         ),
                         ProfileItem(
                           icon: 'assets/icons/earth.svg',
