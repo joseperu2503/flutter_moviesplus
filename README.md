@@ -1,4 +1,6 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="./assets/app/icon.png" width="150" style="border-radius: 20px;" alt="Snappyshop Logo"></a></p>
+<p align="center">
+<img src="assets/app/icon.png" width="150"  alt="logo">
+</p>
 
 # Movies Plus
 
