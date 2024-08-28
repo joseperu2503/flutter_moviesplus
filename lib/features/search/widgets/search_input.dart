@@ -30,7 +30,7 @@ class _SearchInputState extends State<SearchInput> {
       children: [
         Expanded(
           child: Container(
-            height: 52,
+            height: 48,
             decoration: BoxDecoration(
               color: AppColors.primarySoft,
               borderRadius: BorderRadius.circular(16),
@@ -38,7 +38,7 @@ class _SearchInputState extends State<SearchInput> {
             child: Stack(
               children: [
                 Container(
-                  height: 52,
+                  height: 48,
                   padding: const EdgeInsets.only(left: 16),
                   child: Row(
                     children: [
@@ -105,7 +105,7 @@ class _SearchInputState extends State<SearchInput> {
           ),
         if (widget.value.isNotEmpty)
           SizedBox(
-            height: 52,
+            height: 48,
             child: TextButton(
               onPressed: () {
                 widget.onChanged('');

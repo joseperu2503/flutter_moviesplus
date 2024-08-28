@@ -45,6 +45,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
             backgroundColor: Colors.transparent,
             scrolledUnderElevation: 0,
             pinned: true,
+            toolbarHeight: 60,
             flexibleSpace: ClipRRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -52,7 +53,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
                   color: AppColors.backgroundColor.withOpacity(0.5),
                   child: SafeArea(
                     child: Container(
-                      height: 48,
+                      height: 60,
                       padding: const EdgeInsets.only(
                         left: horizontalPaddingMobile,
                         right: horizontalPaddingMobile,

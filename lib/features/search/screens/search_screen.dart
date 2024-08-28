@@ -60,7 +60,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
           SliverAppBar(
             scrolledUnderElevation: 0,
             automaticallyImplyLeading: false,
-            toolbarHeight: 100,
+            toolbarHeight: 60,
             pinned: true,
             backgroundColor: Colors.transparent,
             flexibleSpace: ClipRRect(
@@ -70,6 +70,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                   color: AppColors.backgroundColor.withOpacity(0.5),
                   child: SafeArea(
                     child: Container(
+                      height: 60,
                       padding: const EdgeInsets.only(
                         left: horizontalPaddingMobile,
                         right: horizontalPaddingMobile,

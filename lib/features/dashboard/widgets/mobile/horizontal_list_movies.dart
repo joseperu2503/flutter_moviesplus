@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
@@ -111,9 +112,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'See All',
                         style: TextStyle(
                           fontSize: 14,
@@ -121,6 +122,18 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
                           color: AppColors.primaryBlueAccent,
                           height: 17.07 / 14,
                           leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/arrow_forward.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.primaryBlueAccent,
+                          BlendMode.srcIn,
                         ),
                       ),
                     ],
