@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,28 +42,38 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
         slivers: [
           SliverAppBar(
             titleSpacing: 0,
-            backgroundColor: AppColors.backgroundColor,
+            backgroundColor: Colors.transparent,
             scrolledUnderElevation: 0,
             pinned: true,
-            title: Container(
-              padding: const EdgeInsets.only(
-                left: horizontalPaddingMobile,
-                right: horizontalPaddingMobile,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    'assets/images/logo.png',
-                    height: 18,
+            flexibleSpace: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: Container(
+                  color: AppColors.backgroundColor.withOpacity(0.5),
+                  child: SafeArea(
+                    child: Container(
+                      height: 48,
+                      padding: const EdgeInsets.only(
+                        left: horizontalPaddingMobile,
+                        right: horizontalPaddingMobile,
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/logo.png',
+                            height: 18,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: Container(
-              padding: const EdgeInsets.only(top: 20, bottom: 24),
+              padding: const EdgeInsets.only(top: 12, bottom: 24),
               child: const SwiperMovies(),
             ),
           ),

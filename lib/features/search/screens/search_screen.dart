@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
@@ -60,27 +62,37 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
             automaticallyImplyLeading: false,
             toolbarHeight: 100,
             pinned: true,
-            backgroundColor: AppColors.backgroundColor,
-            flexibleSpace: SafeArea(
-              child: Container(
-                padding: const EdgeInsets.only(
-                  left: horizontalPaddingMobile,
-                  right: horizontalPaddingMobile,
-                  bottom: 12,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SearchInput(
-                      value: searchState.query,
-                      onChanged: (value) {
-                        ref.read(searchProvider.notifier).changeQuery(value);
-                        if (value.isEmpty) {
-                          scrollController.jumpTo(0);
-                        }
-                      },
-                    )
-                  ],
+            backgroundColor: Colors.transparent,
+            flexibleSpace: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: Container(
+                  color: AppColors.backgroundColor.withOpacity(0.5),
+                  child: SafeArea(
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                        left: horizontalPaddingMobile,
+                        right: horizontalPaddingMobile,
+                        bottom: 12,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SearchInput(
+                            value: searchState.query,
+                            onChanged: (value) {
+                              ref
+                                  .read(searchProvider.notifier)
+                                  .changeQuery(value);
+                              if (value.isEmpty) {
+                                scrollController.jumpTo(0);
+                              }
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
