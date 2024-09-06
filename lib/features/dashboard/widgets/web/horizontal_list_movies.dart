@@ -101,10 +101,10 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
               Text(
                 widget.label,
                 style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
                   color: AppColors.white,
-                  height: 1,
+                  height: 1.2,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
               ),
@@ -117,15 +117,14 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 8,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'See All',
                         style: TextStyle(
                           fontSize: 14,
@@ -133,6 +132,18 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
                           color: AppColors.primaryBlueAccent,
                           height: 17.07 / 14,
                           leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/arrow_forward.svg',
+                        width: 10,
+                        height: 10,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.primaryBlueAccent,
+                          BlendMode.srcIn,
                         ),
                       ),
                     ],
@@ -164,7 +175,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizontalListMoviesWeb>
                   child: ListView.separated(
                     controller: scrollController,
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 42,
+                      horizontal: horizontalPaddingWeb,
                     ),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {

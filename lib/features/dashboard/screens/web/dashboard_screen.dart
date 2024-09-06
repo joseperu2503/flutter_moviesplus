@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
+import 'package:moviesplus/features/dashboard/screens/mobile/dashboard_screen.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/appbar.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/horizontal_list_movies.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/poster.dart';
@@ -37,13 +39,23 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
     final List<MapEntry<String, MovieCategory>> categoryList =
         movieCategories.entries.toList();
+
+    final screen = MediaQuery.of(context);
+
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: screen.size.width > Breakpoints.lg,
       appBar: AppbarWeb(scrollController: _scrollController),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          const PosterDashboard(),
+          screen.size.width > Breakpoints.lg
+              ? const PosterDashboard()
+              : SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 12, bottom: 24),
+                    child: const SwiperMovies(),
+                  ),
+                ),
           SliverList.separated(
             itemBuilder: (context, index) {
               final MovieCategory movieCategory = categoryList[index].value;
@@ -63,7 +75,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
             },
             separatorBuilder: (context, index) {
               return const SizedBox(
-                height: 32,
+                height: 12,
               );
             },
             itemCount: movieCategories.length,
