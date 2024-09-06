@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/screens/mobile/dashboard_screen.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/appbar.dart';
@@ -45,11 +46,17 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
     final screen = MediaQuery.of(context);
 
     return Scaffold(
-      extendBodyBehindAppBar: screen.size.width > Breakpoints.lg,
+      extendBodyBehindAppBar: true,
       appBar: AppbarWeb(scrollController: _scrollController),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
+          if (screen.size.width <= Breakpoints.lg)
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: heightAppbar,
+              ),
+            ),
           screen.size.width > Breakpoints.lg
               ? const PosterDashboard()
               : SliverToBoxAdapter(

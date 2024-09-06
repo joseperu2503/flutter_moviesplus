@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,15 +32,15 @@ class _AppbarWebState extends State<AppbarWeb> {
       return;
     }
 
-    if (widget.scrollController!.position.pixels < 0) {
+    if (widget.scrollController!.offset < 0) {
       setState(() {
         opacity = 0;
       });
       return;
     }
-    if (widget.scrollController!.position.pixels < 100) {
+    if (widget.scrollController!.offset < 100) {
       setState(() {
-        opacity = (widget.scrollController!.position.pixels) / 100;
+        opacity = (widget.scrollController!.offset) / 100;
       });
       return;
     }
@@ -66,29 +69,43 @@ class _AppbarWebState extends State<AppbarWeb> {
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context);
+
     return Stack(
       children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: heightAppbar,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.headerWeb,
-                  Colors.transparent,
-                ],
+        if (screen.size.width > Breakpoints.lg)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Opacity(
+              opacity: 1 - opacity,
+              child: Container(
+                height: heightAppbar,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.headerWeb,
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          height: heightAppbar,
-          color: AppColors.headerWeb.withOpacity(opacity),
+        ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 10.0 * opacity,
+              sigmaY: 10.0 * opacity,
+            ),
+            child: Container(
+              height: heightAppbar,
+              color: AppColors.backgroundColor.withOpacity(0.5 * opacity),
+            ),
+          ),
         ),
         Container(
           height: heightAppbar,
