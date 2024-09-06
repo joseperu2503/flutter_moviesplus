@@ -103,8 +103,8 @@ class _MovieAppbarState extends State<MovieAppbar> {
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
         ),
-        child: Row(
-          children: const [
+        child: const Row(
+          children: [
             if (!kIsWeb) CustomBackButton(),
           ],
         ),

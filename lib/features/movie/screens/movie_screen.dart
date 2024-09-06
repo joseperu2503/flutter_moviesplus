@@ -154,7 +154,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
       children: [
         Scaffold(
           extendBodyBehindAppBar: kIsWeb,
-          appBar: kIsWeb ? AppbarWeb() : null,
+          appBar: kIsWeb ? const AppbarWeb() : null,
           body: CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -213,9 +213,9 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                         },
                         tabAlignment: TabAlignment.start,
                         indicatorColor: AppColors.primaryBlueAccent,
-                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                            (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.pressed)) {
+                        overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                            (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.pressed)) {
                             return AppColors.white.withOpacity(0.3);
                           }
 
