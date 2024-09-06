@@ -45,12 +45,12 @@ class BackdropDashboardState extends ConsumerState<PosterDashboard>
     final screen = MediaQuery.of(context);
 
     return SliverToBoxAdapter(
-      child: (movie != null)
-          ? Container(
-              padding: const EdgeInsets.only(
-                bottom: 32,
-              ),
-              child: Stack(
+      child: Container(
+        padding: const EdgeInsets.only(
+          bottom: 32,
+        ),
+        child: (movie != null)
+            ? Stack(
                 children: [
                   MovieImage(
                     width: screen.size.width,
@@ -121,9 +121,12 @@ class BackdropDashboardState extends ConsumerState<PosterDashboard>
                     ),
                   )
                 ],
+              )
+            : SizedBox(
+                width: screen.size.width,
+                height: screen.size.width * 0.5,
               ),
-            )
-          : Container(),
+      ),
     );
   }
 
