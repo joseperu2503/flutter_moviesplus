@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
+import 'package:go_router/go_router.dart';
 
 class AppbarWeb extends StatefulWidget implements PreferredSizeWidget {
   const AppbarWeb({
@@ -87,6 +89,53 @@ class _AppbarWebState extends State<AppbarWeb> {
         Container(
           height: heightAppbar,
           color: AppColors.headerWeb.withOpacity(opacity),
+        ),
+        Container(
+          height: heightAppbar,
+          padding: const EdgeInsets.symmetric(
+            horizontal: horizontalPaddingWeb,
+          ),
+          child: Row(
+            children: [
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    context.go('/');
+                  },
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    height: 18,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              SizedBox(
+                width: 42,
+                height: 42,
+                child: TextButton(
+                  onPressed: () {
+                    context.go('/search');
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/icons/search.svg',
+                    width: 24,
+                    height: 24,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.white,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

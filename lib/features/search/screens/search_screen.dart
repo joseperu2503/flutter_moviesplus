@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
@@ -12,6 +13,7 @@ import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 import 'package:moviesplus/generated/l10n.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
@@ -29,6 +31,13 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
       if ((scrollController.position.pixels + 0) <
           scrollController.position.maxScrollExtent) return;
       ref.read(searchProvider.notifier).loadMoreMovies();
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (ref.read(moviesProvider).movieCategories['popular'] == null) {
+        await ref.read(moviesProvider.notifier).initDashboard();
+        await ref.read(moviesProvider.notifier).getMovies('popular');
+      }
     });
   }
 
@@ -60,7 +69,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
           SliverAppBar(
             scrolledUnderElevation: 0,
             automaticallyImplyLeading: false,
-            toolbarHeight: 60,
+            toolbarHeight: kIsWeb ? 60 + 60 : 60,
             pinned: true,
             backgroundColor: Colors.transparent,
             flexibleSpace: ClipRRect(
@@ -69,29 +78,57 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                 child: Container(
                   color: AppColors.backgroundColor.withOpacity(0.5),
                   child: SafeArea(
-                    child: Container(
-                      height: 60,
-                      padding: const EdgeInsets.only(
-                        left: horizontalPaddingMobile,
-                        right: horizontalPaddingMobile,
-                        bottom: 12,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SearchInput(
-                            value: searchState.query,
-                            onChanged: (value) {
-                              ref
-                                  .read(searchProvider.notifier)
-                                  .changeQuery(value);
-                              if (value.isEmpty) {
-                                scrollController.jumpTo(0);
-                              }
-                            },
-                          )
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        if (kIsWeb)
+                          Container(
+                            height: 60,
+                            padding: const EdgeInsets.only(
+                              left: horizontalPaddingMobile,
+                              right: horizontalPaddingMobile,
+                            ),
+                            child: Row(
+                              children: [
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context.go('/');
+                                    },
+                                    child: Image.asset(
+                                      'assets/images/logo.png',
+                                      height: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        Container(
+                          height: 60,
+                          padding: const EdgeInsets.only(
+                            left: horizontalPaddingMobile,
+                            right: horizontalPaddingMobile,
+                            bottom: 12,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SearchInput(
+                                value: searchState.query,
+                                onChanged: (value) {
+                                  ref
+                                      .read(searchProvider.notifier)
+                                      .changeQuery(value);
+                                  if (value.isEmpty) {
+                                    scrollController.jumpTo(0);
+                                  }
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

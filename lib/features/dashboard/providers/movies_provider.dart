@@ -19,6 +19,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
     state = state.copyWith(
       movieCategories: {...initMovieCategories},
     );
+
     await getMovieGenres();
   }
 
@@ -61,7 +62,6 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
     }
 
     setMovieCategory(key: key, loading: true);
-    // print('get Movies $key page ${movieCategory.page}');
 
     try {
       final MoviesResponse response = await MovieDbService.getMovies(

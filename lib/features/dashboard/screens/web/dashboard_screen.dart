@@ -21,8 +21,10 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(moviesProvider.notifier).initDashboard();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (ref.read(moviesProvider).movieCategories.isEmpty) {
+        await ref.read(moviesProvider.notifier).initDashboard();
+      }
     });
   }
 

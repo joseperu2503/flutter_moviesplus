@@ -26,111 +26,113 @@ class _SearchInputState extends State<SearchInput> {
       text: widget.value,
     );
 
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            height: 48,
-            decoration: BoxDecoration(
-              color: AppColors.primarySoft,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  height: 48,
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/search.svg',
-                        colorFilter: const ColorFilter.mode(
-                          AppColors.textGrey,
-                          BlendMode.srcIn,
+    return Container(
+      constraints: const BoxConstraints(
+        maxWidth: 500,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.primarySoft,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 48,
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/search.svg',
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.textGrey,
+                            BlendMode.srcIn,
+                          ),
+                          width: 24,
+                          height: 24,
                         ),
-                        width: 24,
-                        height: 24,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      borderRadius: BorderRadius.circular(16),
+                      hintText: S.of(context).Search,
+                      hintStyle: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textGrey,
+                      ),
+                      contentPadding: const EdgeInsets.only(
+                        left: 48,
+                        right: 20,
+                        top: 16,
+                        bottom: 16,
+                      ),
                     ),
-                    hintText: S.of(context).Search,
-                    hintStyle: const TextStyle(
-                      fontSize: 17,
+                    style: const TextStyle(
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.textGrey,
+                      color: AppColors.textWhiteGrey,
+                      height: 20 / 16,
                     ),
-                    contentPadding: const EdgeInsets.only(
-                      left: 48,
-                      right: 20,
-                      top: 16,
-                      bottom: 16,
-                    ),
+                    onChanged: (value) {
+                      widget.onChanged(value);
+                    },
+                    controller: controller,
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
                   ),
+                ],
+              ),
+            ),
+          ),
+          if (widget.value.isNotEmpty)
+            Container(
+              padding: const EdgeInsets.only(left: 4),
+              height: 48,
+              child: TextButton(
+                onPressed: () {
+                  widget.onChanged('');
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  S.of(context).Cancel,
                   style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textWhiteGrey,
-                    height: 20 / 16,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.white,
+                    height: 1,
+                    leadingDistribution: TextLeadingDistribution.even,
                   ),
-                  onChanged: (value) {
-                    widget.onChanged(value);
-                  },
-                  controller: controller,
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (widget.value.isNotEmpty)
-          const SizedBox(
-            width: 4,
-          ),
-        if (widget.value.isNotEmpty)
-          SizedBox(
-            height: 48,
-            child: TextButton(
-              onPressed: () {
-                widget.onChanged('');
-              },
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              child: Text(
-                S.of(context).Cancel,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.white,
-                  height: 1,
-                  leadingDistribution: TextLeadingDistribution.even,
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
