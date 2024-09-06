@@ -154,8 +154,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
       children: [
         Scaffold(
           extendBodyBehindAppBar: kIsWeb,
-          appBar:
-              kIsWeb ? AppbarWeb(scrollController: _scrollController) : null,
+          appBar: kIsWeb ? AppbarWeb() : null,
           body: CustomScrollView(
             controller: _scrollController,
             slivers: [
