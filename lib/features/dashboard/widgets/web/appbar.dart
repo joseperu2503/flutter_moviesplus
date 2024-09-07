@@ -77,6 +77,8 @@ class _AppbarWebState extends State<AppbarWeb> {
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: kIsWeb ? AppColors.backgroundColor : Colors.transparent,
       ),
+      scrolledUnderElevation: 0,
+      automaticallyImplyLeading: false,
       flexibleSpace: Stack(
         children: [
           if (screen.size.width > Breakpoints.lg)
