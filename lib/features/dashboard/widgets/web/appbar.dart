@@ -20,7 +20,7 @@ class AppbarWeb extends StatefulWidget implements PreferredSizeWidget {
   State<AppbarWeb> createState() => _AppbarWebState();
 
   @override
-  Size get preferredSize => const Size(double.infinity, heightAppbar);
+  Size get preferredSize => const Size(double.infinity, heightAppbarWeb);
 }
 
 class _AppbarWebState extends State<AppbarWeb> {
@@ -89,13 +89,13 @@ class _AppbarWebState extends State<AppbarWeb> {
               child: Opacity(
                 opacity: 1 - opacity,
                 child: Container(
-                  height: heightAppbar,
+                  height: heightAppbarWeb,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        AppColors.headerWeb,
+                        Colors.black87,
                         Colors.transparent,
                       ],
                     ),
@@ -110,13 +110,13 @@ class _AppbarWebState extends State<AppbarWeb> {
                 sigmaY: 10.0 * opacity,
               ),
               child: Container(
-                height: heightAppbar,
+                height: heightAppbarWeb,
                 color: AppColors.backgroundColor.withOpacity(0.5 * opacity),
               ),
             ),
           ),
           Container(
-            height: heightAppbar,
+            height: heightAppbarWeb,
             padding: const EdgeInsets.symmetric(
               horizontal: horizontalPaddingWeb,
             ),

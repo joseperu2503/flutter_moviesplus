@@ -83,7 +83,7 @@ class CategoryScreenState extends ConsumerState<CategoryScreenWeb> {
                     flexibleSpace: Container(
                       alignment: Alignment.bottomLeft,
                       padding: const EdgeInsets.only(
-                        top: heightAppbar + 10,
+                        top: heightAppbarWeb + 10,
                         bottom: 20,
                       ),
                       child: Text(

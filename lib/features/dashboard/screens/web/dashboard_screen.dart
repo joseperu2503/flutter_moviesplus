@@ -54,7 +54,7 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
           if (screen.size.width <= Breakpoints.lg)
             const SliverToBoxAdapter(
               child: SizedBox(
-                height: heightAppbar,
+                height: heightAppbarWeb,
               ),
             ),
           screen.size.width > Breakpoints.lg

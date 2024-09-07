@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:moviesplus/features/category/screens/web/category_screen.dart';
 import 'package:moviesplus/features/dashboard/screens/web/dashboard_screen.dart';
 import 'package:moviesplus/features/movie/screens/movie_screen.dart';
+import 'package:moviesplus/features/privacy_policy/screens/privacy_policy_screen.dart';
 import 'package:moviesplus/features/search/screens/search_screen.dart';
 import 'package:moviesplus/features/shared/layouts/layout_web.dart';
 
@@ -52,6 +53,10 @@ final appRouterWeb = GoRouter(
               categoryKey: state.pathParameters['categoryKey'] ?? '0',
             );
           },
+        ),
+        GoRoute(
+          path: '/privacy-policy',
+          builder: (context, state) => const PrivacyPolicyScreen(),
         ),
       ],
     ),

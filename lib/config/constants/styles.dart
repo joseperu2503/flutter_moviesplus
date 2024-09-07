@@ -36,6 +36,6 @@ int numMovieColumns(
 }
 
 const double posterAspectRatio = 0.65;
-const double heightAppbar = 80;
+const double heightAppbarWeb = 60;
 const double horizontalPaddingWeb = 16;
 const double horizontalPaddingMobile = 16;
