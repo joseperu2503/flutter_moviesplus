@@ -150,167 +150,162 @@ class MovieScreenState extends ConsumerState<MovieScreen>
         ),
       );
     }
-    return Stack(
-      children: [
-        Scaffold(
-          extendBodyBehindAppBar: kIsWeb,
-          appBar: kIsWeb ? const AppbarWeb() : null,
-          body: CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              CustomSliverBuilder(
-                maxWidth: maxWidth,
-                builder: (context, constraints) {
-                  return MovieAppbar(
-                    movieDetail: movieDetail,
-                    scrollController: _scrollController,
-                    heroTag: heroTag,
-                    widthScreen: constraints.crossAxisExtent,
-                  );
-                },
-              ),
-              CustomSliverBuilder(
-                maxWidth: maxWidth,
-                padding: EdgeInsets.only(
-                  right: horizontalPaddingMobile,
-                  left: horizontalPaddingMobile,
-                  top: screen.size.width > Breakpoints.md ? 12 : 0,
-                ),
-                builder: (context, constraints) {
-                  return MovieDetails(
-                    heroTag: heroTag,
-                    movieDetail: movieDetail,
-                    widthScreen: constraints.crossAxisExtent,
-                  );
-                },
-              ),
-              CustomSliverBuilder(
-                maxWidth: maxWidth,
-                builder: (context, constraints) {
-                  return SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    scrolledUnderElevation: 0,
-                    backgroundColor: AppColors.backgroundColor,
-                    pinned: true,
-                    toolbarHeight: 70,
-                    primary: false,
-                    flexibleSpace: Container(
-                      padding: const EdgeInsets.only(
-                        bottom: 12,
-                      ),
-                      height: 70,
-                      child: TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: horizontalPaddingMobile,
-                        ),
-                        labelPadding: EdgeInsets.zero,
-                        onTap: (value) {
-                          setState(() {
-                            _tabController.animateTo(value);
-                          });
-                        },
-                        tabAlignment: TabAlignment.start,
-                        indicatorColor: AppColors.primaryBlueAccent,
-                        overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                            (Set<WidgetState> states) {
-                          if (states.contains(WidgetState.pressed)) {
-                            return AppColors.white.withOpacity(0.3);
-                          }
-
-                          return null;
-                        }),
-                        dividerColor: AppColors.textDarkGrey,
-                        dividerHeight: 2,
-                        tabs: tabs.map((tab) {
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 16,
-                            ),
-                            child: Text(
-                              tab,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white,
-                                height: 19.5 / 16,
-                                letterSpacing: 0.12,
-                                leadingDistribution:
-                                    TextLeadingDistribution.even,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 12),
-              ),
-              if (_tabController.index == 0)
-                //** Similar movies */
-                CustomSliverBuilder(
-                  maxWidth: maxWidth,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPaddingMobile,
-                  ),
-                  builder: (context, constraints) {
-                    return SliverGrid.builder(
-                      itemBuilder: (context, index) {
-                        final movie = _similarMovies[index];
-                        return MovieItem(movie: movie);
-                      },
-                      gridDelegate: movieSliverGridDelegate(
-                        constraints.crossAxisExtent,
-                      ),
-                      itemCount: _similarMovies.length,
-                    );
-                  },
-                ),
-              if (_tabController.index == 1)
-                //** Recommentadions movies */
-                CustomSliverBuilder(
-                  maxWidth: maxWidth,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPaddingMobile,
-                  ),
-                  builder: (context, constraints) {
-                    return SliverGrid.builder(
-                      itemBuilder: (context, index) {
-                        final movie = _recommendationsMovies[index];
-                        return MovieItem(movie: movie);
-                      },
-                      gridDelegate: movieSliverGridDelegate(
-                        constraints.crossAxisExtent,
-                      ),
-                      itemCount: _recommendationsMovies.length,
-                    );
-                  },
-                ),
-              if (_tabController.index == 2)
-                //** Cast */
-                CustomSliverBuilder(
-                  maxWidth: maxWidth,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPaddingMobile,
-                  ),
-                  builder: (context, constraints) {
-                    return MovieCast(cast: cast);
-                  },
-                ),
-              SliverToBoxAdapter(
-                child: Container(
-                  height: 32 + screen.padding.bottom,
-                ),
-              )
-            ],
+    return Scaffold(
+      extendBodyBehindAppBar: kIsWeb,
+      appBar: kIsWeb ? const AppbarWeb() : null,
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          CustomSliverBuilder(
+            maxWidth: maxWidth,
+            builder: (context, constraints) {
+              return MovieAppbar(
+                movieDetail: movieDetail,
+                scrollController: _scrollController,
+                heroTag: heroTag,
+                widthScreen: constraints.crossAxisExtent,
+              );
+            },
           ),
-        ),
-      ],
+          CustomSliverBuilder(
+            maxWidth: maxWidth,
+            padding: EdgeInsets.only(
+              right: horizontalPaddingMobile,
+              left: horizontalPaddingMobile,
+              top: screen.size.width > Breakpoints.md ? 12 : 0,
+            ),
+            builder: (context, constraints) {
+              return MovieDetails(
+                heroTag: heroTag,
+                movieDetail: movieDetail,
+                widthScreen: constraints.crossAxisExtent,
+              );
+            },
+          ),
+          CustomSliverBuilder(
+            maxWidth: maxWidth,
+            builder: (context, constraints) {
+              return SliverAppBar(
+                automaticallyImplyLeading: false,
+                scrolledUnderElevation: 0,
+                backgroundColor: AppColors.backgroundColor,
+                pinned: true,
+                toolbarHeight: 70,
+                primary: false,
+                flexibleSpace: Container(
+                  padding: const EdgeInsets.only(
+                    bottom: 12,
+                  ),
+                  height: 70,
+                  child: TabBar(
+                    controller: _tabController,
+                    isScrollable: true,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingMobile,
+                    ),
+                    labelPadding: EdgeInsets.zero,
+                    onTap: (value) {
+                      setState(() {
+                        _tabController.animateTo(value);
+                      });
+                    },
+                    tabAlignment: TabAlignment.start,
+                    indicatorColor: AppColors.primaryBlueAccent,
+                    overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                      if (states.contains(WidgetState.pressed)) {
+                        return AppColors.white.withOpacity(0.3);
+                      }
+
+                      return null;
+                    }),
+                    dividerColor: AppColors.textDarkGrey,
+                    dividerHeight: 2,
+                    tabs: tabs.map((tab) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                          horizontal: 16,
+                        ),
+                        child: Text(
+                          tab,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.white,
+                            height: 19.5 / 16,
+                            letterSpacing: 0.12,
+                            leadingDistribution: TextLeadingDistribution.even,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              );
+            },
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 12),
+          ),
+          if (_tabController.index == 0)
+            //** Similar movies */
+            CustomSliverBuilder(
+              maxWidth: maxWidth,
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingMobile,
+              ),
+              builder: (context, constraints) {
+                return SliverGrid.builder(
+                  itemBuilder: (context, index) {
+                    final movie = _similarMovies[index];
+                    return MovieItem(movie: movie);
+                  },
+                  gridDelegate: movieSliverGridDelegate(
+                    constraints.crossAxisExtent,
+                  ),
+                  itemCount: _similarMovies.length,
+                );
+              },
+            ),
+          if (_tabController.index == 1)
+            //** Recommentadions movies */
+            CustomSliverBuilder(
+              maxWidth: maxWidth,
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingMobile,
+              ),
+              builder: (context, constraints) {
+                return SliverGrid.builder(
+                  itemBuilder: (context, index) {
+                    final movie = _recommendationsMovies[index];
+                    return MovieItem(movie: movie);
+                  },
+                  gridDelegate: movieSliverGridDelegate(
+                    constraints.crossAxisExtent,
+                  ),
+                  itemCount: _recommendationsMovies.length,
+                );
+              },
+            ),
+          if (_tabController.index == 2)
+            //** Cast */
+            CustomSliverBuilder(
+              maxWidth: maxWidth,
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPaddingMobile,
+              ),
+              builder: (context, constraints) {
+                return MovieCast(cast: cast);
+              },
+            ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: 32 + screen.padding.bottom,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -8,7 +8,6 @@ class AppTheme {
         scaffoldBackgroundColor: AppColors.backgroundColor,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSwatch(),
-        primaryColor: AppColors.backgroundColor,
         bottomSheetTheme: const BottomSheetThemeData(
           modalBackgroundColor: Colors.white,
           showDragHandle: true,

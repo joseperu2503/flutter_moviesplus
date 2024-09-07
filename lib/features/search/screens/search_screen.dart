@@ -1,7 +1,7 @@
 import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
@@ -71,6 +71,10 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
             automaticallyImplyLeading: false,
             toolbarHeight: kIsWeb ? 60 + 60 : 60,
             pinned: true,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor:
+                  kIsWeb ? AppColors.backgroundColor : Colors.transparent,
+            ),
             backgroundColor: Colors.transparent,
             flexibleSpace: ClipRRect(
               child: BackdropFilter(
