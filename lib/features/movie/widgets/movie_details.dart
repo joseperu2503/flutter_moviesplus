@@ -90,9 +90,6 @@ class MovieDetails extends StatelessWidget {
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
               ],
             ),
           ),

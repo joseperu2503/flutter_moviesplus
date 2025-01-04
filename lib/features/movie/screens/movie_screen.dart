@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
@@ -14,12 +13,12 @@ import 'package:moviesplus/features/movie/models/movie_videos_response.dart';
 import 'package:moviesplus/features/movie/widgets/movie_appbar.dart';
 import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_details.dart';
+import 'package:moviesplus/features/movie/widgets/similar_movies.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/providers/video_provider.dart';
 import 'package:moviesplus/features/shared/widgets/custom_sliver_builder.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
-import 'package:moviesplus/generated/l10n.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
@@ -44,23 +43,28 @@ class MovieScreenState extends ConsumerState<MovieScreen>
   List<Video> _videos = [];
   List<Movie> _recommendationsMovies = [];
   final ScrollController _scrollController = ScrollController();
-  late TabController _tabController;
 
   late int movieId;
 
   @override
   void initState() {
-    movieId = int.tryParse(widget.movieId) ?? 0;
-    _tabController = TabController(length: 3, vsync: this);
-    getMovie();
-    getMovieCredits();
-    getSimilarMovies();
-    getRecommendationsdMovies();
-    getMovieVideos();
     super.initState();
+
+    movieId = int.tryParse(widget.movieId) ?? 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Ejecutar todas las peticiones y esperar a que terminen
+      await Future.wait([
+        getMovie(),
+        getMovieCredits(),
+        getSimilarMovies(),
+        getRecommendationsdMovies(),
+        getMovieVideos(),
+      ]);
+    });
   }
 
-  getMovie() async {
+  Future<void> getMovie() async {
     final moviesState = ref.read(moviesProvider);
     final Movie? movie = moviesState.temporalMovie;
     if (movie != null && !kIsWeb) {
@@ -101,7 +105,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     });
   }
 
-  getMovieCredits() async {
+  Future<void> getMovieCredits() async {
     try {
       final MovieCredits response = await MovieDbService.getMovieCredits(
         id: movieId,
@@ -114,7 +118,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     }
   }
 
-  getSimilarMovies() async {
+  Future<void> getSimilarMovies() async {
     try {
       final MoviesResponse response = await MovieDbService.getMovies(
         path: '/movie/${widget.movieId}/similar',
@@ -127,7 +131,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     }
   }
 
-  getRecommendationsdMovies() async {
+  Future<void> getRecommendationsdMovies() async {
     try {
       final MoviesResponse response = await MovieDbService.getMovies(
         path: '/movie/${widget.movieId}/recommendations',
@@ -140,7 +144,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     }
   }
 
-  getMovieVideos() async {
+  Future<void> getMovieVideos() async {
     try {
       final MovieVideosResponse response = await MovieDbService.getMovieVideos(
         id: movieId,
@@ -158,12 +162,6 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     final screen = MediaQuery.of(context);
     final double maxWidth = screen.size.height * 1.1;
     final videoState = ref.watch(videoProvider);
-
-    List<String> tabs = [
-      S.of(context).Similar,
-      S.of(context).Recommendations,
-      S.of(context).CastAndCrew,
-    ];
 
     if (isLoading) {
       return const Scaffold(
@@ -210,124 +208,59 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   );
                 },
               ),
-              CustomSliverBuilder(
-                maxWidth: maxWidth,
-                builder: (context, constraints) {
-                  return SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    scrolledUnderElevation: 0,
-                    backgroundColor: AppColors.backgroundColor,
-                    pinned: true,
-                    toolbarHeight: 70,
-                    primary: false,
-                    flexibleSpace: Container(
-                      padding: const EdgeInsets.only(
-                        bottom: 12,
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 24),
+                    MovieCast(cast: _cast),
+                    if (_similarMovies.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24),
+                        child: SimilarMovies(movies: _similarMovies),
+                      )
+                  ],
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: horizontalPaddingMobile,
                       ),
-                      height: 70,
-                      child: TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: horizontalPaddingMobile,
-                        ),
-                        labelPadding: EdgeInsets.zero,
-                        onTap: (value) {
-                          setState(() {
-                            _tabController.animateTo(value);
-                          });
-                        },
-                        tabAlignment: TabAlignment.start,
-                        indicatorColor: AppColors.primaryBlueAccent,
-                        overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                            (Set<WidgetState> states) {
-                          if (states.contains(WidgetState.pressed)) {
-                            return AppColors.white.withOpacity(0.3);
-                          }
-
-                          return null;
-                        }),
-                        dividerColor: AppColors.textDarkGrey,
-                        dividerHeight: 2,
-                        tabs: tabs.map((tab) {
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 16,
-                            ),
-                            child: Text(
-                              tab,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white,
-                                height: 19.5 / 16,
-                                letterSpacing: 0.12,
-                                leadingDistribution:
-                                    TextLeadingDistribution.even,
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                      child: Text(
+                        'Recommendations',
+                        style: Styles.subtitle,
                       ),
                     ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                  ],
+                ),
+              ),
+              CustomSliverBuilder(
+                maxWidth: maxWidth,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: horizontalPaddingMobile,
+                ),
+                builder: (context, constraints) {
+                  return SliverGrid.builder(
+                    itemBuilder: (context, index) {
+                      final movie = _recommendationsMovies[index];
+                      return MovieItem(movie: movie);
+                    },
+                    gridDelegate: movieSliverGridDelegate(
+                      constraints.crossAxisExtent,
+                    ),
+                    itemCount: _recommendationsMovies.length,
                   );
                 },
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 12),
-              ),
-              if (_tabController.index == 0)
-                //** Similar movies */
-                CustomSliverBuilder(
-                  maxWidth: maxWidth,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPaddingMobile,
-                  ),
-                  builder: (context, constraints) {
-                    return SliverGrid.builder(
-                      itemBuilder: (context, index) {
-                        final movie = _similarMovies[index];
-                        return MovieItem(movie: movie);
-                      },
-                      gridDelegate: movieSliverGridDelegate(
-                        constraints.crossAxisExtent,
-                      ),
-                      itemCount: _similarMovies.length,
-                    );
-                  },
-                ),
-              if (_tabController.index == 1)
-                //** Recommentadions movies */
-                CustomSliverBuilder(
-                  maxWidth: maxWidth,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPaddingMobile,
-                  ),
-                  builder: (context, constraints) {
-                    return SliverGrid.builder(
-                      itemBuilder: (context, index) {
-                        final movie = _recommendationsMovies[index];
-                        return MovieItem(movie: movie);
-                      },
-                      gridDelegate: movieSliverGridDelegate(
-                        constraints.crossAxisExtent,
-                      ),
-                      itemCount: _recommendationsMovies.length,
-                    );
-                  },
-                ),
-              if (_tabController.index == 2)
-                //** Cast */
-                CustomSliverBuilder(
-                  maxWidth: maxWidth,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: horizontalPaddingMobile,
-                  ),
-                  builder: (context, constraints) {
-                    return MovieCast(cast: _cast);
-                  },
-                ),
               SliverToBoxAdapter(
                 child: Container(
                   height: 32 + screen.padding.bottom,

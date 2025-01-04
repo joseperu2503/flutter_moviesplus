@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/breakpoints.dart';
 
 SliverGridDelegateWithFixedCrossAxisCount movieSliverGridDelegate(
@@ -39,3 +40,14 @@ const double posterAspectRatio = 0.65;
 const double heightAppbarWeb = 80;
 const double horizontalPaddingWeb = 16;
 const double horizontalPaddingMobile = 16;
+
+class Styles {
+  static const subtitle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
+    height: 19.5 / 16,
+    letterSpacing: 0.12,
+    leadingDistribution: TextLeadingDistribution.even,
+  );
+}

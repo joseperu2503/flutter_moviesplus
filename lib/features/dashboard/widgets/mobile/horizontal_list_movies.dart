@@ -63,7 +63,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
   MediaQueryData get _screen => MediaQuery.of(context);
   int get _numMovies => numMovieColumns(_screen.size.width);
 
-  //calculo para que se vea la cantidad de peliculas establecidas po numMovieColumns
+  //calculo para que se vea la cantidad de peliculas establecidas por numMovieColumns
   //mas una parte de la siguiente pelicula
   double get _listViewHeight =>
       (_screen.size.width -
