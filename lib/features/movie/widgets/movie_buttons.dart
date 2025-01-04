@@ -1,68 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/movie/models/movie_videos_response.dart';
+import 'package:moviesplus/features/shared/providers/video_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-class MovieButtons extends StatefulWidget {
+class MovieButtons extends ConsumerStatefulWidget {
   const MovieButtons({
     super.key,
     required this.movie,
+    required this.videos,
   });
+
   final MovieDetail movie;
+  final List<Video> videos;
 
   @override
-  State<MovieButtons> createState() => _MovieButtonsState();
+  MovieButtonsState createState() => MovieButtonsState();
 }
 
-class _MovieButtonsState extends State<MovieButtons> {
+class MovieButtonsState extends ConsumerState<MovieButtons> {
   shareMovie() async {
     await Share.share(
       '${widget.movie.title} \n\n https://moviesplus.joseperezgil.com/movie/${widget.movie.id}',
     );
   }
 
+  playTrailer() {
+    ref.read(videoProvider.notifier).playTrailer(widget.videos.first.key);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // TextButton(
-        //   onPressed: () {},
-        //   style: TextButton.styleFrom(
-        //     backgroundColor: AppColors.secondaryOrange,
-        //     minimumSize: const Size(115, 48),
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(32),
-        //     ),
-        //   ),
-        //   child: Row(
-        //     children: [
-        //       SvgPicture.asset(
-        //         'assets/icons/play.svg',
-        //         width: 18,
-        //         height: 18,
-        //         colorFilter: const ColorFilter.mode(
-        //           AppColors.white,
-        //           BlendMode.srcIn,
-        //         ),
-        //       ),
-        //       const SizedBox(
-        //         width: 8,
-        //       ),
-        //       const Text(
-        //         'Play',
-        //         style: TextStyle(
-        //           fontSize: 16,
-        //           fontWeight: FontWeight.w500,
-        //           color: AppColors.white,
-        //           height: 19.5 / 16,
-        //           letterSpacing: 0.12,
-        //           leadingDistribution: TextLeadingDistribution.even,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
+        if (widget.videos.isNotEmpty)
+          TextButton(
+            onPressed: () {
+              playTrailer();
+            },
+            style: TextButton.styleFrom(
+              backgroundColor: AppColors.secondaryOrange,
+              minimumSize: const Size(115, 48),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
+              ),
+            ),
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/play.svg',
+                  width: 18,
+                  height: 18,
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.white,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text(
+                  'Trailer',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.white,
+                    height: 19.5 / 16,
+                    letterSpacing: 0.12,
+                    leadingDistribution: TextLeadingDistribution.even,
+                  ),
+                ),
+              ],
+            ),
+          ),
         const SizedBox(
           width: 16,
         ),

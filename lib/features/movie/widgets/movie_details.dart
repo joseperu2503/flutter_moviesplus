@@ -4,6 +4,7 @@ import 'package:moviesplus/config/constants/breakpoints.dart';
 import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/movie/models/movie_videos_response.dart';
 import 'package:moviesplus/features/movie/widgets/movie_buttons.dart';
 import 'package:moviesplus/features/movie/widgets/movie_info.dart';
 import 'package:moviesplus/features/shared/widgets/movie_image.dart';
@@ -14,11 +15,13 @@ class MovieDetails extends StatelessWidget {
     required this.widthScreen,
     required this.movieDetail,
     required this.heroTag,
+    required this.videos,
   });
 
   final double widthScreen;
   final MovieDetail movieDetail;
   final String heroTag;
+  final List<Video> videos;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,10 @@ class MovieDetails extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                MovieButtons(movie: movieDetail),
+                MovieButtons(
+                  movie: movieDetail,
+                  videos: videos,
+                ),
                 const SizedBox(
                   height: 24,
                 ),
