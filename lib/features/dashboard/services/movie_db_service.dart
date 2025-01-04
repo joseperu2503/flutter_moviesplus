@@ -4,6 +4,7 @@ import 'package:moviesplus/features/dashboard/models/genres_response.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/movie/models/movie_videos_response.dart';
 import 'package:moviesplus/features/profile/models/country.dart';
 import 'package:moviesplus/features/profile/models/language.dart';
 
@@ -53,6 +54,20 @@ class MovieDbService {
       );
 
       return MovieCredits.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future<MovieVideosResponse> getMovieVideos({
+    required int id,
+  }) async {
+    try {
+      final response = await Api.get(
+        '/movie/$id/videos',
+      );
+
+      return MovieVideosResponse.fromJson(response.data);
     } catch (e) {
       throw Exception(e);
     }

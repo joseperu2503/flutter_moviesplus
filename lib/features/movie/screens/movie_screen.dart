@@ -10,6 +10,7 @@ import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/dashboard/widgets/web/appbar.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
+import 'package:moviesplus/features/movie/models/movie_videos_response.dart';
 import 'package:moviesplus/features/movie/widgets/movie_appbar.dart';
 import 'package:moviesplus/features/movie/widgets/movie_cast.dart';
 import 'package:moviesplus/features/movie/widgets/movie_details.dart';
@@ -33,17 +34,21 @@ class MovieScreen extends ConsumerStatefulWidget {
 
 class MovieScreenState extends ConsumerState<MovieScreen>
     with SingleTickerProviderStateMixin {
-  bool loading = false;
+  bool isLoading = false;
   MovieDetail movieDetail = MovieDetail();
   String heroTag = '';
-  List<Cast> cast = [];
+  List<Cast> _cast = [];
   List<Movie> _similarMovies = [];
+  List<Video> _videos = [];
   List<Movie> _recommendationsMovies = [];
   final ScrollController _scrollController = ScrollController();
   late TabController _tabController;
 
+  late int movieId;
+
   @override
   void initState() {
+    movieId = int.tryParse(widget.movieId) ?? 0;
     _tabController = TabController(length: 3, vsync: this);
     getMovie();
     getMovieCredits();
@@ -74,13 +79,13 @@ class MovieScreenState extends ConsumerState<MovieScreen>
       });
     } else {
       setState(() {
-        loading = true;
+        isLoading = true;
       });
     }
 
     try {
       final MovieDetail response = await MovieDbService.getMovieDetail(
-        id: int.tryParse(widget.movieId) ?? 0,
+        id: movieId,
       );
       setState(() {
         movieDetail = response;
@@ -89,17 +94,17 @@ class MovieScreenState extends ConsumerState<MovieScreen>
       throw Exception(e);
     }
     setState(() {
-      loading = false;
+      isLoading = false;
     });
   }
 
   getMovieCredits() async {
     try {
       final MovieCredits response = await MovieDbService.getMovieCredits(
-        id: int.tryParse(widget.movieId) ?? 0,
+        id: movieId,
       );
       setState(() {
-        cast = response.cast;
+        _cast = response.cast;
       });
     } catch (e) {
       throw Exception(e);
@@ -132,6 +137,19 @@ class MovieScreenState extends ConsumerState<MovieScreen>
     }
   }
 
+  getMovieVideos() async {
+    try {
+      final MovieVideosResponse response = await MovieDbService.getMovieVideos(
+        id: movieId,
+      );
+      setState(() {
+        _videos = response.results;
+      });
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
@@ -143,7 +161,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
       S.of(context).CastAndCrew,
     ];
 
-    if (loading) {
+    if (isLoading) {
       return const Scaffold(
         body: Center(
           child: CustomProgressIndicator(),
@@ -296,7 +314,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                 horizontal: horizontalPaddingMobile,
               ),
               builder: (context, constraints) {
-                return MovieCast(cast: cast);
+                return MovieCast(cast: _cast);
               },
             ),
           SliverToBoxAdapter(
