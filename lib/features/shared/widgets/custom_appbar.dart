@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/shared/widgets/back_button.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -22,9 +23,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       flexibleSpace: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: 18,
+            horizontal: horizontalPaddingMobile - 9,
           ),
-          height: 60,
+          height: heightAppbarMobile,
           child: Row(
             children: [
               if (onBack) const CustomBackButton(),

@@ -219,46 +219,48 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   ],
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      height: 24,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: horizontalPaddingMobile,
+              if (_recommendationsMovies.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(
+                        height: 24,
                       ),
-                      child: Text(
-                        S.of(context).Recommendations,
-                        style: Styles.subtitle,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: horizontalPaddingMobile,
+                        ),
+                        child: Text(
+                          S.of(context).Recommendations,
+                          style: Styles.subtitle,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              CustomSliverBuilder(
-                maxWidth: maxWidth,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: horizontalPaddingMobile,
+              if (_recommendationsMovies.isNotEmpty)
+                CustomSliverBuilder(
+                  maxWidth: maxWidth,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: horizontalPaddingMobile,
+                  ),
+                  builder: (context, constraints) {
+                    return SliverGrid.builder(
+                      itemBuilder: (context, index) {
+                        final movie = _recommendationsMovies[index];
+                        return MovieItem(movie: movie);
+                      },
+                      gridDelegate: movieSliverGridDelegate(
+                        constraints.crossAxisExtent,
+                      ),
+                      itemCount: _recommendationsMovies.length,
+                    );
+                  },
                 ),
-                builder: (context, constraints) {
-                  return SliverGrid.builder(
-                    itemBuilder: (context, index) {
-                      final movie = _recommendationsMovies[index];
-                      return MovieItem(movie: movie);
-                    },
-                    gridDelegate: movieSliverGridDelegate(
-                      constraints.crossAxisExtent,
-                    ),
-                    itemCount: _recommendationsMovies.length,
-                  );
-                },
-              ),
               SliverToBoxAdapter(
                 child: Container(
                   height: 32 + screen.padding.bottom,

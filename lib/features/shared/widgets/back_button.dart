@@ -34,8 +34,8 @@ class CustomBackButton extends ConsumerWidget {
           kIsWeb || Platform.isAndroid
               ? 'assets/icons/arrow_back_material.svg'
               : 'assets/icons/arrow_back_ios.svg',
-          width: 28,
-          height: 28,
+          width: 24,
+          height: 24,
           colorFilter: const ColorFilter.mode(
             AppColors.white,
             BlendMode.srcIn,
