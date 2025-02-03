@@ -6,6 +6,7 @@ import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class HorizonalListMovies extends ConsumerStatefulWidget {
   const HorizonalListMovies({
@@ -114,9 +115,9 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
                   ),
                   child: Row(
                     children: [
-                      const Text(
-                        'See All',
-                        style: TextStyle(
+                      Text(
+                        S.of(context).SeeAll,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: AppColors.primaryBlueAccent,

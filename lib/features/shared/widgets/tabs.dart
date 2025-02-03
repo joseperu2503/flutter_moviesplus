@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class Tabs extends ConsumerStatefulWidget {
   const Tabs({
@@ -40,26 +41,28 @@ class TabsState extends ConsumerState<Tabs> {
 
   double get activeWidth => tabsWidth * 0.3;
   double get inactiveWidth {
-    return (tabsWidth - activeWidth) / (tabs.length - 1);
+    return (tabsWidth - activeWidth) / (tabs().length - 1);
   }
 
-  List<Tab> tabs = [
-    Tab(
-      label: 'Home',
-      icon: 'assets/icons/home_outlined.svg',
-      activeIcon: 'assets/icons/home_solid.svg',
-    ),
-    Tab(
-      label: 'Search',
-      icon: 'assets/icons/search.svg',
-      activeIcon: 'assets/icons/search.svg',
-    ),
-    Tab(
-      label: 'Profile',
-      icon: 'assets/icons/profile_outlined.svg',
-      activeIcon: 'assets/icons/profile_solid.svg',
-    ),
-  ];
+  List<Tab> tabs() {
+    return [
+      Tab(
+        label: S.of(context).Home,
+        icon: 'assets/icons/home_outlined.svg',
+        activeIcon: 'assets/icons/home_solid.svg',
+      ),
+      Tab(
+        label: S.of(context).Search,
+        icon: 'assets/icons/search.svg',
+        activeIcon: 'assets/icons/search.svg',
+      ),
+      Tab(
+        label: S.of(context).Profile,
+        icon: 'assets/icons/profile_outlined.svg',
+        activeIcon: 'assets/icons/profile_solid.svg',
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +77,7 @@ class TabsState extends ConsumerState<Tabs> {
           ),
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: tabs.length,
+            itemCount: tabs().length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               bool isActive = widget.navigationShell.currentIndex == index;
@@ -125,8 +128,8 @@ class TabsState extends ConsumerState<Tabs> {
                               children: [
                                 SvgPicture.asset(
                                   isActive
-                                      ? tabs[index].activeIcon
-                                      : tabs[index].icon,
+                                      ? tabs()[index].activeIcon
+                                      : tabs()[index].icon,
                                   colorFilter: ColorFilter.mode(
                                     isActive
                                         ? AppColors.primaryBlueAccent
@@ -146,7 +149,7 @@ class TabsState extends ConsumerState<Tabs> {
                                   duration: const Duration(seconds: 1),
                                   curve: Curves.fastLinearToSlowEaseIn,
                                   child: Text(
-                                    isActive ? tabs[index].label : '',
+                                    isActive ? tabs()[index].label : '',
                                     style: const TextStyle(
                                       color: AppColors.primaryBlueAccent,
                                       fontSize: 12,

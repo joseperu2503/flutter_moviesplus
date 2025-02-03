@@ -17,6 +17,7 @@ import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:moviesplus/features/movie/widgets/widgets.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   const MovieScreen({
@@ -218,7 +219,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                   ],
                 ),
               ),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -230,7 +231,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                         horizontal: horizontalPaddingMobile,
                       ),
                       child: Text(
-                        'Recommendations',
+                        S.of(context).Recommendations,
                         style: Styles.subtitle,
                       ),
                     ),

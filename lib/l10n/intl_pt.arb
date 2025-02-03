@@ -2,9 +2,9 @@
   "Profile": "Perfil",
   "Language": "Linguagem",
   "Country": "País",
-  "NowPlaying": "Em reprodução",
+  "NowPlaying": "Em exibição",
   "Popular": "Popular",
-  "TopRated": "Melhor avaliado",
+  "TopRated": "Melhor avaliados",
   "Upcoming": "Próximos",
   "Recommended": "Recomendado",
   "Search": "Pesquisar",
@@ -13,5 +13,10 @@
   "Recommendations": "Recomendações",
   "Similar": "Semelhante",
   "Minutes": "Minutos",
-  "Results": "Resultados"
+  "Results": "Resultados",
+  "SeeAll": "Ver tudo",
+  "Trailer": "Trailer",
+  "Similar Movies": "Filmes similares",
+  "General": "Geral",
+  "Home": "Início"
 }

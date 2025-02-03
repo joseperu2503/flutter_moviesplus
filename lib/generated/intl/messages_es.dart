@@ -22,21 +22,24 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "Cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
-        "CastAndCrew": MessageLookupByLibrary.simpleMessage("Reparto y equipo"),
-        "Country": MessageLookupByLibrary.simpleMessage("Pais"),
-        "Language": MessageLookupByLibrary.simpleMessage("Lenguaje"),
-        "Minutes": MessageLookupByLibrary.simpleMessage("Minutos"),
-        "NowPlaying": MessageLookupByLibrary.simpleMessage("En cartelera"),
-        "Popular": MessageLookupByLibrary.simpleMessage("Popular"),
-        "Profile": MessageLookupByLibrary.simpleMessage("Perfil"),
-        "Recommendations":
-            MessageLookupByLibrary.simpleMessage("Recomendaciones"),
-        "Recommended": MessageLookupByLibrary.simpleMessage("Recomendados"),
-        "Results": MessageLookupByLibrary.simpleMessage("Resultados"),
-        "Search": MessageLookupByLibrary.simpleMessage("Buscar"),
-        "Similar": MessageLookupByLibrary.simpleMessage("Similar"),
-        "TopRated": MessageLookupByLibrary.simpleMessage("Mas Valorados"),
-        "Upcoming": MessageLookupByLibrary.simpleMessage("Proximamente")
-      };
+    "Cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
+    "CastAndCrew": MessageLookupByLibrary.simpleMessage("Reparto y equipo"),
+    "Country": MessageLookupByLibrary.simpleMessage("País"),
+    "General": MessageLookupByLibrary.simpleMessage("General"),
+    "Home": MessageLookupByLibrary.simpleMessage("Inicio"),
+    "Language": MessageLookupByLibrary.simpleMessage("Lenguaje"),
+    "Minutes": MessageLookupByLibrary.simpleMessage("Minutos"),
+    "NowPlaying": MessageLookupByLibrary.simpleMessage("En cartelera"),
+    "Popular": MessageLookupByLibrary.simpleMessage("Popular"),
+    "Profile": MessageLookupByLibrary.simpleMessage("Perfil"),
+    "Recommendations": MessageLookupByLibrary.simpleMessage("Recomendaciones"),
+    "Recommended": MessageLookupByLibrary.simpleMessage("Recomendados"),
+    "Results": MessageLookupByLibrary.simpleMessage("Resultados"),
+    "Search": MessageLookupByLibrary.simpleMessage("Buscar"),
+    "SeeAll": MessageLookupByLibrary.simpleMessage("Ver todo"),
+    "Similar": MessageLookupByLibrary.simpleMessage("Similar"),
+    "TopRated": MessageLookupByLibrary.simpleMessage("Más valorados"),
+    "Trailer": MessageLookupByLibrary.simpleMessage("Tráiler"),
+    "Upcoming": MessageLookupByLibrary.simpleMessage("Próximamente"),
+  };
 }

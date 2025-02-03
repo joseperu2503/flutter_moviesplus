@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class SimilarMovies extends ConsumerStatefulWidget {
   const SimilarMovies({
@@ -40,13 +41,13 @@ class HorizonalListMoviesState extends ConsumerState<SimilarMovies>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(
+        Padding(
+          padding: const EdgeInsets.only(
             left: horizontalPaddingMobile,
             right: horizontalPaddingMobile - 16,
           ),
           child: Text(
-            'Similar Movies',
+            S.of(context).Similar,
             style: Styles.subtitle,
           ),
         ),

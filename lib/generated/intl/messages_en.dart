@@ -22,21 +22,24 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "CastAndCrew": MessageLookupByLibrary.simpleMessage("Cast and Crew"),
-        "Country": MessageLookupByLibrary.simpleMessage("Country"),
-        "Language": MessageLookupByLibrary.simpleMessage("Language"),
-        "Minutes": MessageLookupByLibrary.simpleMessage("Minutes"),
-        "NowPlaying": MessageLookupByLibrary.simpleMessage("Now Playing"),
-        "Popular": MessageLookupByLibrary.simpleMessage("Popular"),
-        "Profile": MessageLookupByLibrary.simpleMessage("Profile"),
-        "Recommendations":
-            MessageLookupByLibrary.simpleMessage("Recommendations"),
-        "Recommended": MessageLookupByLibrary.simpleMessage("Recommended"),
-        "Results": MessageLookupByLibrary.simpleMessage("Results"),
-        "Search": MessageLookupByLibrary.simpleMessage("Search"),
-        "Similar": MessageLookupByLibrary.simpleMessage("Similar"),
-        "TopRated": MessageLookupByLibrary.simpleMessage("Top Rated"),
-        "Upcoming": MessageLookupByLibrary.simpleMessage("Upcoming")
-      };
+    "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "CastAndCrew": MessageLookupByLibrary.simpleMessage("Cast and Crew"),
+    "Country": MessageLookupByLibrary.simpleMessage("Country"),
+    "General": MessageLookupByLibrary.simpleMessage("General"),
+    "Home": MessageLookupByLibrary.simpleMessage("Home"),
+    "Language": MessageLookupByLibrary.simpleMessage("Language"),
+    "Minutes": MessageLookupByLibrary.simpleMessage("Minutes"),
+    "NowPlaying": MessageLookupByLibrary.simpleMessage("Now Playing"),
+    "Popular": MessageLookupByLibrary.simpleMessage("Popular"),
+    "Profile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "Recommendations": MessageLookupByLibrary.simpleMessage("Recommendations"),
+    "Recommended": MessageLookupByLibrary.simpleMessage("Recommended"),
+    "Results": MessageLookupByLibrary.simpleMessage("Results"),
+    "Search": MessageLookupByLibrary.simpleMessage("Search"),
+    "SeeAll": MessageLookupByLibrary.simpleMessage("See All"),
+    "Similar": MessageLookupByLibrary.simpleMessage("Similar"),
+    "TopRated": MessageLookupByLibrary.simpleMessage("Top Rated"),
+    "Trailer": MessageLookupByLibrary.simpleMessage("Trailer"),
+    "Upcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
+  };
 }

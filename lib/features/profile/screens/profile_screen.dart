@@ -49,9 +49,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.symmetric(
                             horizontal: 18,
                           ),
-                          child: const Text(
-                            'General',
-                            style: TextStyle(
+                          child: Text(
+                            S.of(context).General,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: AppColors.white,

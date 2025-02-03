@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/widgets/cast_item.dart';
+import 'package:moviesplus/generated/l10n.dart';
 
 class MovieCast extends StatelessWidget {
   const MovieCast({
@@ -16,12 +17,12 @@ class MovieCast extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(
+        Padding(
+          padding: const EdgeInsets.symmetric(
             horizontal: horizontalPaddingMobile,
           ),
           child: Text(
-            'Cast and Crew',
+            S.of(context).CastAndCrew,
             style: Styles.subtitle,
           ),
         ),

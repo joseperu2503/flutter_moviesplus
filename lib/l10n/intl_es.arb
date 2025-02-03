@@ -1,11 +1,11 @@
 {
   "Profile": "Perfil",
   "Language": "Lenguaje",
-  "Country": "Pais",
+  "Country": "País",
   "NowPlaying": "En cartelera",
   "Popular": "Popular",
-  "TopRated": "Mas Valorados",
-  "Upcoming": "Proximamente",
+  "TopRated": "Más valorados",
+  "Upcoming": "Próximamente",
   "Recommended": "Recomendados",
   "Search": "Buscar",
   "Cancel": "Cancelar",
@@ -13,5 +13,10 @@
   "Recommendations": "Recomendaciones",
   "Similar": "Similar",
   "Minutes": "Minutos",
-  "Results": "Resultados"
+  "Results": "Resultados",
+  "SeeAll": "Ver todo",
+  "Trailer": "Tráiler",
+  "Similar Movies": "Películas similares",
+  "General": "General",
+  "Home": "Inicio"
 }
