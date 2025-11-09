@@ -37,10 +37,12 @@ class OptionItem extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.white,
+                  color: isSelected
+                      ? AppColors.primaryBlueAccent
+                      : AppColors.textWhiteGrey,
                   height: 17.07 / 14,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),

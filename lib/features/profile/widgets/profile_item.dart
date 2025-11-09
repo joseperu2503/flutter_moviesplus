@@ -45,7 +45,7 @@ class ProfileItem extends StatelessWidget {
                   width: 24,
                   height: 24,
                   colorFilter: const ColorFilter.mode(
-                    AppColors.textGrey,
+                    AppColors.textWhiteGrey,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -59,7 +59,7 @@ class ProfileItem extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: AppColors.white,
+                color: AppColors.textWhiteGrey,
                 height: 17.07 / 14,
                 leadingDistribution: TextLeadingDistribution.even,
               ),
@@ -70,7 +70,7 @@ class ProfileItem extends StatelessWidget {
               width: 20,
               height: 20,
               colorFilter: const ColorFilter.mode(
-                AppColors.primaryBlueAccent,
+                AppColors.textWhiteGrey,
                 BlendMode.srcIn,
               ),
             ),
