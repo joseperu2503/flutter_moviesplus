@@ -52,6 +52,7 @@ flutter build appbundle
 
 
 ## intl
+
 ```bash
 dart run intl_utils:generate
 ```
