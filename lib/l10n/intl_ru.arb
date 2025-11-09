@@ -1,0 +1,21 @@
+{
+  "profile": "Профиль",
+  "language": "Язык",
+  "country": "Страна",
+  "nowPlaying": "Сейчас в кино",
+  "popular": "Популярное",
+  "topRated": "Лучшие",
+  "upcoming": "Скоро",
+  "recommended": "Рекомендуемое",
+  "search": "Поиск",
+  "cancel": "Отмена",
+  "castAndCrew": "Актеры и съёмочная группа",
+  "recommendations": "Рекомендации",
+  "similar": "Похожие",
+  "minutes": "Минуты",
+  "results": "Результаты",
+  "seeAll": "Показать все",
+  "trailer": "Трейлер",
+  "general": "Общее",
+  "home": "Главная"
+}

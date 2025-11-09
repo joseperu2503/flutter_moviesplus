@@ -30,7 +30,7 @@ class CountryScreenState extends ConsumerState<CountryScreen> {
     final screen = MediaQuery.of(context);
     return Scaffold(
       appBar: CustomAppBar(
-        title: S.of(context).Country,
+        title: S.of(context).country,
       ),
       body: CustomScrollView(
         slivers: [

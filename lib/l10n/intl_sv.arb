@@ -1,0 +1,21 @@
+{
+  "profile": "Profil",
+  "language": "Språk",
+  "country": "Land",
+  "nowPlaying": "Visas nu",
+  "popular": "Populär",
+  "topRated": "Högst betygsatta",
+  "upcoming": "Kommande",
+  "recommended": "Rekommenderad",
+  "search": "Sök",
+  "cancel": "Avbryt",
+  "castAndCrew": "Rollista och team",
+  "recommendations": "Rekommendationer",
+  "similar": "Liknande",
+  "minutes": "Minuter",
+  "results": "Resultat",
+  "seeAll": "Visa alla",
+  "trailer": "Trailer",
+  "general": "Allmänt",
+  "home": "Hem"
+}

@@ -1,0 +1,21 @@
+{
+  "profile": "प्रोफ़ाइल",
+  "language": "भाषा",
+  "country": "देश",
+  "nowPlaying": "अब चल रही हैं",
+  "popular": "लोकप्रिय",
+  "topRated": "शीर्ष रेटेड",
+  "upcoming": "आने वाली",
+  "recommended": "अनुशंसित",
+  "search": "खोजें",
+  "cancel": "रद्द करें",
+  "castAndCrew": "कलाकार और दल",
+  "recommendations": "सिफ़ारिशें",
+  "similar": "समान",
+  "minutes": "मिनट",
+  "results": "परिणाम",
+  "seeAll": "सभी देखें",
+  "trailer": "ट्रेलर",
+  "general": "सामान्य",
+  "home": "होम"
+}

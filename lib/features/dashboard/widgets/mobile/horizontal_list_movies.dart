@@ -116,7 +116,7 @@ class HorizonalListMoviesState extends ConsumerState<HorizonalListMovies>
                   child: Row(
                     children: [
                       Text(
-                        S.of(context).SeeAll,
+                        S.of(context).seeAll,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

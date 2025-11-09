@@ -30,7 +30,7 @@ class LanguageScreenState extends ConsumerState<LanguageScreen> {
     final screen = MediaQuery.of(context);
     return Scaffold(
       appBar: CustomAppBar(
-        title: S.of(context).Language,
+        title: S.of(context).language,
       ),
       body: CustomScrollView(
         slivers: [

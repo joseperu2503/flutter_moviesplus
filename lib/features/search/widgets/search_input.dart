@@ -72,7 +72,7 @@ class _SearchInputState extends State<SearchInput> {
                         ),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: S.of(context).Search,
+                      hintText: S.of(context).search,
                       hintStyle: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -120,7 +120,7 @@ class _SearchInputState extends State<SearchInput> {
                   ),
                 ),
                 child: Text(
-                  S.of(context).Cancel,
+                  S.of(context).cancel,
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

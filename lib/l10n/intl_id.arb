@@ -1,0 +1,21 @@
+{
+  "profile": "Profil",
+  "language": "Bahasa",
+  "country": "Negara",
+  "nowPlaying": "Sedang Tayang",
+  "popular": "Populer",
+  "topRated": "Peringkat Teratas",
+  "upcoming": "Akan Datang",
+  "recommended": "Direkomendasikan",
+  "search": "Cari",
+  "cancel": "Batal",
+  "castAndCrew": "Pemeran dan Kru",
+  "recommendations": "Rekomendasi",
+  "similar": "Serupa",
+  "minutes": "Menit",
+  "results": "Hasil",
+  "seeAll": "Lihat Semua",
+  "trailer": "Trailer",
+  "general": "Umum",
+  "home": "Beranda"
+}

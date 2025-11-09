@@ -1,0 +1,21 @@
+{
+  "profile": "个人资料",
+  "language": "语言",
+  "country": "国家",
+  "nowPlaying": "正在上映",
+  "popular": "热门",
+  "topRated": "高评分",
+  "upcoming": "即将上映",
+  "recommended": "推荐",
+  "search": "搜索",
+  "cancel": "取消",
+  "castAndCrew": "演员和工作人员",
+  "recommendations": "推荐内容",
+  "similar": "相似",
+  "minutes": "分钟",
+  "results": "结果",
+  "seeAll": "查看全部",
+  "trailer": "预告片",
+  "general": "通用",
+  "home": "首页"
+}

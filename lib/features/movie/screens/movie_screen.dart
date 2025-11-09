@@ -10,14 +10,14 @@ import 'package:moviesplus/features/dashboard/widgets/web/appbar.dart';
 import 'package:moviesplus/features/movie/models/movie_credits.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/movie/models/movie_videos_response.dart';
+import 'package:moviesplus/features/movie/widgets/widgets.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/providers/video_provider.dart';
 import 'package:moviesplus/features/shared/widgets/custom_sliver_builder.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:moviesplus/features/movie/widgets/widgets.dart';
 import 'package:moviesplus/generated/l10n.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   const MovieScreen({
@@ -232,7 +232,7 @@ class MovieScreenState extends ConsumerState<MovieScreen>
                           horizontal: horizontalPaddingMobile,
                         ),
                         child: Text(
-                          S.of(context).Recommendations,
+                          S.of(context).recommendations,
                           style: Styles.subtitle,
                         ),
                       ),

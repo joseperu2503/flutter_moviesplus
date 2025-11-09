@@ -98,11 +98,7 @@ class MainAppState extends ConsumerState<MainApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('es'),
-        Locale('pt'),
-      ],
+      supportedLocales: S.delegate.supportedLocales,
       locale: Locale(profileState.language?.iso6391 ?? 'en'),
       // scrollBehavior: const MaterialScrollBehavior().copyWith(
       //   dragDevices: {

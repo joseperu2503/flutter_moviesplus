@@ -1,0 +1,21 @@
+{
+  "profile": "プロフィール",
+  "language": "言語",
+  "country": "国",
+  "nowPlaying": "上映中",
+  "popular": "人気",
+  "topRated": "高評価",
+  "upcoming": "近日公開",
+  "recommended": "おすすめ",
+  "search": "検索",
+  "cancel": "キャンセル",
+  "castAndCrew": "キャストとスタッフ",
+  "recommendations": "おすすめ作品",
+  "similar": "類似",
+  "minutes": "分",
+  "results": "結果",
+  "seeAll": "すべて表示",
+  "trailer": "トレーラー",
+  "general": "一般",
+  "home": "ホーム"
+}

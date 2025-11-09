@@ -1,0 +1,21 @@
+{
+  "profile": "Profilo",
+  "language": "Lingua",
+  "country": "Paese",
+  "nowPlaying": "In sala",
+  "popular": "Popolare",
+  "topRated": "Più votati",
+  "upcoming": "In arrivo",
+  "recommended": "Consigliato",
+  "search": "Cerca",
+  "cancel": "Annulla",
+  "castAndCrew": "Cast e troupe",
+  "recommendations": "Raccomandazioni",
+  "similar": "Simili",
+  "minutes": "Minuti",
+  "results": "Risultati",
+  "seeAll": "Vedi tutto",
+  "trailer": "Trailer",
+  "general": "Generale",
+  "home": "Home"
+}

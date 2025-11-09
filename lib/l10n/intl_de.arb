@@ -1,0 +1,21 @@
+{
+  "profile": "Profil",
+  "language": "Sprache",
+  "country": "Land",
+  "nowPlaying": "Aktuell im Kino",
+  "popular": "Beliebt",
+  "topRated": "Bestbewertet",
+  "upcoming": "Demnächst",
+  "recommended": "Empfohlen",
+  "search": "Suchen",
+  "cancel": "Abbrechen",
+  "castAndCrew": "Besetzung und Team",
+  "recommendations": "Empfehlungen",
+  "similar": "Ähnlich",
+  "minutes": "Minuten",
+  "results": "Ergebnisse",
+  "seeAll": "Alle anzeigen",
+  "trailer": "Trailer",
+  "general": "Allgemein",
+  "home": "Startseite"
+}

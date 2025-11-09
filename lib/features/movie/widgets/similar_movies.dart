@@ -47,7 +47,7 @@ class HorizonalListMoviesState extends ConsumerState<SimilarMovies>
             right: horizontalPaddingMobile - 16,
           ),
           child: Text(
-            S.of(context).Similar,
+            S.of(context).similar,
             style: Styles.subtitle,
           ),
         ),

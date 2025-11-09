@@ -79,7 +79,21 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
 
       state = state.copyWith(
         languages: response
-            .where((e) => ['en', 'es', 'pt'].contains(e.iso6391))
+            .where((e) => [
+                  'en', // Inglés
+                  'es', // Español
+                  'pt', // Portugués
+                  'fr', // Francés
+                  'de', // Alemán
+                  'it', // Italiano
+                  'ru', // Ruso
+                  'zh', // Chino mandarín
+                  'ja', // Japonés
+                  'hi', // Hindi
+                  'ko', // Coreano
+                  'id', // Indonesio
+                  'sv', // Sueco
+                ].contains(e.iso6391))
             .toList(),
         loadingStatus: LoadingStatus.success,
       );

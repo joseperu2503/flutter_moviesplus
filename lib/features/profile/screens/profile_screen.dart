@@ -18,7 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: S.of(context).Profile,
+        title: S.of(context).profile,
         onBack: false,
       ),
       body: CustomScrollView(
@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             horizontal: 18,
                           ),
                           child: Text(
-                            S.of(context).General,
+                            S.of(context).general,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -65,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         ProfileItem(
                           icon: 'assets/icons/language.svg',
-                          label: S.of(context).Language,
+                          label: S.of(context).language,
                           onPress: () {
                             context.push('/language');
                           },
@@ -77,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         ProfileItem(
                           icon: 'assets/icons/earth.svg',
-                          label: S.of(context).Country,
+                          label: S.of(context).country,
                           onPress: () {
                             context.push('/country');
                           },

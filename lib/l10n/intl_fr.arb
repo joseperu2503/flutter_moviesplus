@@ -1,0 +1,21 @@
+{
+  "profile": "Profil",
+  "language": "Langue",
+  "country": "Pays",
+  "nowPlaying": "En salle",
+  "popular": "Populaire",
+  "topRated": "Les mieux notés",
+  "upcoming": "À venir",
+  "recommended": "Recommandé",
+  "search": "Rechercher",
+  "cancel": "Annuler",
+  "castAndCrew": "Distribution et équipe",
+  "recommendations": "Recommandations",
+  "similar": "Similaires",
+  "minutes": "Minutes",
+  "results": "Résultats",
+  "seeAll": "Voir tout",
+  "trailer": "Bande-annonce",
+  "general": "Général",
+  "home": "Accueil"
+}

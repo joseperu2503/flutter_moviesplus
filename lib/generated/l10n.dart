@@ -56,110 +56,108 @@ class S {
   }
 
   /// `Profile`
-  String get Profile {
-    return Intl.message('Profile', name: 'Profile', desc: '', args: []);
+  String get profile {
+    return Intl.message('Profile', name: 'profile', desc: '', args: []);
   }
 
   /// `Language`
-  String get Language {
-    return Intl.message('Language', name: 'Language', desc: '', args: []);
+  String get language {
+    return Intl.message('Language', name: 'language', desc: '', args: []);
   }
 
   /// `Country`
-  String get Country {
-    return Intl.message('Country', name: 'Country', desc: '', args: []);
+  String get country {
+    return Intl.message('Country', name: 'country', desc: '', args: []);
   }
 
   /// `Now Playing`
-  String get NowPlaying {
-    return Intl.message('Now Playing', name: 'NowPlaying', desc: '', args: []);
+  String get nowPlaying {
+    return Intl.message('Now Playing', name: 'nowPlaying', desc: '', args: []);
   }
 
   /// `Popular`
-  String get Popular {
-    return Intl.message('Popular', name: 'Popular', desc: '', args: []);
+  String get popular {
+    return Intl.message('Popular', name: 'popular', desc: '', args: []);
   }
 
   /// `Top Rated`
-  String get TopRated {
-    return Intl.message('Top Rated', name: 'TopRated', desc: '', args: []);
+  String get topRated {
+    return Intl.message('Top Rated', name: 'topRated', desc: '', args: []);
   }
 
   /// `Upcoming`
-  String get Upcoming {
-    return Intl.message('Upcoming', name: 'Upcoming', desc: '', args: []);
+  String get upcoming {
+    return Intl.message('Upcoming', name: 'upcoming', desc: '', args: []);
   }
 
   /// `Recommended`
-  String get Recommended {
-    return Intl.message('Recommended', name: 'Recommended', desc: '', args: []);
+  String get recommended {
+    return Intl.message('Recommended', name: 'recommended', desc: '', args: []);
   }
 
   /// `Search`
-  String get Search {
-    return Intl.message('Search', name: 'Search', desc: '', args: []);
+  String get search {
+    return Intl.message('Search', name: 'search', desc: '', args: []);
   }
 
   /// `Cancel`
-  String get Cancel {
-    return Intl.message('Cancel', name: 'Cancel', desc: '', args: []);
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
 
   /// `Cast and Crew`
-  String get CastAndCrew {
+  String get castAndCrew {
     return Intl.message(
       'Cast and Crew',
-      name: 'CastAndCrew',
+      name: 'castAndCrew',
       desc: '',
       args: [],
     );
   }
 
   /// `Recommendations`
-  String get Recommendations {
+  String get recommendations {
     return Intl.message(
       'Recommendations',
-      name: 'Recommendations',
+      name: 'recommendations',
       desc: '',
       args: [],
     );
   }
 
   /// `Similar`
-  String get Similar {
-    return Intl.message('Similar', name: 'Similar', desc: '', args: []);
+  String get similar {
+    return Intl.message('Similar', name: 'similar', desc: '', args: []);
   }
 
   /// `Minutes`
-  String get Minutes {
-    return Intl.message('Minutes', name: 'Minutes', desc: '', args: []);
+  String get minutes {
+    return Intl.message('Minutes', name: 'minutes', desc: '', args: []);
   }
 
   /// `Results`
-  String get Results {
-    return Intl.message('Results', name: 'Results', desc: '', args: []);
+  String get results {
+    return Intl.message('Results', name: 'results', desc: '', args: []);
   }
 
   /// `See All`
-  String get SeeAll {
-    return Intl.message('See All', name: 'SeeAll', desc: '', args: []);
+  String get seeAll {
+    return Intl.message('See All', name: 'seeAll', desc: '', args: []);
   }
 
   /// `Trailer`
-  String get Trailer {
-    return Intl.message('Trailer', name: 'Trailer', desc: '', args: []);
+  String get trailer {
+    return Intl.message('Trailer', name: 'trailer', desc: '', args: []);
   }
 
-  // skipped getter for the 'Similar Movies' key
-
   /// `General`
-  String get General {
-    return Intl.message('General', name: 'General', desc: '', args: []);
+  String get general {
+    return Intl.message('General', name: 'general', desc: '', args: []);
   }
 
   /// `Home`
-  String get Home {
-    return Intl.message('Home', name: 'Home', desc: '', args: []);
+  String get home {
+    return Intl.message('Home', name: 'home', desc: '', args: []);
   }
 }
 
@@ -169,8 +167,18 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'de'),
       Locale.fromSubtags(languageCode: 'es'),
+      Locale.fromSubtags(languageCode: 'fr'),
+      Locale.fromSubtags(languageCode: 'hi'),
+      Locale.fromSubtags(languageCode: 'id'),
+      Locale.fromSubtags(languageCode: 'it'),
+      Locale.fromSubtags(languageCode: 'ja'),
+      Locale.fromSubtags(languageCode: 'ko'),
       Locale.fromSubtags(languageCode: 'pt'),
+      Locale.fromSubtags(languageCode: 'ru'),
+      Locale.fromSubtags(languageCode: 'sv'),
+      Locale.fromSubtags(languageCode: 'zh'),
     ];
   }
 

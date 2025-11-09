@@ -1,8 +1,10 @@
 import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
@@ -13,7 +15,6 @@ import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/movie_item.dart';
 import 'package:moviesplus/features/shared/widgets/progress_indicator.dart';
 import 'package:moviesplus/generated/l10n.dart';
-import 'package:go_router/go_router.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
@@ -160,7 +161,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                   children: [
                     if (showResults)
                       Text(
-                        S.of(context).Results,
+                        S.of(context).results,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -171,7 +172,7 @@ class SearchScreenState extends ConsumerState<SearchScreen> {
                       ),
                     if (showRecommended)
                       Text(
-                        S.of(context).Recommended,
+                        S.of(context).recommended,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

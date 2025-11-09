@@ -22,7 +22,7 @@ class MovieCast extends StatelessWidget {
             horizontal: horizontalPaddingMobile,
           ),
           child: Text(
-            S.of(context).CastAndCrew,
+            S.of(context).castAndCrew,
             style: Styles.subtitle,
           ),
         ),

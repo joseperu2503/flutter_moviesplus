@@ -47,17 +47,17 @@ class TabsState extends ConsumerState<Tabs> {
   List<Tab> tabs() {
     return [
       Tab(
-        label: S.of(context).Home,
+        label: S.of(context).home,
         icon: 'assets/icons/home_outlined.svg',
         activeIcon: 'assets/icons/home_solid.svg',
       ),
       Tab(
-        label: S.of(context).Search,
+        label: S.of(context).search,
         icon: 'assets/icons/search.svg',
         activeIcon: 'assets/icons/search.svg',
       ),
       Tab(
-        label: S.of(context).Profile,
+        label: S.of(context).profile,
         icon: 'assets/icons/profile_outlined.svg',
         activeIcon: 'assets/icons/profile_solid.svg',
       ),

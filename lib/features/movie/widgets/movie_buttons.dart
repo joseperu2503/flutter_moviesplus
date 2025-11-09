@@ -5,8 +5,8 @@ import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/features/movie/models/movie_detail.dart';
 import 'package:moviesplus/features/movie/models/movie_videos_response.dart';
 import 'package:moviesplus/features/shared/providers/video_provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:moviesplus/generated/l10n.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MovieButtons extends ConsumerStatefulWidget {
   const MovieButtons({
@@ -64,7 +64,7 @@ class MovieButtonsState extends ConsumerState<MovieButtons> {
                   width: 8,
                 ),
                 Text(
-                  S.of(context).Trailer,
+                  S.of(context).trailer,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
