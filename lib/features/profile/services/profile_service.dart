@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:moviesplus/config/constants/storage_keys.dart';
 import 'package:moviesplus/features/core/services/storage_service.dart';
 import 'package:moviesplus/features/profile/models/country.dart';
-import 'package:moviesplus/features/profile/models/language.dart';
 
 class ProfileService {
   static Future<void> setCountry(Country country) async {
@@ -32,31 +32,28 @@ class ProfileService {
     }
   }
 
-  static Future<void> setLanguage(Language language) async {
-    await StorageService.set<Map<String, dynamic>>(
+  static Future<void> setLanguage(Locale locale) async {
+    await StorageService.set<String>(
       StorageKeys.language,
-      language.toJson(),
+      locale.languageCode,
     );
   }
 
-  static Future<Language> getLanguage() async {
-    final Language defaultLanguage = Language(
-      englishName: "English",
-      iso6391: "en",
-      name: "English",
-    );
+  static Future<Locale> getLanguage() async {
+    final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
+
     try {
-      final Map<String, dynamic>? languageStorage =
-          await StorageService.get<Map<String, dynamic>>(
+      final String? languageCode = await StorageService.get<String>(
         StorageKeys.language,
       );
-      if (languageStorage == null) {
-        return defaultLanguage;
+
+      if (languageCode == null) {
+        return deviceLocale;
       }
 
-      return Language.fromJson(languageStorage);
+      return Locale(languageCode);
     } catch (e) {
-      return defaultLanguage;
+      return deviceLocale;
     }
   }
 }

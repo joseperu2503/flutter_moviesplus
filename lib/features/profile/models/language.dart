@@ -1,7 +1,7 @@
 class Language {
-  String? iso6391;
-  String? englishName;
-  String? name;
+  String iso6391;
+  String englishName;
+  String name;
 
   Language({
     required this.iso6391,

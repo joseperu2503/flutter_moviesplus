@@ -1,7 +1,8 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:moviesplus/config/constants/environment.dart';
 import 'package:moviesplus/features/profile/models/country.dart';
-import 'package:moviesplus/features/profile/models/language.dart';
 import 'package:moviesplus/features/profile/services/profile_service.dart';
 
 class Api {
@@ -14,12 +15,12 @@ class Api {
     Map<String, dynamic> queryParameters = const {},
   }) async {
     final movieApiKey = Environment.movieApiKey;
-    final Language language = await ProfileService.getLanguage();
+    final Locale language = await ProfileService.getLanguage();
     final Country country = await ProfileService.getCountry();
 
     return _dioBase.get(path, queryParameters: {
       'api_key': movieApiKey,
-      'language': language.iso6391,
+      'language': language.languageCode,
       'region': country.iso31661,
       ...queryParameters,
     });

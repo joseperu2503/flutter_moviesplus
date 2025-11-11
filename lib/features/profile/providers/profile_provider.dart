@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/services/movie_db_service.dart';
 import 'package:moviesplus/features/profile/models/country.dart';
 import 'package:moviesplus/features/profile/models/language.dart';
@@ -52,23 +51,6 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     );
   }
 
-  Future<void> getLanguage() async {
-    final Language language = await ProfileService.getLanguage();
-
-    state = state.copyWith(
-      language: () => language,
-    );
-  }
-
-  changeLanguage(Language language) async {
-    await ProfileService.setLanguage(language);
-
-    state = state.copyWith(
-      language: () => language,
-    );
-    await ref.read(moviesProvider.notifier).initDashboard();
-  }
-
   getLanguages() async {
     state = state.copyWith(
       loadingStatus: LoadingStatus.loading,
@@ -111,13 +93,11 @@ class ProfileState {
   final Country? country;
   final LoadingStatus loadingStatus;
   final List<Language> languages;
-  final Language? language;
   ProfileState({
     this.countries = const [],
     this.loadingStatus = LoadingStatus.none,
     this.country,
     this.languages = const [],
-    this.language,
   });
 
   ProfileState copyWith({
@@ -125,13 +105,11 @@ class ProfileState {
     ValueGetter<Country?>? country,
     LoadingStatus? loadingStatus,
     List<Language>? languages,
-    ValueGetter<Language?>? language,
   }) =>
       ProfileState(
         countries: countries ?? this.countries,
         country: country != null ? country() : this.country,
         loadingStatus: loadingStatus ?? this.loadingStatus,
         languages: languages ?? this.languages,
-        language: language != null ? language() : this.language,
       );
 }

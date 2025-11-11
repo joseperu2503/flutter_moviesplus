@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/features/dashboard/models/genre.dart';
 import 'package:moviesplus/features/dashboard/models/movies_response.dart';
@@ -16,6 +17,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
   final StateNotifierProviderRef ref;
 
   initDashboard() async {
+    debugPrint('initDashboard');
     state = state.copyWith(
       movieCategories: {...initMovieCategories},
     );

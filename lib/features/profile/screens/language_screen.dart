@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviesplus/config/constants/app_colors.dart';
 import 'package:moviesplus/config/constants/styles.dart';
+import 'package:moviesplus/features/profile/providers/language_provider.dart';
 import 'package:moviesplus/features/profile/providers/profile_provider.dart';
 import 'package:moviesplus/features/profile/widgets/option_item.dart';
 import 'package:moviesplus/features/shared/widgets/custom_appbar.dart';
@@ -19,7 +20,6 @@ class LanguageScreenState extends ConsumerState<LanguageScreen> {
   void initState() {
     Future.microtask(() {
       ref.read(profileProvider.notifier).getLanguages();
-      ref.read(profileProvider.notifier).getLanguage();
     });
     super.initState();
   }
@@ -27,6 +27,8 @@ class LanguageScreenState extends ConsumerState<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     final profileState = ref.watch(profileProvider);
+    final languageState = ref.watch(languageProvider);
+
     final screen = MediaQuery.of(context);
     return Scaffold(
       appBar: CustomAppBar(
@@ -43,15 +45,16 @@ class LanguageScreenState extends ConsumerState<LanguageScreen> {
               itemBuilder: (context, index) {
                 final language = profileState.languages[index];
                 return OptionItem(
-                  label: language.name ?? '',
+                  label: language.name,
                   onPress: () {
-                    ref.read(profileProvider.notifier).changeLanguage(language);
+                    ref
+                        .read(languageProvider.notifier)
+                        .changeLanguage(language.iso6391);
                   },
                   padding: const EdgeInsets.symmetric(
                     horizontal: horizontalPaddingMobile,
                   ),
-                  isSelected:
-                      language.iso6391 == profileState.language?.iso6391,
+                  isSelected: language.iso6391 == languageState.languageCode,
                 );
               },
               itemCount: profileState.languages.length,

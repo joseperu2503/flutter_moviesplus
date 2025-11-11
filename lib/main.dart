@@ -10,7 +10,7 @@ import 'package:moviesplus/config/constants/environment.dart';
 import 'package:moviesplus/config/router/app_router_mobile.dart';
 import 'package:moviesplus/config/router/app_router_web.dart';
 import 'package:moviesplus/config/theme/app_theme.dart';
-import 'package:moviesplus/features/profile/providers/profile_provider.dart';
+import 'package:moviesplus/features/profile/providers/language_provider.dart';
 import 'package:moviesplus/features/shared/services/device_service.dart';
 import 'package:moviesplus/generated/l10n.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -70,8 +70,6 @@ class MainApp extends ConsumerStatefulWidget {
 class MainAppState extends ConsumerState<MainApp> {
   @override
   void initState() {
-    ref.read(profileProvider.notifier).getLanguage();
-
     //** En caso de ser celular bloquea el giro */
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!kIsWeb && Device(context).isPhone) {
@@ -86,7 +84,7 @@ class MainAppState extends ConsumerState<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    final profileState = ref.watch(profileProvider);
+    final languageState = ref.watch(languageProvider);
     return MaterialApp.router(
       title: 'Movies Plus',
       debugShowCheckedModeBanner: false,
@@ -99,7 +97,7 @@ class MainAppState extends ConsumerState<MainApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: Locale(profileState.language?.iso6391 ?? 'en'),
+      locale: languageState,
       // scrollBehavior: const MaterialScrollBehavior().copyWith(
       //   dragDevices: {
       //     PointerDeviceKind.mouse,

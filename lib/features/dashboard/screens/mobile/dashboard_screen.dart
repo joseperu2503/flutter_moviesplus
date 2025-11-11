@@ -10,6 +10,7 @@ import 'package:moviesplus/config/constants/sizes.dart';
 import 'package:moviesplus/config/constants/styles.dart';
 import 'package:moviesplus/features/dashboard/providers/movies_provider.dart';
 import 'package:moviesplus/features/dashboard/widgets/mobile/horizontal_list_movies.dart';
+import 'package:moviesplus/features/profile/providers/language_provider.dart';
 import 'package:moviesplus/features/shared/models/movie.dart';
 import 'package:moviesplus/features/shared/models/movie_category.dart';
 import 'package:moviesplus/features/shared/widgets/movie_image.dart';
@@ -25,11 +26,6 @@ class DashboardScreen extends ConsumerStatefulWidget {
 class DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (ref.read(moviesProvider).movieCategories.isEmpty) {
-        await ref.read(moviesProvider.notifier).initDashboard();
-      }
-    });
     super.initState();
   }
 
@@ -38,6 +34,16 @@ class DashboardScreenState extends ConsumerState<DashboardScreen> {
     final movieCategories = ref.watch(moviesProvider).movieCategories;
     final List<MapEntry<String, MovieCategory>> categoryList =
         movieCategories.entries.toList();
+
+    ref.listen<Locale>(
+      languageProvider,
+      (previous, next) async {
+        if (previous == null || previous.languageCode != next.languageCode) {
+          debugPrint('🌐 Idioma cambiado a: ${next.languageCode}');
+          await ref.read(moviesProvider.notifier).initDashboard();
+        }
+      },
+    );
 
     return Scaffold(
       body: CustomScrollView(
