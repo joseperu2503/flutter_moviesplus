@@ -95,7 +95,7 @@ class MovieInfo extends StatelessWidget {
         ),
         Text(
           movie.genres != null && movie.genres!.isNotEmpty
-              ? movie.genres![0].name
+              ? movie.genres![0].name ?? ''
               : '',
           style: const TextStyle(
             fontSize: 12,

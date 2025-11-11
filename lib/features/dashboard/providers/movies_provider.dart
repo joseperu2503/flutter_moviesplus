@@ -27,6 +27,8 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
     try {
       final List<Genre> genres = await MovieDbService.getMovieGenres();
       for (var genre in genres) {
+        if (genre.name == null) continue;
+
         Map<String, MovieCategory> newMovieCategories = {
           ...state.movieCategories
         };
@@ -34,7 +36,7 @@ class MoviesNotifier extends StateNotifier<MoviesState> {
         if (newMovieCategories[genre.id.toString()] == null) {
           newMovieCategories[genre.id.toString()] = MovieCategory(
             name: (context) {
-              return genre.name;
+              return genre.name ?? '';
             },
             url: '/discover/movie',
             queryParameters: {

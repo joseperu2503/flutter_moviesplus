@@ -1,6 +1,6 @@
 class Genre {
   final int id;
-  final String name;
+  final String? name;
 
   Genre({
     required this.id,
